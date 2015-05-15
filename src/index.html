@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html ng-app="nocc" ng-controller="AppCtrl">
+    <head>
+        <title ng-bind="page_title"></title>
+
+        <meta charset="utf-8" />
+
+        <!-- social media tags -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@nocc">
+        <meta name="twitter:title" content="nocc">
+        <meta name="twitter:description" content="nocc">
+        <meta name="twitter:creator" content="@abidibo">
+        <meta name="twitter:image:src" content="">
+        <meta property="og:title" content="nocc" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="" />
+        <meta property="og:image" content="" />
+        <meta property="og:description" content="nocc">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- font awesome from BootstrapCDN -->
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+        <!-- compiled CSS --><% styles.forEach( function ( file ) { %>
+        <link rel="stylesheet" type="text/css" href="<%= file %>" /><% }); %>
+
+        <!-- compiled JavaScript --><% scripts.forEach( function ( file ) { %>
+        <script type="text/javascript" src="<%= file %>"></script><% }); %>
+
+        <!-- bootstrap material design -->
+        <script>$(document).ready(function() { $.material.init(); });</script>
+
+    </head>
+    <body>
+        <aside id="sidebar" ng-controller="SidebarController as vm">
+            <div class="logo-container">
+                <h1><a href ui-sref="home">NOCC</a></h1>
+                <button type="button" class="navbar-toggle" ng-init="appMenuCollapsed = true"
+                    ng-click="appMenuCollapsed = ! appMenuCollapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <nav>
+                <div class="collapse navbar-collapse" collapse="appMenuCollapsed">
+                    <ul>
+                        <li>
+                            <a href="">
+                                miao
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+        <nav id="topbar" class="navbar navbar-default" role="navigation" ng-controller="TopbarController as vm">
+            <div class="container-fluid">
+                <div>
+                    <ul class="nav navbar-nav pull-right">
+                            <li ng-show="is_authenticated"><a href ui-sref="home">{{ user.username }}</a></li>
+                            <li><a href="javascript:void(0)" class="fa fa-2x fa-sign-out" ng-click="logout()" ng-show="is_authenticated"></a></li>
+                            <li ui-sref-active="active"><a href class="fa fa-2x fa-sign-in" ui-sref="login" ng-hide="is_authenticated"></a></li>
+                    </ul>
+                </div> <!-- /.collapse.navbar-collapse -->
+            </div> <!-- /.container-fluid -->
+        </nav>
+
+        <div id="content-container" ui-view="main"></div>
+
+    </body>
+</html>
