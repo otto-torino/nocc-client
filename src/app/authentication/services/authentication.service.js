@@ -7,13 +7,13 @@
     'use strict';
 
     angular
-        .module('nocc.authentication.services', ['nocc.config', 'ngCookies', 'ui.bootstrap', 'dialogs.main'])
+        .module('nocc.authentication.services', ['nocc.config', 'ui.bootstrap', 'dialogs.main'])
         .config(function( dialogsProvider ) {
             dialogsProvider.useFontAwesome();
         })
         .factory('authenticationService', authenticationService);
 
-    authenticationService.$inject = ['$cookies', '$http', 'dialogs', 'API_BASE_URL'];
+    authenticationService.$inject = ['$http', '$q', '$window', 'dialogs', 'API_BASE_URL'];
 
     /**
     * @namespace   authenticationService
@@ -21,7 +21,7 @@
     *              and methods to check if the user is authenticated
     * @returns {Factory}
     */
-    function authenticationService($cookies, $http, dialogs, API_BASE_URL) {
+    function authenticationService($http, $q, $window, dialogs, API_BASE_URL) {
         /**
         * @summary Authentication Service Object
         * @description The Factory to be returned
@@ -31,7 +31,10 @@
             logout: logout,
             isAuthenticated: isAuthenticated,
             getAuthenticatedUser: getAuthenticatedUser,
-            setAuthenticatedUser: setAuthenticatedUser
+            getToken: getToken,
+            setAuthenticatedUser: setAuthenticatedUser,
+            unauthenticate: unauthenticate,
+            refreshAuthenticatedUser: refreshAuthenticatedUser
         };
 
         return service;
@@ -47,52 +50,38 @@
          * @memberof nocc.authentication.services.authenticationService
          */
         function login(username, password) {
-            return $http.post(API_BASE_URL + '/auth/login/', {
+            var deferred = $q.defer();
+            var url = API_BASE_URL + '/auth/login/';
+            $http.post(url, {
                 username: username, password: password
-            }).then(loginSuccessFn, loginErrorFn);
-        }
+            }).then(
+                function loginSuccessFn(response) {
+                    var token = response.data.token;
+                    var user = response.data.user;
 
-        /**
-         * @summary Login success callback
-         * @param {object} response Server response, properties: config, data, status, statusText
-         * @desc Set the authenticated account and redirect to index
-         */
-        function loginSuccessFn(response) {
-            service.setAuthenticatedUser(response.data);
-        }
-
-        /**
-         * @summary Login error callback
-         * @param {object} response Server response, properties: config, data, status, statusText
-         * @desc Shows a modal with an error message
-         */
-        function loginErrorFn(response) {
-            dialogs.error(
-                'Errore di autenticazione', 
-                'L\'utente e password forniti non sono validi.',
-                {
-                    size: 'sm'
+                    if (token && user) {
+                        service.setAuthenticatedUser(token, user);
+                        deferred.resolve(true);
+                    } else {
+                        deferred.reject('Invalid data received from server');
+                    }
+                },
+                function loginErrorFn(response) {
+                    deferred.reject(response.data.message);
                 }
+
             );
+            return deferred.promise;
         }
 
         /**
          * @summary Logout
-         * @description Delete the cookie where the user object is stored and logouts from server
+         * @description Deletes the authentication info stored in the localStorage
          * @returns {Promise}
          * @memberOf nocc.authentication.services.authenticationService
          */
         function logout() {
-            return $http.post(API_BASE_URL + '/auth/logout/', {}).then(logoutSuccessFn, logoutErrorFn);
-        }
-
-        /**
-         * @summary Logout success callback
-         * @param {object} response Server response, properties: config, data, status, statusText
-         * @description Redirects to the home page
-         */
-        function logoutSuccessFn(response) {
-            delete $cookies.authenticatedUser;
+            return $http.post(API_BASE_URL + '/auth/logout/', {}).then(unauthenticate, logoutErrorFn);
         }
 
         /**
@@ -117,32 +106,68 @@
          * @memberOf nocc.authentication.services.authenticationService
          */
         function isAuthenticated() {
-            return !!$cookies.authenticatedUser;
+            return !!($window.localStorage.token && $window.localStorage.user);
         }
 
         /**
          * @summary Gets the authenticated user
          * @description Return the currently authenticated user
-         * @returns {object|undefined} Account if authenticated, else `undefined`
+         * @returns {object|undefined} User if authenticated, else `undefined`
          * @memberOf nocc.authentication.services.authenticationService
          */
         function getAuthenticatedUser() {
-            if (!$cookies.authenticatedUser) {
+            if(!isAuthenticated()) {
                 return;
             }
+            return JSON.parse($window.localStorage.user);
+        }
 
-            return JSON.parse($cookies.authenticatedUser);
+        /**
+         * @summary Gets the authentication token
+         * @returns {String|undefined} token if authenticated, else `undefined`
+         * @memberOf nocc.authentication.services.authenticationService
+         */
+        function getToken() {
+            if(!isAuthenticated()) {
+                return;
+            }
+            return $window.localStorage.token;
         }
 
         /**
          * @summary Sets the authenticated user
-         * @description Stringify the user object and store it in a cookie
+         * @description Stores the token and user in the localStorage.
+         *              User is stored in a stringified version since localStorage only supports
+         *              key: value pairs
+         * @param {String} token The authentication token
          * @param {Object} user The user object to be stored
          * @returns {undefined}
          * @memberOf nocc.authentication.services.authenticationService
          */
-        function setAuthenticatedUser(user) {
-            $cookies.authenticatedUser = JSON.stringify(user);
+        function setAuthenticatedUser(token, user) {
+            $window.localStorage.token = token;
+            $window.localStorage.user = JSON.stringify(user);
+        }
+
+        function refreshAuthenticatedUser() {
+            var user = getAuthenticatedUser();
+            return $http.get(API_BASE_URL + '/auth/profile/' + user.username + '/', {}).then(
+                function(response) {
+                    $window.localStorage.user = JSON.stringify(response.data);
+                }, function() {
+                    console.log('error'); //@TODO
+                });
+        }
+
+        /**
+         * @summary Anauthenticates the user
+         * @description removes auth data from localStorage
+         * @return {undefined}
+         * @memberOf nocc.authentication.services.authenticationService
+         */
+        function unauthenticate() {
+            $window.localStorage.removeItem('token');
+            $window.localStorage.removeItem('user');
         }
 
     }

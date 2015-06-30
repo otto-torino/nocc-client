@@ -1,0 +1,51 @@
+<section>
+    <div class="row">
+        <div class="col-xs-12 col-sm-3 col-md-2">
+            <p>
+                <img ng-show="vm.doctor.model.photo" ng-src="{{ vm.doctor.model.photo }}" class="img-responsive img-circle" />
+                <img ng-hide="vm.doctor.model.photo" src="assets/img/photo_placeholder.png" class="img-responsive img-circle" />
+            </p>
+        </div>
+        <div class="col-xs-12 col-sm-9 col-md-10">
+            <h1>{{ vm.doctor.fullname }}  <i ng-click="vm.openMainInfoForm()" style="margin-left: 20px;" class="link fa fa-pencil" /></h1>
+            <p><b ng-repeat="d in vm.doctor.doctor_types">{{ d | ucfirst }}{{ $last ? '' : ', ' }}</b></p>
+            <p>Account creato il: {{ vm.doctor.model.created_at | date:'dd/MM/yyyy' }}</p>
+            <p ng-show="vm.doctor.model.cv"><a href="{{ vm.doctor.model.cv }}"><i class="fa fa-1x fa-file }}"></i> CV</a></p>
+            <div ng-show="vm.doctor.contacts.length">
+                <h2>Contatti</h2>
+                <tabset>
+                    <tab ng-repeat="contact in vm.doctor.contacts" active="contact.active">
+                        <tab-heading>
+                            {{ contact.hospital_obj.name }}
+                            <i style="margin: 0 10px; display: inline-block;" class="link fa fa-pencil" ng-click="vm.openEditContactForm(contact)"></i>
+                            <i ng-click="vm.confirmAndDelete(contact)" class="link fa fa-times"></i>
+                        </tab-heading>
+                        <div style="margin-top: 20px;">
+                            <p>{{ contact.description }}</p>
+                            <hr />
+                            <p><i class="fa fa-phone"></i> {{ contact.phone }}</p>
+                            <p><i class="fa fa-envelope"></i> {{ contact.email }}</p>
+                            <hr />
+                            <p class="title"><strong>Disponibilità</strong></p>
+                            <table class="table table-hover table-bordered">
+                                <tbody>
+                                    <tr ng-repeat="day in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']" ng-class="{ 'success': contact[day] }">
+                                        <th>{{ day|itweekday|ucfirst }}</th>
+                                        <td>{{ contact['get_' + day + '_display'] }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="title"><strong>Eccezioni</strong> <i ng-click="vm.openContactAvailabilityExceptionForm(contact)" class="link fa fa-plus"></i></p>
+                            <div>
+                                <span class="tag" ng-repeat="e in contact.exceptions|orderBy:'date'">{{ e.date|date:'dd/MM/yyyy' }} <i ng-click="vm.confirmAndDeleteException(contact, e)" class="link fa fa-remove"></i></span>
+                            </div>
+                        </div>
+                    </tab>
+                    <tab>
+                        <tab-heading><i ng-click="vm.openNewContactForm()" style="" class="link fa fa-plus" /></tab-heading>
+                    </tab>
+                </tabset>
+            </div>
+        </div>
+    </div>
+</section>

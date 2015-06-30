@@ -19,6 +19,7 @@
     function config( $stateProvider ) {
         $stateProvider.state( 'login', {
             url: '/login',
+            parent: 'loggedOut',
             views: {
                 "main": {
                     controller: 'LoginController',

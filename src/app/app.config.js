@@ -7,6 +7,7 @@
      */
     angular
         .module('nocc.config', [])
-        .constant('API_BASE_URL', 'http://localhost:8000/nocc/api/v1');
+        .constant('API_BASE_URL', 'http://localhost:8000/nocc/api/v1')
+        .constant('MEDIA_BASE_URL', 'http://localhost:8000');
 
 })();

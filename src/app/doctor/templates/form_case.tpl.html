@@ -1,0 +1,124 @@
+<div class="modal-header">
+    <h2><i class="fa fa-plus" /> Creazione caso clinico</h2>
+</div>
+<form role="form">
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="case__description">Descrizione</label>
+            <div class="error" ng-show="errors.description"> <!-- @FIXME -->
+                <div class="alert alert-danger" ng-repeat="e in errors.description">{{ e }}</div>
+            </div>
+            <input type="text" class="form-control" id="case__description" ng-model="case.description" placeholder="" required />
+        </div>
+        <div class="form-group">
+            <label for="case__patient">Paziente</label>
+            <div class="error" ng-show="errors.patient">
+                <div class="alert alert-danger" ng-repeat="e in errors.patient">{{ e }}</div>
+            </div>
+            <select class="form-control" id="case__patient" ng-model="case.patient" required>
+                <option ng-repeat="p in patients.list" value="{{ p.id }}" ng-selected="case.patient == p.id">{{ p.lastname }} {{ p.firstname }}</option>
+                <option value="0">aggiungi...</option>
+            </select>
+        </div>
+        <!-- New Patient -->
+        <div ng-show="case.patient === '0'">
+            <div class="form-group">
+                <label for="patient__firstname">Nome</label>
+                <div class="error" ng-show="errors.patient__firstname"> <!-- @FIXME -->
+                    <div class="alert alert-danger" ng-repeat="e in errors.patient__firstname">{{ e }}</div>
+                </div>
+                <input type="text" class="form-control" id="patient__firstname" ng-model="case.new_patient.firstname" placeholder="es. Mario" required />
+            </div>
+            <div class="form-group">
+                <label for="patient__lastname">Cognome</label>
+                <div class="error" ng-show="errors.patient__lastname"> <!-- @FIXME -->
+                    <div class="alert alert-danger" ng-repeat="e in errors.patient__lastname">{{ e }}</div>
+                </div>
+                <input type="text" class="form-control" id="patient__lastname" ng-model="case.new_patient.lastname" placeholder="es. Rossi" required />
+            </div>
+            <div class="form-group">
+                <label for="patient__sex">Sesso</label>
+                <div class="error" ng-show="errors.patient__sex"> <!-- @FIXME -->
+                    <div class="alert alert-danger" ng-repeat="e in errors.patient__sex">{{ e }}</div>
+                </div>
+                <div class="radio radio-success">
+                    <label>
+                      <input name="patient__sex" value="1" ng-model="case.new_patient.sex" ng-checked="case.new_patient.sex == 1" type="radio">
+                      Maschio
+                    </label>
+                </div>
+                <div class="radio radio-success">
+                    <label>
+                      <input name="patient__sex" value="2" ng-model="case.new_patient.sex" ng-checked="case.new_patient.sex == 2" type="radio">
+                      Femmina
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="patient__cf">Codice Fiscale</label>
+                <div class="error" ng-show="errors.patient__cf"> <!-- @FIXME -->
+                    <div class="alert alert-danger" ng-repeat="e in errors.patient__cf">{{ e }}</div>
+                </div>
+                <input type="text" class="form-control" id="patient__cf" ng-model="case.new_patient.cf" placeholder="es. DBTGNT88G21T654T" required />
+            </div>
+            <div class="form-group">
+                <label for="patient__birth_date">Data di nascita</label>
+                <div class="error" ng-show="errors.patient__birth_date">
+                    <div class="alert alert-danger" ng-repeat="e in errors.date">{{ e }}</div>
+                </div>
+                <div class="dropdown">
+                    <a class="dropdown-toggle" id="dropdown2" role="button" data-target="#" href="#">
+                        <div class="input-group"><input type="text" class="form-control" data-ng-model="case.new_patient.birth_date | date:'dd/MM/yyyy'" placeholder="es. 01/10/1980" required>
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker data-ng-model="case.new_patient.birth_date" data-datetimepicker-config="{ dropdownSelector: '#dropdown2', 'minView': 'day' }"/>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="patient__birth_place">Luogo di nascita</label>
+                <div class="error" ng-show="errors.patient__birth_place"> <!-- @FIXME -->
+                    <div class="alert alert-danger" ng-repeat="e in errors.patient__birth_place">{{ e }}</div>
+                </div>
+                <input type="text" class="form-control" id="patient__birth_place" ng-model="case.new_patient.birth_place" placeholder="es. Milano" required />
+            </div>
+            <div class="form-group">
+                <label for="patient__address">Indirizzo</label>
+                <div class="error" ng-show="errors.patient__address"> <!-- @FIXME -->
+                    <div class="alert alert-danger" ng-repeat="e in errors.patient__address">{{ e }}</div>
+                </div>
+                <input type="text" class="form-control" id="patient__address" ng-model="case.new_patient.address" placeholder="es. Via Roma 45" required />
+            </div>
+            <div class="form-group">
+                <label for="patient__city">Città</label>
+                <div class="error" ng-show="errors.patient__city"> <!-- @FIXME -->
+                    <div class="alert alert-danger" ng-repeat="e in errors.patient__city">{{ e }}</div>
+                </div>
+                <input type="text" class="form-control" id="patient__city" ng-model="case.new_patient.city" placeholder="es. Torino" required />
+            </div>
+            <div class="form-group">
+                <label for="patient__phone">Telefono</label>
+                <div class="error" ng-show="errors.patient__phone"> <!-- @FIXME -->
+                    <div class="alert alert-danger" ng-repeat="e in errors.patient__phone">{{ e }}</div>
+                </div>
+                <input type="text" class="form-control" id="patient__phone" ng-model="case.new_patient.phone" placeholder="es. 011.784839" required />
+            </div>
+            <div class="form-group">
+                <label for="patient__email">E-mail</label>
+                <div class="error" ng-show="errors.patient__email"> <!-- @FIXME -->
+                    <div class="alert alert-danger" ng-repeat="e in errors.patient__email">{{ e }}</div>
+                </div>
+                <input type="email" class="form-control" id="patient__email" ng-model="case.new_patient.email" placeholder="es. mariorossi@gmail.com" required />
+            </div>
+        </div>
+        <!-- End New Patient -->
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-click="cancel()" type="button">Annulla</button>
+        <button class="btn btn-primary" ng-disabled="!case.description || (!case.patient || (case.patient === '0' && !checkNewPatientMandatoryFields()))" ng-click="save()" type="button" disabled="disabled">Salva</button>
+    </div>
+    <script>$.material.checkbox();$.material.radio();$.material.input();</script>
+</form>

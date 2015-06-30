@@ -6,6 +6,14 @@
  *              Modules are organized in directories at this fs level. Each module provides is own routes.
  */
 
+/**
+ * @summary Uses or loads a module if not yet loaded
+ * @description Splitting files inside modules folder is something I like,
+ *              coming from a server-side scripting background I'm used to have single file classes.
+ *              So I need a way to use or load a module because I don't know the order of js file inclusion.
+ * @param {String} module
+ * @param {Array} dep dependencies
+ */
 angular._useOrLoadModule = function(module, dep) {
 
     try {
@@ -20,57 +28,23 @@ angular._useOrLoadModule = function(module, dep) {
 angular.module( 'nocc', [
     'templates-app',
     'templates-common',
-    'nocc.config',
-    'nocc.layout',
-    'nocc.authentication',
-    'nocc.home',
-    'ui.router'
+    'nocc.config',              // configuration module
+    'nocc.routes',              // app routes
+    'nocc.interceptors',        // app middlewares
+    'nocc.controllers',         // app main controller
+    'nocc.factory',             // factory sidebar
+    'nocc.utils',               // utils module
+    'nocc.layout',              // common layout module
+    'nocc.authentication',      // authentication module
+    'nocc.notification',        // notification module
+    'nocc.profile',             // user profile module
+    'nocc.doctor',              // doctor module
+    'nocc.hospital',            // hospital module
+    'nocc.case',                // case module
+    'nocc.home',                // home page module
+    'pageslide-directive'       // sliding panel (notifications)
 ])
 
-/**
- * Routes are defined in a per-module basis
- * When location doesn't match any module url then it fallbaks to /home
- */
-.config(function noccConfig($stateProvider, $urlRouterProvider) {
-    // unmatched urls
-    $urlRouterProvider.otherwise( '/home' );
-})
 
-.run( function run () {
-})
-
-/**
- * Main app controller
- * Uses scope instead of controller as technique in order to have fallback in other nested views
- */
-.controller('AppCtrl', function AppCtrl($scope, $state, authenticationService) {
-    /**
-     * Actions to perform in the main controller when the state (ui-router) changes
-     * - change pageTitle
-     * - refresh is_authenticated and user properties
-     */
-    $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
-        if(angular.isDefined(toState.data.page_title)) {
-            $scope.page_title = toState.data.page_title + ' | NOCC' ;
-            // authentication
-            $scope.is_authenticated = authenticationService.isAuthenticated();
-            $scope.user = authenticationService.getAuthenticatedUser();
-        }
-    });
-
-    $scope.logout = logout;
-
-    /**
-    * @summary logout
-    * @description Log the user out
-    * @memberOf nocc.AppCtrl
-    * @uses nocc.authentication.services.authenticationService
-    */
-    function logout() {
-        authenticationService.logout().then(function() {
-            $state.go('home', {}, {reload: true});
-        });
-    }
-
-});
-
+.config(function() {  })
+.run(function() {  });

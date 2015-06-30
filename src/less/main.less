@@ -22,7 +22,8 @@
 
 @import 'variables.less';
 @import 'layout.less';
-
+@import 'forms.less';
+@import 'tabs.less';
 
 /**
  * Typography
@@ -57,6 +58,30 @@ h2 {
   color: #666;
 }
 
+/**
+ * Links
+ */
+.link, a[ng-click] {
+    cursor: pointer;
+}
+
+/**
+ * Tables
+ */
+.table-auto {
+    width: auto !important;
+}
+
+/**
+ * Tags
+ */
+.tag {
+    background: #f8f8f8;
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
 
 /**
  * Footer
@@ -98,6 +123,13 @@ h2 {
  */
 .modal-body {
     padding-top: 10px !important;
+}
+
+/**
+ * Classes
+ */
+.bg-white {
+    background-color: #fff;
 }
 
 /**

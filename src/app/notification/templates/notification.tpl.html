@@ -1,0 +1,9 @@
+<section ng-controller="NotificationCtrl">
+    <h1><i class="fa fa-bell"></i> Notifiche</h1>
+    <ul class="notification">
+        <li ng-repeat="m in messages">
+            <p><b>{{ m.case }}</b><br />
+               {{ m.text }}</p>
+        </li>
+    </ul>
+</section>

@@ -7,16 +7,16 @@
     'use strict';
 
     angular
-        .module('nocc.authentication.controllers', [])
+        .module('nocc.authentication.controllers', ['dialogs.main'])
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$state', 'authenticationService'];
+    LoginController.$inject = ['$state', 'authenticationService', 'dialogs'];
 
     /**
      * @namespace LoginController
      * @description Controller of the login view
      */
-    function LoginController($state, authenticationService) {
+    function LoginController($state, authenticationService, dialogs) {
 
         var vm = this;
         vm.login = login;
@@ -39,19 +39,27 @@
         /**
          * @summary Login
          * @description Log the user in
+         *              If login is successfull the user is redirected to the home page,
+         *              if login is not successfull an error dialog is shown in the same 
+         *              login page
          * @memberOf nocc.authentication.controllers.LoginController
          * @uses nocc.authentication.services.authenticationService
          */
         function login() {
-            // redirects to the home page after login
-            authenticationService.login(vm.username, vm.password).then(function() {
-                if(authenticationService.isAuthenticated()) {
+            authenticationService.login(vm.username, vm.password).then(
+                function success() {
                     $state.go('home', {}, {reload: true});
+                },
+                function error(response) {
+                    dialogs.error(
+                        'Errore di autenticazione',
+                        response,
+                        {
+                            size: 'sm'
+                        }
+                    );
                 }
-                else {
-                    $state.go('login', {}, {reload: true});
-                }
-            });
+            );
         }
     }
 })();

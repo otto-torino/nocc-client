@@ -1,0 +1,63 @@
+<div class="modal-header">
+    <h2><i class="fa fa-plus" /> {{ title }}</h2>
+</div>
+<form role="form">
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="contact__hospital">Ospedale</label>
+            <div class="error" ng-show="errors.hospital">
+                <div class="alert alert-danger" ng-repeat="e in errors.hospital">{{ e }}</div>
+            </div>
+            <select class="form-control" id="contact__hospital" ng-model="contact.hospital" required>
+                <option ng-repeat="h in hospital.list" value="{{ h.id }}" ng-selected="contact.hospital == h.id">{{ h.name }}</option>
+                <option value="0">aggiungi...</option>
+            </select>
+        </div>
+        <div class="form-group" ng-show="contact.hospital === '0'">
+            <label for="hospital__name">Nome Ospedale</label>
+            <div class="error" ng-show="errors.hospital_name"> <!-- @FIXME -->
+                <div class="alert alert-danger" ng-repeat="e in errors.hospital_name">{{ e }}</div>
+            </div>
+            <input type="text" class="form-control" id="hospital__name" ng-model="contact.new_hospital.name" placeholder="es. Molinette" required />
+        </div>
+        <div class="form-group">
+            <label for="contact__description">Descrizione</label>
+            <div class="error" ng-show="errors.description">
+                <div class="alert alert-danger" ng-repeat="e in errors.description">{{ e }}</div>
+            </div>
+            <textarea class="form-control" id="contact__description" ng-model="contact.description" placeholder="es. reparto chirurgia"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="contact__phone">Telefono</label>
+            <div class="error" ng-show="errors.phone">
+                <div class="alert alert-danger" ng-repeat="e in errors.phone">{{ e }}</div>
+            </div>
+            <input type="text" class="form-control" id="contact__phone" ng-model="contact.phone" placeholder="es. +39 011 345234" required />
+        </div>
+        <div class="form-group">
+            <label for="contact__email">E-mail</label>
+            <div class="error" ng-show="errors.email">
+                <div class="alert alert-danger" ng-repeat="e in errors.email">{{ e }}</div>
+            </div>
+            <input type="email" class="form-control" id="contact__email" ng-model="contact.email" placeholder="es. mariorossi@gmail.com" required />
+        </div>
+
+        <h3>Disponibilità</h3>
+
+        <div class="form-group" ng-repeat="day in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']">
+            <label for="contact__{{ day }}">{{ day|itweekday|ucfirst }}</label>
+            <div class="error" ng-show="errors[day]">
+                <div class="alert alert-danger" ng-repeat="e in errors[day]">{{ e }}</div>
+            </div>
+            <select class="form-control" id="contact__[day]" ng-model="contact[day]" required>
+                <option ng-repeat="a in availability_choices" value="{{ a.id }}" ng-selected="contact[day] == a.id">{{ a.label }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-click="cancel()" type="button">Annulla</button>
+        <button class="btn btn-primary" ng-disabled="!contact.phone || !contact.email || (contact.hospital === '0' && !contact.new_hospital.name)" ng-click="save()" type="button" disabled="disabled">Salva</button>
+    </div>
+</form>
+<script>$.material.checkbox();$.material.input();</script>

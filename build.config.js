@@ -63,6 +63,8 @@ module.exports = {
   vendor_files: {
     js: [
       'vendor/jquery/dist/jquery.min.js',
+      'vendor/moment/moment.js',
+      'vendor/bootstrap/dist/js/bootstrap.js',
       'vendor/angular/angular.js',
       'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
       'vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js',
@@ -72,10 +74,20 @@ module.exports = {
       'vendor/bootstrap-material-design/scripts/ripples.js',
       'vendor/angular-cookies/angular-cookies.js',
       'vendor/angular-sanitize/angular-sanitize.js',
+      'vendor/angular-animate/angular-animate.js',
       'vendor/angular-dialog-service/dist/dialogs.min.js',
+      'vendor/ngtoast/dist/ngToast.js',
+      'vendor/angular-permission/dist/angular-permission.js',
+      'vendor/ng-file-upload/ng-file-upload-shim.js',
+      'vendor/ng-file-upload/ng-file-upload.js',
+      'vendor/angular-bootstrap-datetimepicker/src/js/datetimepicker.js',
+      'vendor/angular-pageslide-directive/dist/angular-pageslide-directive.js',
     ],
     css: [
       'vendor/angular-dialog-service/dist/dialogs.min.css',
+      'vendor/ngtoast/dist/ngToast.css',
+      'vendor/bootstrap/dist/css/bootstrap.css',
+      'vendor/angular-bootstrap-datetimepicker/src/css/datetimepicker.css',
     ],
     assets: [
     ]

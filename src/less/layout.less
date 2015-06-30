@@ -9,6 +9,25 @@ body {
 #sidebar {
     min-height: 100%;
     background: #333;
+    nav  {
+        .fa {
+            color: #fff;
+            font-size: 18px;
+            margin-right: 10px;
+        }
+        .navbar-collapse {
+            padding: 0;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            padding: 10px 20px;
+            background: #222;
+            border: 1px solid #111;
+        }
+    }
     .logo-container {
         height: @topbar-height;
         background: #FF503F;
@@ -44,7 +63,9 @@ body {
     }
 }
 #content-container {
-    padding: 20px;
+    > section {
+        padding: 20px;
+    }
 }
 
 /* menu collapse */
@@ -62,4 +83,48 @@ body {
     #content-container {
         margin-left: 250px;
     }
+}
+
+/* actions bar */
+.actions-bar {
+    background: #eaeaea;
+    border-bottom: 1px solid #fff;
+    text-align: right;
+    padding: 10px 30px 10px 20px;
+}
+
+/* pageslide */
+.ng-pageslide {
+    background: #75c1cf;
+    border-left: 1px solid #fff;
+    > div {
+        padding: 20px 10px;
+    }
+}
+
+/* notification */
+ul.notification {
+    list-style-type: none;
+    padding-left: 0;
+    li {
+        background: lighten(#066071, 5%);
+        padding: 5px;
+        color: #fff;
+        margin-bottom: 5px;
+    }
+}
+.notification-num {
+    display: inline-block;
+    padding: 4px;
+    border-radius: 50%;
+    background: red;
+    color: #fff;
+    height: 20px;
+    width: 20px;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: center;
+    position: relative;
+    top: -15px;
+    left: -5px;
 }

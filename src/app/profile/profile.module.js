@@ -5,7 +5,6 @@
  * @description This is the profile module responsible for managing the user profile
  *
  *              The module provides:
- *              - controllers
  *              - routes
  */
 (function () {
@@ -13,9 +12,14 @@
 
     angular
         .module('nocc.profile', [
-            'nocc.profile.controllers',
             'nocc.profile.routes',
-            'nocc.profile.services'
-        ]);
+            'permission',
+            'nocc.authentication.services'
+        ])
+        .run(function(Permission, authenticationService) {
+            Permission.defineRole('hasProfile', function(stateParams) {
+                return authenticationService.isAuthenticated();
+            });
+        });
 
 })();

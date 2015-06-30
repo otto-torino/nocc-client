@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <h2><i class="fa fa-plus" /> Aggiungi eccezione</h2>
+</div>
+<form role="form">
+    <div class="modal-body">
+        <div class="error" ng-show="errors.date">
+            <div class="alert alert-danger" ng-repeat="e in errors.date">{{ e }}</div>
+        </div>
+        <datetimepicker style="margin:auto" data-ng-model="exception.date"
+                        data-datetimepicker-config="{ dropdownSelector: '.dropdown-toggle', minView: 'day' }"></datetimepicker>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-click="cancel()" type="button">Annulla</button>
+        <button class="btn btn-primary" ng-disabled="!exception.date" ng-click="save()" type="button" disabled="disabled">Salva</button>
+    </div>
+</form>

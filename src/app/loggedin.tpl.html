@@ -1,0 +1,39 @@
+<aside id="sidebar">
+    <div class="logo-container">
+        <h1><a href ui-sref="home">NOCC</a></h1>
+        <button type="button" class="navbar-toggle" ng-init="appMenuCollapsed = true"
+            ng-click="appMenuCollapsed = ! appMenuCollapsed">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+    </div>
+    <nav>
+        <div class="collapse navbar-collapse" collapse="appMenuCollapsed">
+            <div ui-view="sidebar"></div>
+        </div>
+    </nav>
+</aside>
+<nav id="topbar" class="navbar navbar-default" role="navigation" ng-controller="TopbarController as vm">
+    <div class="container-fluid">
+        <div>
+            <ul class="nav navbar-nav pull-left">
+                <li ng-show="auth.is_authenticated"><a class="link fa fa-2x fa-bell" ng-click="layout.openNotificationPanel = !layout.openNotificationPanel"><span class="notification-num">{{ layout.notifications }}</span></a></li>
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+                <li ng-show="auth.is_authenticated"><i class="fa fa-user"></i> <a style="display: inline-block; padding-left: 5px;" href ui-sref="profile">{{ auth.user.username }}</a></li>
+                <li><a href="javascript:void(0)" class="fa fa-2x fa-sign-out" ng-click="logout()" ng-show="auth.is_authenticated"></a></li>
+                <li ui-sref-active="active"><a href class="fa fa-2x fa-sign-in" ui-sref="login" ng-hide="auth.is_authenticated"></a></li>
+            </ul>
+        </div> <!-- /.collapse.navbar-collapse -->
+    </div> <!-- /.container-fluid -->
+</nav>
+
+<div id="content-container" ui-view="main"></div>
+<pageslide ps-open="layout.openNotificationPanel" ps-speed="0.25">
+    <div>
+        <ng-include src="'notification/templates/notification.tpl.html'"></ng-include>
+    </div>
+</pageslide>
+<toast></toast>

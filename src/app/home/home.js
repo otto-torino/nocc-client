@@ -23,16 +23,37 @@ angular.module( 'nocc.home', [
  * this way makes each module more "self-contained".
  */
 .config(function config( $stateProvider ) {
-  $stateProvider.state( 'home', {
-    url: '/home',
-    views: {
-      "main": {
-        controller: 'HomeCtrl',
-        templateUrl: 'home/home.tpl.html'
-      }
-    },
-    data:{ page_title: 'Home' }
-  });
+    $stateProvider.state( 'home', {
+        url: '/home',
+        parent: 'loggedOut',
+        views: {
+            "main": {
+                controller: 'HomeCtrl',
+                templateUrl: 'home/home.tpl.html'
+            }
+        },
+        data:{ page_title: 'Home' }
+    })
+    .state( 'apphome', {
+        url: '/app',
+        parent: 'loggedIn',
+        views: {
+            "main": {
+                controller: 'AppHomeCtrl',
+                templateUrl: 'home/apphome.tpl.html'
+            },
+            // ritorna un'istanza della classe actor adeguata all'utente loggato
+            // actor = new FactoryActor();
+            // current_state = myservice.getStateFromAPI();
+            // Switch.execute(actor, current_state);
+            "sidebar": {
+                controllerProvider: ['NoccControllerFactory', function(NoccControllerFactory) { return NoccControllerFactory.sidebar; }],
+                //controllerProvider: ['authenticationService', function(authenticationService) { console.log('DIO'); }],
+                templateUrl: 'layout/templates/sidebar.tpl.html'
+            }
+        },
+        data:{ page_title: 'Home' }
+    });
 })
 
 /**
@@ -41,9 +62,13 @@ angular.module( 'nocc.home', [
 .controller( 'HomeCtrl', function HomeController( $state, authenticationService ) {
     // @todo activate function described. If user is authenticated then is redirected to app home page
     if(authenticationService.isAuthenticated()) {
-        //window.location = '/minchia';
+            $state.go('apphome');
     }
 })
+.controller( 'AppHomeCtrl', function AppHomeController( $state, authenticationService ) {
+    // @todo activate function described. If user is authenticated then is redirected to app home page
+})
+
 
 ;
 
