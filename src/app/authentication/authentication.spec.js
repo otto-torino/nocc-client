@@ -17,15 +17,10 @@ describe( 'authentication login and logout: ', function() {
             user: {
                 id: 4,
                 username: 'lorierif',
-                patient: null,
                 email: '',
-                doctor: {
-                    firstname: 'Fabrizio',
-                    lastname: 'Lorieri',
-                    is_oncologist: false,
-                    is_radiotherapist: false,
-                    is_surgeon: true
-                }
+                is_patient: false,
+                is_doctor: true,
+                is_surgeon: true
             }
         };
         $httpBackend.when('POST', "http://localhost:8000/nocc/api/v1/auth/login/").respond(fake_data);

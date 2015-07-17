@@ -9,6 +9,11 @@ body {
 #sidebar {
     min-height: 100%;
     background: #333;
+    h2 {
+        color: #8e9aa4;
+        font-size: 20px;
+        padding-left: 10px;
+    }
     nav  {
         .fa {
             color: #fff;
@@ -26,6 +31,9 @@ body {
             padding: 10px 20px;
             background: #222;
             border: 1px solid #111;
+        }
+        li + li {
+            border-top-width: 0px;
         }
     }
     .logo-container {
@@ -63,7 +71,7 @@ body {
     }
 }
 #content-container {
-    > section {
+    > section, > div {
         padding: 20px;
     }
 }

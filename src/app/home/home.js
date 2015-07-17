@@ -34,24 +34,12 @@ angular.module( 'nocc.home', [
         },
         data:{ page_title: 'Home' }
     })
+    /**
+     * Every actor (surgeon, doctor, patient) has its own apphome state
+     */
     .state( 'apphome', {
         url: '/app',
         parent: 'loggedIn',
-        views: {
-            "main": {
-                controller: 'AppHomeCtrl',
-                templateUrl: 'home/apphome.tpl.html'
-            },
-            // ritorna un'istanza della classe actor adeguata all'utente loggato
-            // actor = new FactoryActor();
-            // current_state = myservice.getStateFromAPI();
-            // Switch.execute(actor, current_state);
-            "sidebar": {
-                controllerProvider: ['NoccControllerFactory', function(NoccControllerFactory) { return NoccControllerFactory.sidebar; }],
-                //controllerProvider: ['authenticationService', function(authenticationService) { console.log('DIO'); }],
-                templateUrl: 'layout/templates/sidebar.tpl.html'
-            }
-        },
         data:{ page_title: 'Home' }
     });
 })
@@ -62,13 +50,9 @@ angular.module( 'nocc.home', [
 .controller( 'HomeCtrl', function HomeController( $state, authenticationService ) {
     // @todo activate function described. If user is authenticated then is redirected to app home page
     if(authenticationService.isAuthenticated()) {
-            $state.go('apphome');
+        $state.go('apphome');
     }
 })
-.controller( 'AppHomeCtrl', function AppHomeController( $state, authenticationService ) {
-    // @todo activate function described. If user is authenticated then is redirected to app home page
-})
-
 
 ;
 

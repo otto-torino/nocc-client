@@ -20,22 +20,9 @@
         $stateProvider.state( 'profile', {
             url: '/profile',
             parent: 'loggedIn',
-            views: {
-                "main": {
-                    controllerProvider: function() { return 'DoctorProfileCtrl'; },
-                    controllerAs: 'vm',
-                    templateUrl: function() { return 'doctor/templates/profile.tpl.html'; }
-                },
-                "sidebar": {
-                    controllerProvider: ['NoccControllerFactory', function(NoccControllerFactory) { return NoccControllerFactory.sidebar; }],
-                    //controllerProvider: ['authenticationService', function(authenticationService) { console.log('DIO'); }],
-                    templateUrl: 'layout/templates/sidebar.tpl.html'
-                }
-            },
-            data:{
-                page_title: 'Profile',
+            data: {
                 permissions: {
-                    only: ['hasProfile'],
+                    only: ['isAuthenticated'],
                     redirectTo: 'home'
                 }
             }

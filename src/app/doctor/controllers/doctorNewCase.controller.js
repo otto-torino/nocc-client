@@ -10,14 +10,14 @@
         .module('nocc.doctor.controllers')
         .controller('DoctorNewCaseCtrl', DoctorNewCaseCtrl);
 
-    DoctorNewCaseCtrl.$inject = ['$scope', '$state', '$filter', '$modalInstance', 'authenticationService', 'patientService', 'doctorService', 'caseService', 'data'];
+    DoctorNewCaseCtrl.$inject = ['$rootScope', '$scope', '$state', '$filter', '$modalInstance', 'authenticationService', 'patientService', 'doctorService', 'contactService', 'caseService', 'data'];
 
     /**
-     * @namespace DoctorSidebarCtrl
-     * @description Controller of the doctor's profile view
-     * @permissions hasProfile
+     * @namespace DoctorNewCaseCtrl
+     * @description Controller of the doctor's new case view
+     * @permissions isSurgeon
      */
-    function DoctorNewCaseCtrl($scope, $state, $filter, $modalInstance, authenticationService, patientService, doctorService, caseService, data) {
+    function DoctorNewCaseCtrl($rootScope, $scope, $state, $filter, $modalInstance, authenticationService, patientService, doctorService, contactService, caseService, data) {
 
         /** check permission */
         (function() {
@@ -27,7 +27,20 @@
         })();
 
         $scope.errors = {};
-        $scope['case'] = {};
+        $scope['case'] = {
+            new_patient: {}
+        };
+
+        var user = authenticationService.getAuthenticatedUser();
+
+        /**
+         * @summary Gets surgeon contacts data
+         * @uses nocc.doctor.services.doctorService
+         * @uses nocc.contact.services.contactService
+         */
+        contactService.list(user.username).then(function(response) {
+            $scope.contacts = { list: response.data };
+        });
 
         /**
          * @summary Gets patients data
@@ -94,6 +107,7 @@
             function saveSuccessFn(response) {
                 var newcase = response.data;
                 data.ctrl.surgeon_cases.push(newcase);
+                $rootScope.$broadcast('update_notifications');
                 $modalInstance.dismiss();
             }
 

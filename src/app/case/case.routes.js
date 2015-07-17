@@ -15,49 +15,36 @@
     /**
      * @summary config
      * @description Defines profile routes
+     *              Choose if it is bettere to have a template factory which depends from the case status or to create a router for each "MAIN" state
+     *              which redirects to the appropriate state which depends from status and eventually the actor
      */
     function config( $stateProvider ) {
+        // case list
         $stateProvider.state( 'case', {
-            url: '/app/case/list',
+            url: '/app/case/list/',
             parent: 'loggedIn',
-            views: {
-                "main": {
-                    controllerProvider: ['NoccControllerFactory', function(NoccControllerFactory) { return NoccControllerFactory.caseList; }],
-                    controllerAs: 'vm',
-                    templateUrl: function() { return 'case/templates/case_list.tpl.html'; }
-                },
-                "sidebar": {
-                    controllerProvider: ['NoccControllerFactory', function(NoccControllerFactory) { return NoccControllerFactory.sidebar; }],
-                    templateUrl: 'layout/templates/sidebar.tpl.html'
-                }
-            },
             data:{
-                page_title: 'Casi',
-                permissions: {
-                    only: ['isAuthenticated'],
-                    redirectTo: 'home'
-                }
+                page_title: 'Casi'
             }
+        /**
+         * Every actor redefines its case detail state and also all its substates
+         * The case detail substates are the ones which allow o manage the case view
+         * like a single app, all substates are loaded inside ui-view defined at this level
+         */
         }).state( 'case.detail', {
-            url: '/app/case/:caseId/status/:status',
+            url: '/app/case/:caseId',
             parent: 'loggedIn',
-            views: {
-                "main": {
-                    controllerProvider: ['NoccControllerFactory', function(NoccControllerFactory) { return NoccControllerFactory.caseDetail; }],
-                    controllerAs: 'vm',
-                    templateProvider: ['NoccControllerFactory', function(NoccControllerFactory) { return NoccControllerFactory.caseDetailTemplate(); }]
-                },
-                "sidebar": {
-                    controllerProvider: ['NoccControllerFactory', function(NoccControllerFactory) { return NoccControllerFactory.sidebar; }],
-                    templateUrl: 'layout/templates/sidebar.tpl.html'
-                }
+            /**
+             * every case detail status and its children have the caseObj variable resolved
+             */
+            resolve: {
+                caseObj: ['$stateParams', 'caseService', function ($stateParams, caseService) {
+                    angular._debug.log('caseService.get called from case.routes.js: case.detail resolve', 4);
+                    return caseService.get($stateParams.caseId).then(function(response) { return response.data; });
+                }]
             },
             data:{
-                page_title: 'Caso',
-                permissions: {
-                    only: ['isAuthenticated'],
-                    redirectTo: 'home'
-                }
+                page_title: 'Caso'
             }
         });
     }

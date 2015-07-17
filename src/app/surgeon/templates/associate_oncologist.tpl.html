@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h2>Associa oncologo</h2>
+</div>
+<form role="form">
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="profile__name">Oncologo</label>
+            <div class="error" ng-show="errors.oncologist">
+                <div class="alert alert-danger" ng-repeat="e in errors.oncologist">{{ e }}</div>
+            </div>
+            <select class="form-control" id="data__oncologist" ng-model="data.oncologist" required>
+                <option ng-repeat="o in oncologists" value="{{ o.id }}" ng-selected="data.oncologist == o.id">{{ o.lastname }} {{ o.firstname }}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="profile__name">Contatto</label>
+            <div class="error" ng-show="errors.oncologist_contact">
+                <div class="alert alert-danger" ng-repeat="e in errors.oncologist_contact">{{ e }}</div>
+            </div>
+            <div ng-show="!data.oncologist && !oncologist_contacts.length">Selezionare il medico</div>
+            <div ng-show="data.oncologist && !oncologist_contacts.length">Il medico selezionato non ha contatti attivi</div>
+            <select ng-show="data.oncologist && oncologist_contacts.length" class="form-control" id="data__oncologist_contact" ng-model="data.oncologist_contact" ng-options="c.id as (c.hospital_obj.name + ' ' + c.description) for c in oncologist_contacts" required>
+            </select>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-click="cancel()" type="button">Annulla</button>
+        <button class="btn btn-primary" ng-disabled="!data.oncologist || !data.oncologist_contact" ng-click="save()" type="button" disabled="disabled">Salva</button>
+    </div>
+</form>
+<script>$.material.checkbox();</script>

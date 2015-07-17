@@ -29,6 +29,7 @@
 
         // parent controller, must be update when saving after submission in order to have changes reflected in the profile view
         var profile_ctrl = data.ctrl;
+        var user = authenticationService.getAuthenticatedUser();
 
         $scope.exception = { doctor_contact: data.contact.id };
 
@@ -38,7 +39,14 @@
         };
 
         $scope.save = function() {
-            contactService.createException({ doctor_contact: $scope.exception.doctor_contact, date: moment($scope.exception.date).format('YYYY-MM-DD') }).then(function(response) {
+            contactService.createException(
+                    user.username,
+                    data.contact.id,
+                    {
+                        doctor_contact: $scope.exception.doctor_contact,
+                        date: moment($scope.exception.date).format('YYYY-MM-DD')
+                    }
+            ).then(function(response) {
                 var exception = response.data;
                 // if contact was inserted without recharging the page
                 if(typeof data.contact.exceptions == 'undefined') {

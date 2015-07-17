@@ -1,6 +1,8 @@
 <nav>
+    <div ui-view="case-nav"></div>
+    <h2>Principale</h2>
     <ul>
-        <li ng-repeat="n in nav">
+        <li ng-repeat="n in navMain">
             <i class="fa fa-{{ n.fa }}"></i> <a href ui-sref="{{ n.state }}">{{ n.text }}</a>
         </li>
     </ul>

@@ -6,23 +6,16 @@
  * Login function
  */
 var login = function(authenticationService, $httpBackend, scope) {
-
+    console.log('MAAAAAAA');
     fake_user = {
         token: 'myfaketoken',
         user: {
             id: 4,
             username: 'lorierif',
-            patient: null,
             email: '',
-            doctor: {
-                id: 2,
-                firstname: 'Fabrizio',
-                lastname: 'Lorieri',
-                is_oncologist: false,
-                is_radiotherapist: false,
-                is_surgeon: true,
-                contacts: []
-            }
+            is_patient: false,
+            is_doctor: true,
+            is_surgeon: true
         }
     };
     $httpBackend.when('POST', "http://localhost:8000/nocc/api/v1/auth/login/").respond(fake_user);
@@ -35,7 +28,7 @@ var login = function(authenticationService, $httpBackend, scope) {
 describe('case creation: ', function() {
 
     var $rootScope, $modalInstance, $state, $filter, $controller;
-    var scope1, scope2;
+    var scope1, scope2, scope3;
     var doctorService, authenticationService, caseService, patientService, fake_user;
     var dialogs, $httpBackend;
 
@@ -46,6 +39,7 @@ describe('case creation: ', function() {
             $rootScope = _$rootScope_;
             scope1 = $rootScope.$new();
             scope2 = $rootScope.$new();
+            scope3 = $rootScope.$new();
             $modalInstance = {                    // Create a mock object using spies
                 close: jasmine.createSpy('modalInstance.close'),
                 dismiss: jasmine.createSpy('modalInstance.dismiss'),
@@ -86,7 +80,28 @@ describe('case creation: ', function() {
         login(authenticationService, $httpBackend, {});
 
         fake_cases = [];
-        $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/case/?role=surgeon").respond(fake_cases);
+        $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/cases/?role=surgeon").respond(fake_cases);
+
+        var fake_surgeon_data = {
+            id: 2,
+            firstname: 'Fabrizio',
+            lastname: 'Lorieri',
+            is_surgeon: true,
+            is_oncologist: false,
+            is_radiotherapist: false
+        };
+        $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctors/lorierif/").respond(fake_surgeon_data);
+
+        var fake_contacts_data = [
+            {
+                id: 1,
+                doctor: '2',
+                hospital: '3',
+                phone: '99999',
+                email: 'gino@pino.it'
+            }
+        ];
+        $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctors/lorierif/contacts/").respond(fake_contacts_data);
 
         var fake_get_patients_data = [
             {
@@ -95,7 +110,7 @@ describe('case creation: ', function() {
                 lastname: 'Cognome1'
             }
         ];
-        $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/patient/").respond(fake_get_patients_data);
+        $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/patients/").respond(fake_get_patients_data);
 
         var fake_get_oncologists_data = [
             {
@@ -104,7 +119,7 @@ describe('case creation: ', function() {
                 lastname: 'Cognome'
             }
         ];
-        $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctor/?type=oncologist").respond(fake_get_oncologists_data);
+        $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctors/?type=oncologist").respond(fake_get_oncologists_data);
 
         var fake_get_radiotherapists_data = [
             {
@@ -113,7 +128,7 @@ describe('case creation: ', function() {
                 lastname: 'Cognome'
             }
         ];
-        $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctor/?type=radiotherapist").respond(fake_get_radiotherapists_data);
+        $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctors/?type=radiotherapist").respond(fake_get_radiotherapists_data);
 
         var fake_get_observers_data = [
             {
@@ -122,7 +137,7 @@ describe('case creation: ', function() {
                 lastname: 'Cognome'
             }
         ];
-        $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctor/").respond(fake_get_observers_data);
+        $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctors/").respond(fake_get_observers_data);
 
         var fake_post_case_data = [
             {
@@ -130,12 +145,13 @@ describe('case creation: ', function() {
                 description: 'descrizione'
             }
         ];
-        $httpBackend.when('POST', "http://localhost:8000/nocc/api/v1/case/").respond(fake_post_case_data);
+        $httpBackend.when('POST', "http://localhost:8000/nocc/api/v1/cases/").respond(fake_post_case_data);
 
 
     });
 
     it('newly created surgeon case is added to the cases list', function() {
+
         var CaseListController = $controller('DoctorCaseListCtrl', {
             $scope: scope1,
             $state: $state,
@@ -164,7 +180,6 @@ describe('case creation: ', function() {
         scope2.save();
         $httpBackend.flush();
         expect(CaseListController.surgeon_cases.length).toBe(1);
-
 
     });
 

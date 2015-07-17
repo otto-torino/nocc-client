@@ -1,0 +1,4 @@
+- rendere private le immagini del profilo ed i CV
+- creare una direttiva imgjax che permetta di renderizzare immagini protette che arrivano da chiamata ajax
+- eliminazione degli allegati dell'esame clinico
+- bestemmiare dio e la madonna

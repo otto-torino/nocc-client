@@ -8,7 +8,7 @@
     'use strict';
 
     angular
-        .module('nocc.utils.filters', [])
+        .module('nocc.utils.filters')
         .filter('ucfirst', ucfirst)
         .filter('itweekday', itweekday);
 

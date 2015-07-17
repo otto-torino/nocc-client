@@ -11,21 +11,22 @@
         .module('nocc.utils.services', [])
         .factory('files', files);
 
-    files.$inject = [];
+    files.$inject = ['$http'];
 
     /**
     * @namespace   files
     * @description Provides methods to deal with files
     * @returns {Factory}
     */
-    function files() {
+    function files($http) {
         /**
         * @summary Files Service Object
         * @description The Factory to be returned
         */
         var service= {
             getExtension: getExtension,
-            getFilename: getFilename
+            getFilename: getFilename,
+            getMedia: getMedia
         };
 
         return service;
@@ -54,6 +55,15 @@
                 return decodeURIComponent(path.split('/').pop());
             }
             return;
+        }
+
+        /**
+         * Performs an ajax get request to get a private media
+         * @param {String} url
+         * @return {Promise}
+         */
+        function getMedia(url) {
+            return $http({method: 'GET', url: url, responseType: "blob"});
         }
     }
 

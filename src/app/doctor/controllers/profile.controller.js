@@ -33,7 +33,7 @@
             vm.updateExtendedProps();
 
             // contacts
-            contactService.list(vm.doctor.model.id).then(function(response) {
+            contactService.list(vm.doctor.model.user.username).then(function(response) {
                 vm.doctor.contacts = response.data;
                 vm.doctor.contacts[0].active = true;
                 // closure to use c param inside loop
@@ -50,7 +50,7 @@
                 /* jshint loopfunc:true */
                 for (var i = 0, len = vm.doctor.contacts.length; i < len; i++) {
                     var c = vm.doctor.contacts[i];
-                    contactService.listExceptions(c.id).then(successFactory(c), errorFactory(c));
+                    contactService.listExceptions(vm.doctor.model.user.username, c.id).then(successFactory(c), errorFactory(c));
                 }
             }, function(response) { vm.doctor.contacts = []; });
 
@@ -111,7 +111,7 @@
         vm.confirmAndDelete = function(contact) {
             var dlg = dialogs.confirm('Sicuro di voler eliminare il contatto?', '', { size: 'sm' });
             dlg.result.then(function(btn){
-                contactService.kill(contact.id).then(
+                contactService.kill($scope.auth.user.username, contact.id).then(
                     function() {
                         vm.doctor.contacts.splice(vm.doctor.contacts.indexOf(contact), 1);
                     },
@@ -142,9 +142,9 @@
         vm.confirmAndDeleteException = function(contact, exception) {
             var dlg = dialogs.confirm('Sicuro di voler eliminare l\'eccezione?', '', { size: 'sm' });
             dlg.result.then(function(btn){
-                contactService.killException(exception.id).then(
+                contactService.killException($scope.auth.user.username, contact.id, exception.id).then(
                     function() {
-                        contact.exceptions.splice(rontact.exceptions.indexOf(exception), 1);
+                        contact.exceptions.splice(contact.exceptions.indexOf(exception), 1);
                     },
                     function() {
                         console.log('error'); // @TODO

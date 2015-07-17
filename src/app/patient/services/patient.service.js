@@ -37,7 +37,7 @@
         * @memberOf nocc.patient.services.patientService
         */
         function list() {
-            return $http.get(API_BASE_URL + '/patient/');
+            return $http.get(API_BASE_URL + '/patients/');
         }
 
         /**
@@ -47,7 +47,7 @@
         * @memberOf nocc.patient.services.patientService
         */
         function create(patient) {
-            return $http.post(API_BASE_URL + '/patient/', patient);
+            return $http.post(API_BASE_URL + '/patients/', patient);
         }
 
     }

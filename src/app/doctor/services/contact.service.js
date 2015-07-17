@@ -38,72 +38,80 @@
 
         /**
         * @summary Retrieves contacts list given the doctor username
-        * @param {Integer} doctor_id
+        * @param {String} username
         * @returns {Promise}
         * @memberOf nocc.doctor.services.contactService
         */
-        function list(doctor_id) {
-            return $http.get(API_BASE_URL + '/doctor/profile/contacts/?doctor=' + doctor_id);
+        function list(username) {
+            return $http.get(API_BASE_URL + '/doctors/' + username + '/contacts/');
         }
 
         /**
         * @summary Creates a doctor contact
+        * @param {String} username
         * @param {Object} contact
         * @returns {Promise}
         * @memberOf nocc.doctor.services.contactService
         */
-        function create(contact) {
-            return $http.post(API_BASE_URL + '/doctor/profile/contacts/', contact);
+        function create(username, contact) {
+            return $http.post(API_BASE_URL + '/doctors/' + username + '/contacts/', contact);
         }
 
         /**
         * @summary Updates a doctor contact
+        * @param {String} username
         * @param {Object} contact
         * @returns {Promise}
         * @memberOf nocc.doctor.services.contactService
         */
-        function update(contact) {
-            return $http.put(API_BASE_URL + '/doctor/profile/contacts/' + contact.id + '/', contact);
+        function update(username, contact) {
+            return $http.put(API_BASE_URL + '/doctors/' + username + '/contacts/' + contact.id + '/', contact);
         }
 
         /**
         * @summary Deletes a doctor contact
+        * @param {String} username
         * @param {Integer} id
         * @returns {Promise}
         * @memberOf nocc.doctor.services.contactService
         */
-        function kill(id) {
-            return $http['delete'](API_BASE_URL + '/doctor/profile/contacts/' + id + '/');
+        function kill(username, id) {
+            return $http['delete'](API_BASE_URL + '/doctors/' + username +'/contacts/' + id + '/');
         }
 
         /**
         * @summary Retrieves exceptions list given the doctor contact
+        * @param {String} username
         * @param {Integer} contact_id
         * @returns {Promise}
         * @memberOf nocc.doctor.services.contactService
         */
-        function listExceptions(contact_id) {
-            return $http.get(API_BASE_URL + '/doctor/profile/contacts/exceptions/?contact=' + contact_id);
+        function listExceptions(username, contact_id) {
+            return $http.get(API_BASE_URL + '/doctors/' + username + '/contacts/' + contact_id + '/exceptions/');
         }
 
         /**
         * @summary Creates a contact availability exception
+        * @param {String} username
+        * @param {Integer} contact_id
         * @param {Object} exception
         * @returns {Promise}
         * @memberOf nocc.doctor.services.contactService
         */
-        function createException(exception) {
-            return $http.post(API_BASE_URL + '/doctor/profile/contacts/exceptions/', exception);
+        function createException(username, contact_id, exception) {
+            return $http.post(API_BASE_URL + '/doctors/' + username + '/contacts/' + contact_id + '/exceptions/', exception);
         }
 
         /**
         * @summary Deletes a doctor contact's availability exception
+        * @param {String} username
+        * @param {Integer} contact_id
         * @param {Integer} id
         * @returns {Promise}
         * @memberOf nocc.doctor.services.contactService
         */
-        function killException(id) {
-            return $http['delete'](API_BASE_URL + '/doctor/profile/contacts/exceptions/' + id + '/');
+        function killException(username, contact_id, id) {
+            return $http['delete'](API_BASE_URL + '/doctors/' + username + '/contacts/' + contact_id + '/exceptions/' + id + '/');
         }
 
     }

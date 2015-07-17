@@ -38,7 +38,7 @@
         * @memberOf nocc.hospital.services.hospitalService
         */
         function list() {
-            return $http.get(API_BASE_URL + '/hospital/');
+            return $http.get(API_BASE_URL + '/hospitals/');
         }
 
         /**
@@ -47,7 +47,7 @@
         * @memberOf nocc.hospital.services.hospitalService
         */
         function get(hospital_id) {
-            return $http.get(API_BASE_URL + '/hospital/' + hospital_id + '/');
+            return $http.get(API_BASE_URL + '/hospitals/' + hospital_id + '/');
         }
 
         /**
@@ -57,7 +57,7 @@
         * @memberOf nocc.hospital.services.hospitalService
         */
         function create(hospital) {
-            return $http.post(API_BASE_URL + '/hospital/', hospital);
+            return $http.post(API_BASE_URL + '/hospitals/', hospital);
         }
     }
 })();

@@ -26,6 +26,7 @@
         })();
 
         $scope.errors = {};
+        var user = authenticationService.getAuthenticatedUser();
 
         // parent controller, must be update when saving after submission in order to have changes reflected in the profile view
         var profile_ctrl = data.ctrl;
@@ -71,10 +72,10 @@
                         $scope.hospital.list.push(response.data);
                         $scope.contact.hospital = response.data.id;
                         if(action === 'insert') {
-                            contactService.create($scope.contact).then(saveSuccessFn, saveErrorFn);
+                            contactService.create(user.username, $scope.contact).then(saveSuccessFn, saveErrorFn);
                         }
                         else if (action === 'edit') {
-                            contactService.update($scope.contact).then(saveSuccessFn, saveErrorFn);
+                            contactService.update(user.username, $scope.contact).then(saveSuccessFn, saveErrorFn);
                         }
                     },
                     function() {
@@ -84,10 +85,10 @@
             }
             else {
                 if(action === 'insert') {
-                    contactService.create($scope.contact).then(saveSuccessFn, saveErrorFn);
+                    contactService.create(user.username, $scope.contact).then(saveSuccessFn, saveErrorFn);
                 }
                 else if (action === 'edit') {
-                    contactService.update($scope.contact).then(saveSuccessFn, saveErrorFn);
+                    contactService.update(user.username, $scope.contact).then(saveSuccessFn, saveErrorFn);
                 }
             }
 

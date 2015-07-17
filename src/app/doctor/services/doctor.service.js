@@ -45,7 +45,7 @@
         * @memberOf nocc.doctor.services.doctorService
         */
         function get(username) {
-            return $http.get(API_BASE_URL + '/doctor/profile/' + username + '/');
+            return $http.get(API_BASE_URL + '/doctors/' + username + '/');
         }
 
         /**
@@ -54,7 +54,7 @@
         * @memberOf nocc.doctor.services.doctorService
         */
         function oncologists() {
-            return $http.get(API_BASE_URL + '/doctor/?type=oncologist');
+            return $http.get(API_BASE_URL + '/doctors/?type=oncologist');
         }
 
         /**
@@ -63,7 +63,7 @@
         * @memberOf nocc.doctor.services.doctorService
         */
         function radiotherapists() {
-            return $http.get(API_BASE_URL + '/doctor/?type=radiotherapist');
+            return $http.get(API_BASE_URL + '/doctors/?type=radiotherapist');
         }
 
         /**
@@ -72,7 +72,7 @@
         * @memberOf nocc.doctor.services.doctorService
         */
         function observers() {
-            return $http.get(API_BASE_URL + '/doctor/');
+            return $http.get(API_BASE_URL + '/doctors/');
         }
 
         /**
@@ -85,7 +85,7 @@
         * @memberOf nocc.doctor.services.doctorService
         */
         function update(username, profile) {
-            return $http.put(API_BASE_URL + '/doctor/profile/' + username + '/', profile);
+            return $http.put(API_BASE_URL + '/doctors/' + username + '/', profile);
         }
 
         /**
@@ -98,7 +98,7 @@
         */
         function updateCV(username, file) {
             return Upload.upload({
-                url: API_BASE_URL + '/doctor/profile/' + username + '/',
+                url: API_BASE_URL + '/doctors/' + username + '/',
                 method: 'PATCH',
                 file: file,
                 fileFormDataName: 'cv'
@@ -115,7 +115,7 @@
         */
         function updatePhoto(username, file) {
             return Upload.upload({
-                url: API_BASE_URL + '/doctor/profile/update/' + username + '/',
+                url: API_BASE_URL + '/doctors/' + username + '/',
                 method: 'PATCH',
                 file: file,
                 fileFormDataName: 'photo'

@@ -39,7 +39,7 @@
             <div class="form-control-static" ng-show="doctor.cv"><a href="{{ doctor.cv }}" target="_blank">file presente</a></div>
             <p>Inseirsci/Modifica CV</p>
             <div ngf-drop ngf-select ng-model="file.cv" class="drop-box" 
-                 ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword,application/pdf">Trascina un file o clicca per aprire una finestra di selezione</div>
+                 ngf-drag-over-class="dragover" ngf-multiple="false" ngf-allow-dir="false" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword,application/pdf">Trascina un file o clicca per aprire una finestra di selezione</div>
             <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
             <progressbar ng-show="show_progress_bar_cv" class="progress-striped active" animate="true" max="100" value="progressValue_cv" type="success"><i>{{ progressValue_cv }} / 100</i></progressbar>
             <p class="alert alert-info" ng-show="progressValue_cv == 100 && show_progress_bar_cv && !uploadError_cv"><i class="fa fa-info-circle" style="display: inline-block;margin-right: 10px;"></i>upload completato con successo</p>
@@ -54,7 +54,7 @@
             <div class="form-control-static" ng-show="doctor.photo"><a href="{{ doctor.photoCV }}" target="_blank">file presente</a></div>
             <p>Inseirsci/Modifica fotografia</p>
             <div ngf-drop ngf-select ng-model="file.photo" class="drop-box" 
-                 ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true" accept="image/*">Trascina un'immagine (jpg, png, gif) o clicca per aprire una finestra di selezione</div>
+                 ngf-drag-over-class="dragover" ngf-multiple="false" ngf-allow-dir="false" accept="image/*">Trascina un'immagine (jpg, png, gif) o clicca per aprire una finestra di selezione</div>
             <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
             <progressbar ng-show="show_progress_bar_ph" class="progress-striped active" animate="true" max="100" value="progressValue_ph" type="success"><i>{{ progressValue_ph }} / 100</i></progressbar>
             <p class="alert alert-info" ng-show="progressValue_ph == 100 && show_progress_bar_ph && !uploadError_ph"><i class="fa fa-info-circle" style="display: inline-block;margin-right: 10px;"></i>upload completato con successo</p>

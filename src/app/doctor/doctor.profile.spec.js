@@ -6,23 +6,15 @@
  * Login function
  */
 var login = function(authenticationService, $httpBackend, scope) {
-
     fake_user = {
         token: 'myfaketoken',
         user: {
             id: 4,
             username: 'lorierif',
-            patient: null,
             email: '',
-            doctor: {
-                id: 2,
-                firstname: 'Fabrizio',
-                lastname: 'Lorieri',
-                is_oncologist: false,
-                is_radiotherapist: false,
-                is_surgeon: true,
-                contacts: []
-            }
+            is_patient: false,
+            is_doctor: true,
+            is_surgeon: true
         }
     };
     $httpBackend.when('POST', "http://localhost:8000/nocc/api/v1/auth/login/").respond(fake_user);
@@ -134,7 +126,7 @@ describe('profile: ', function() {
                     username: 'lorierif'
                 }
             };
-            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctor/profile/lorierif/").respond(fake_doctor_data);
+            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctors/lorierif/").respond(fake_doctor_data);
 
             // update user
             var fake_put_doctor_data = {
@@ -144,7 +136,7 @@ describe('profile: ', function() {
                 is_radiotherapist: false,
                 is_surgeon: true
             };
-            $httpBackend.when('PUT', "http://localhost:8000/nocc/api/v1/doctor/profile/lorierif/").respond(fake_put_doctor_data);
+            $httpBackend.when('PUT', "http://localhost:8000/nocc/api/v1/doctors/lorierif/").respond(fake_put_doctor_data);
 
             // contacts
             var fake_get_doctor_contacts = [
@@ -159,7 +151,7 @@ describe('profile: ', function() {
                     }
                 }
             ];
-            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctor/profile/contacts/?doctor=1").respond(fake_get_doctor_contacts);
+            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctors/lorierif/contacts/").respond(fake_get_doctor_contacts);
 
             var fake_get_contact_exceptions = [
                 {
@@ -168,7 +160,7 @@ describe('profile: ', function() {
                     date: '2015-06-07'
                 }
             ];
-            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctor/profile/contacts/exceptions/?contact=1").respond(fake_get_contact_exceptions);
+            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctors/lorierif/contacts/1/exceptions/").respond(fake_get_contact_exceptions);
 
         });
 
@@ -230,7 +222,7 @@ describe('profile: ', function() {
                     username: 'lorierif'
                 }
             };
-            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctor/profile/lorierif/").respond(fake_doctor_data);
+            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctors/lorierif/").respond(fake_doctor_data);
 
             // contacts
             var fake_get_doctor_contacts = [
@@ -245,7 +237,7 @@ describe('profile: ', function() {
                     }
                 }
             ];
-            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctor/profile/contacts/?doctor=1").respond(fake_get_doctor_contacts);
+            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctors/lorierif/contacts/").respond(fake_get_doctor_contacts);
 
             fake_post_contact_data = {
                 id: '10',
@@ -254,7 +246,7 @@ describe('profile: ', function() {
                 doctor: '2',
                 hospital: '2'
             };
-            $httpBackend.when('POST', "http://localhost:8000/nocc/api/v1/doctor/profile/contacts/").respond(fake_post_contact_data);
+            $httpBackend.when('POST', "http://localhost:8000/nocc/api/v1/doctors/lorierif/contacts/").respond(fake_post_contact_data);
 
             var fake_get_contact_exceptions = [
                 {
@@ -263,7 +255,7 @@ describe('profile: ', function() {
                     date: '2015-06-07'
                 }
             ];
-            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctor/profile/contacts/exceptions/?contact=1").respond(fake_get_contact_exceptions);
+            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctors/lorierif/contacts/1/exceptions/").respond(fake_get_contact_exceptions);
 
             var fake_get_hospital_data = [
                 {
@@ -275,7 +267,7 @@ describe('profile: ', function() {
                     name: 'ospedale2'
                 }
             ];
-            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/hospital/").respond(fake_get_hospital_data);
+            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/hospitals/").respond(fake_get_hospital_data);
 
         });
 
@@ -336,7 +328,7 @@ describe('profile: ', function() {
                     username: 'lorierif'
                 }
             };
-            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctor/profile/lorierif/").respond(fake_doctor_data);
+            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctors/lorierif/").respond(fake_doctor_data);
 
             // contacts
             var fake_get_doctor_contacts = [
@@ -351,7 +343,7 @@ describe('profile: ', function() {
                     }
                 }
             ];
-            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctor/profile/contacts/?doctor=1").respond(fake_get_doctor_contacts);
+            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctors/lorierif/contacts/").respond(fake_get_doctor_contacts);
             var fake_get_hospital_data = [
                 {
                     id: 1,
@@ -362,7 +354,7 @@ describe('profile: ', function() {
                     name: 'ospedale2'
                 }
             ];
-            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/hospital/").respond(fake_get_hospital_data);
+            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/hospitals/").respond(fake_get_hospital_data);
 
             fake_put_contact_data = {
                 id: '2',
@@ -375,7 +367,7 @@ describe('profile: ', function() {
                     name: 'Mauriziano'
                 }
             };
-            $httpBackend.when('PUT', "http://localhost:8000/nocc/api/v1/doctor/profile/contacts/1/").respond(fake_put_contact_data);
+            $httpBackend.when('PUT', "http://localhost:8000/nocc/api/v1/doctors/lorierif/contacts/1/").respond(fake_put_contact_data);
 
             var fake_get_contact_exceptions = [
                 {
@@ -384,7 +376,7 @@ describe('profile: ', function() {
                     date: '2015-06-07'
                 }
             ];
-            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctor/profile/contacts/exceptions/?contact=1").respond(fake_get_contact_exceptions);
+            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctors/lorierif/contacts/1/exceptions/").respond(fake_get_contact_exceptions);
 
         });
 
@@ -447,7 +439,7 @@ describe('profile: ', function() {
                     username: 'lorierif'
                 }
             };
-            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctor/profile/lorierif/").respond(fake_doctor_data);
+            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctors/lorierif/").respond(fake_doctor_data);
 
             // contacts
             var fake_get_doctor_contacts = [
@@ -462,7 +454,7 @@ describe('profile: ', function() {
                     }
                 }
             ];
-            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctor/profile/contacts/?doctor=1").respond(fake_get_doctor_contacts);
+            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctors/lorierif/contacts/").respond(fake_get_doctor_contacts);
 
             var fake_get_contact_exceptions = [
                 {
@@ -471,10 +463,10 @@ describe('profile: ', function() {
                     date: '2015-06-07'
                 }
             ];
-            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctor/profile/contacts/exceptions/?contact=1").respond(fake_get_contact_exceptions);
+            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctors/lorierif/contacts/1/exceptions/").respond(fake_get_contact_exceptions);
 
             // delete contact
-            $httpBackend.when('DELETE', "http://localhost:8000/nocc/api/v1/doctor/profile/contacts/1/").respond({});
+            $httpBackend.when('DELETE', "http://localhost:8000/nocc/api/v1/doctors/lorierif/contacts/1/").respond({});
 
         });
 
@@ -495,6 +487,80 @@ describe('profile: ', function() {
             ProfileController.confirmAndDelete(ProfileController.doctor.contacts[0]);
             $httpBackend.flush();
             expect(ProfileController.doctor.contacts.length).toBe(0);
+        });
+    });
+
+    // @TODO test exceptions creation
+    describe('deleting exception: ', function() {
+        var scope1;
+
+        beforeEach(function() {
+
+            scope1 = $rootScope.$new();
+
+            login(authenticationService, $httpBackend, scope1);
+
+            // init user
+            var fake_doctor_data = {
+                id: 1,
+                firstname: 'Fabrizio',
+                lastname: 'Lorieri',
+                is_oncologist: false,
+                is_radiotherapist: false,
+                is_surgeon: true,
+                user: {
+                    id: 1,
+                    username: 'lorierif'
+                }
+            };
+            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctors/lorierif/").respond(fake_doctor_data);
+
+            // contacts
+            var fake_get_doctor_contacts = [
+                {
+                    id: 1,
+                    phone: '144',
+                    email: 'florieri@molinette.it',
+                    hospital: 2,
+                    hospital_obj: {
+                        id: 2,
+                        name: 'Molinette'
+                    }
+                }
+            ];
+            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctors/lorierif/contacts/").respond(fake_get_doctor_contacts);
+
+            var fake_get_contact_exceptions = [
+                {
+                    id: 1,
+                    doctor_contact: 1,
+                    date: '2015-06-07'
+                }
+            ];
+            $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/doctors/lorierif/contacts/1/exceptions/").respond(fake_get_contact_exceptions);
+
+            // delete exception
+            $httpBackend.when('DELETE', "http://localhost:8000/nocc/api/v1/doctors/lorierif/contacts/1/exceptions/1/").respond({});
+
+        });
+
+        it('profile delete contact exception', function() {
+            var ProfileController = $controller('DoctorProfileCtrl', {
+                $scope: scope1,
+                $state: $state,
+                authenticationService: authenticationService,
+                contactService: contactService,
+                doctorService: doctorService,
+                files: files,
+                dialogs: dialogs
+            });
+            $httpBackend.flush();
+
+            expect(ProfileController.doctor.contacts[0].exceptions.length).toBe(1);
+
+            ProfileController.confirmAndDeleteException(ProfileController.doctor.contacts[0], ProfileController.doctor.contacts[0].exceptions[0]);
+            $httpBackend.flush();
+            expect(ProfileController.doctor.contacts[0].exceptions.length).toBe(0);
         });
     });
 

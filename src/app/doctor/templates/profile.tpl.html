@@ -11,6 +11,9 @@
             <p><b ng-repeat="d in vm.doctor.doctor_types">{{ d | ucfirst }}{{ $last ? '' : ', ' }}</b></p>
             <p>Account creato il: {{ vm.doctor.model.created_at | date:'dd/MM/yyyy' }}</p>
             <p ng-show="vm.doctor.model.cv"><a href="{{ vm.doctor.model.cv }}"><i class="fa fa-1x fa-file }}"></i> CV</a></p>
+            <div ng-show="!vm.doctor.contacts.length">
+                <a ng-click="vm.openNewContactForm()">aggiungi un contatto</a>
+            </div>
             <div ng-show="vm.doctor.contacts.length">
                 <h2>Contatti</h2>
                 <tabset>

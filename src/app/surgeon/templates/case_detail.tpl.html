@@ -1,0 +1,8 @@
+<div ng-if="bar.actions.length" class="actions-bar">
+    <i ng-repeat="action in bar.actions" class="link fa fa-2x fa-{{ action.fa }}" ng-click="action.exec()"></i>
+</div>
+<section>
+    <h1>{{ caseObj.description }}</h1>
+    <p><strong>Paziente</strong>: {{ caseObj.patient_obj.firstname }} {{ caseObj.patient_obj.lastname }}</p>
+    <div ui-view="case-main"></div>
+</section>
