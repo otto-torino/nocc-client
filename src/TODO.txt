@@ -1,4 +1,7 @@
-- rendere private le immagini del profilo ed i CV
-- creare una direttiva imgjax che permetta di renderizzare immagini protette che arrivano da chiamata ajax
-- eliminazione degli allegati dell'esame clinico
+
+- apri recidiva: aprire finestra con campi del nuovo caso tranne doctor_contact. descrizione precompialta con descrizione vecchio casa + recidicva
+  salvo e creo un nuovo caso. come risultato mi viene fuori un'informativa dicendo che è stata aperta una recidiv -> LINK AL NUOVO CASO RECIDIVA
+- fu stato accepted notificare paziente e dottoreche l'ha proposto
+- controllare pollingComplete e accepted di therapeuticProposalService quando si aggiungono campi alla tabella (followup, revaluation)
+- template proposte terapeutiche
 - bestemmiare dio e la madonna

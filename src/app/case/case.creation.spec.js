@@ -81,6 +81,7 @@ describe('case creation: ', function() {
 
         fake_cases = [];
         $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/cases/?role=surgeon").respond(fake_cases);
+        $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/cases/?role=doctor").respond(fake_cases);
 
         var fake_surgeon_data = {
             id: 2,

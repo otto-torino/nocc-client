@@ -54,7 +54,9 @@ angular.module( 'nocc', [
     'nocc.patient',             // doctor module
     'nocc.hospital',            // hospital module
     'nocc.case',                // case module
+    'nocc.therapeuticProposal', // therapeutic proposal module
     'nocc.examination',         // examination module
+    'nocc.followup',            // followup module
     'nocc.home',                // home page module
     'pageslide-directive'       // sliding panel (notifications)
 ])

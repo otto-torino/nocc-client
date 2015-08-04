@@ -1,0 +1,39 @@
+<div class="modal-header">
+    <h2><i class="fa fa-plus" /> Inserimento linee guida</h2>
+</div>
+<form role="form" name="guidelineForm">
+    <div class="modal-body">
+
+
+        <div class="form-group">
+            <label for="guideline__title">Titolo</label>
+            <div class="error" ng-show="errors.guideline__title"> <!-- @FIXME -->
+                <div class="alert alert-danger" ng-repeat="e in errors.guideline__title">{{ e }}</div>
+            </div>
+            <input type="text" class="form-control" id="guideline__title" ng-model="guideline.title" required />
+        </div>
+
+        <div class="form-group">
+            <label for="guideline__file">File</label>
+            <div class="error" ng-show="errors.guideline__file">
+                <div class="alert alert-danger" ng-repeat="e in errors.guideline__file">{{ e }}</div>
+            </div>
+            <input class="form-control" ngf-select="" ng-model="guideline.file" name="guideline__file" accept="" required="" type="file">
+
+            <progressbar ng-show="show_progress_bar_file" class="progress-striped active" animate="true" max="100" value="progressValue_file" type="success"><i>{{ progressValue_file }} / 100</i></progressbar>
+            <p class="alert alert-info" ng-show="progressValue_file == 100 && show_progress_bar_file && !uploadError_file">
+                <i class="fa fa-info-circle" style="display: inline-block;margin-right: 10px;"></i> upload completato con successo
+            </p>
+            <p class="alert alert-danger" ng-show="uploadError_file">
+                <i class="fa fa-exclamation-circle" style="display: inline-block;margin-right: 10px;"></i> upload fallito
+            </p>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-click="cancel()" type="button">Annulla</button>
+        <button ng-show="!examination.id" class="btn btn-primary" ng-disabled="!guidelineForm.$valid" ng-click="save()" type="button" disabled="disabled">Salva</button>
+    </div>
+</form>
+<script>$.material.checkbox();</script>

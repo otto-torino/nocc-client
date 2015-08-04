@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h2>Associa radioterapista</h2>
+</div>
+<form role="form">
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="profile__name">Radioterapista</label>
+            <div class="error" ng-show="errors.radiotherapist">
+                <div class="alert alert-danger" ng-repeat="e in errors.radiotherapist">{{ e }}</div>
+            </div>
+            <select class="form-control" id="data__radiotherapist" ng-model="data.radiotherapist" required>
+                <option ng-repeat="o in radiotherapists" value="{{ o.id }}" ng-selected="data.radiotherapist == o.id">{{ o.lastname }} {{ o.firstname }}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="profile__name">Contatto</label>
+            <div class="error" ng-show="errors.radiotherapist_contact">
+                <div class="alert alert-danger" ng-repeat="e in errors.radiotherapist_contact">{{ e }}</div>
+            </div>
+            <div ng-show="!data.radiotherapist && !radiotherapist_contacts.length">Selezionare il medico</div>
+            <div ng-show="data.radiotherapist && !radiotherapist_contacts.length">Il medico selezionato non ha contatti attivi</div>
+            <select ng-show="data.radiotherapist && radiotherapist_contacts.length" class="form-control" id="data__radiotherapist_contact" ng-model="data.radiotherapist_contact" ng-options="c.id as (c.hospital_obj.name + ' ' + c.description) for c in radiotherapist_contacts" required>
+            </select>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-click="cancel()" type="button">Annulla</button>
+        <button class="btn btn-primary" ng-disabled="!data.radiotherapist || !data.radiotherapist_contact" ng-click="save()" type="button" disabled="disabled">Salva</button>
+    </div>
+</form>
+<script>$.material.checkbox();</script>

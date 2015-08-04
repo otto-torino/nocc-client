@@ -1,0 +1,41 @@
+<div class="row" style="margin-bottom: 20px;">
+    <div class="col-sm-12 col-md-6">
+        <h2>Proposta terapeutica</h2>
+        <div class="shadow-z-1">
+            <div style="padding: 14px;" class="bg-white">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Data</th>
+                        <td>{{ vm.tp.date | date: 'dd/MM/yyyy' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Titolo</th>
+                        <td>{{ vm.tp.title }}</td>
+                    </tr>
+                    <tr>
+                        <th>Descrizione</th>
+                        <td>{{ vm.tp.description }}</td>
+                    </tr>
+                    <tr>
+                        <th>Rivalutazione</th>
+                        <td><i class="fa fa-{{ vm.tp.need_revaluation ? 'check' : 'remove' }}"></i></td>
+                    </tr>
+                    <tr>
+                        <th>Linne guida</th>
+                        <td>
+                            <ul>
+                                <li ng-repeat="g in vm.tp.guidelines_obj">
+                                    <aajax href="{{ g.file | absurl }}">{{ g.title }}</aajax>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+                <div ng-repeat="s in vm.tp.sections">
+                    <h4>{{ s.section_type == 'oncologist' ? 'Oncologo' : (s.section_type == 'radiotherapist' ? 'Radioterapista' : 'Chirurgo') }}</h4>
+                    {{ s.text }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

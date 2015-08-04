@@ -27,7 +27,8 @@
             update: update,
             kill: kill,
             list: list,
-            uploadAttachment: uploadAttachment
+            uploadAttachment: uploadAttachment,
+            killAttachment: killAttachment
         };
 
         return service;
@@ -94,6 +95,10 @@
                 fields: { examination: examination_id },
                 fileFormDataName: 'file'
             });
+        }
+
+        function killAttachment(case_id, examination_id, attachment_id) {
+            return $http['delete'](API_BASE_URL + '/cases/' + case_id + '/examinations/' + examination_id + '/delete-attachment/?attachment_id=' + attachment_id);
         }
     }
 })();

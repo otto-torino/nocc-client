@@ -1,0 +1,22 @@
+<p class="alert alert-info">Terapia avviata</p>
+<div ng-if="!data.followups.length">
+    <p ng-if="!tp.need_revaluation"><a href ng-click="forwardStatusCompleted()" class="btn btn-primary">Terapia completata</a></p>
+    <p ng-if="tp.need_revaluation"><a href ng-click="forwardStatusRevaluation()" class="btn btn-primary">Inizia rivalutazione</a></p>
+</div>
+<div ng-if="data.followups.length">
+    <h2>Follow Up</h2>
+    <div ng-repeat="fu in data.followups" class="bg-white well">
+        <h3>{{ fu.doctor_contact.doctor.firstname }} {{ fu.doctor_contact.doctor.lastname }}</h3>
+        <p><strong>Data</strong>: {{ fu.date | date: 'dd/MM/yyyy HH:mm' }}</p>
+        <p>{{ fu.text }}</p>
+        <p ng-show="fu.status==data.FU_STATUS_DICT.to_be_accepted">
+            <a ng-click="acceptFU(fu)" class="btn btn-primary">Accetta</a>
+            <a ng-click="refuseFU(fu)" class="btn btn-primary">Rifiuta</a>
+        </p>
+        <p ng-show="fu.status==data.FU_STATUS_DICT.accepted">
+            <a class="btn btn-info" href ui-sref="case.detail.surgeon.examination">Inserire risultati esami</a> 
+            <a class="btn btn-primary" href ng-click="closeFollowUp(fu)">chiudere il Follow Up</a>
+        </p>
+    </div>
+
+</div>

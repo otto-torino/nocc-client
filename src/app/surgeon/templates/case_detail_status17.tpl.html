@@ -1,0 +1,18 @@
+<h2>Fine trattamento</h2>
+<p ng-show="!data.followup">
+    <a href ng-click="createFU()" class="btn btn-primary">Follow Up finale</a>
+</p>
+<div ng-if="data.followup && data.followup.status!=data.FU_STATUS_DICT.finalized" class="well">
+    <h2>Follow Up</h2>
+    <h3>{{ data.followup.doctor_contact.doctor.firstname }} {{ data.followup.doctor_contact.doctor.lastname }}</h3>
+    <p><strong>Data</strong>: {{ data.followup.date | date: 'dd/MM/yyyy HH:mm' }}</p>
+    <p>{{ data.followup.text }}</p>
+    <p ng-show="data.followup.status==data.FU_STATUS_DICT.accepted">
+        <a class="btn btn-info" href ui-sref="case.detail.surgeon.examination({ activeTab: 'final' })">Inserire risultati esami</a> 
+        <a class="btn btn-primary" href ng-click="closeFollowUp(data.followup)">chiudere il Follow Up</a>
+    </p>
+
+</div>
+<div ng-if="data.followup && data.followup.status==data.FU_STATUS_DICT.finalized">
+    Completa
+</div>

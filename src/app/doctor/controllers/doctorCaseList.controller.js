@@ -23,6 +23,7 @@
         vm.actions = [];
 
         vm.surgeon_cases = [];
+        vm.doctor_cases = [];
 
         var user = authenticationService.getAuthenticatedUser();
 
@@ -44,6 +45,14 @@
          */
         caseService.listAsSurgeon().then(function(response) { 
             vm.surgeon_cases = response.data;
+        });
+
+        /**
+         * @summary retrieves oncologist cases
+         * @uses nocc.case.services.caseService
+         */
+        caseService.listAsDoctor().then(function(response) { 
+            vm.doctor_cases = response.data;
         });
 
         /**

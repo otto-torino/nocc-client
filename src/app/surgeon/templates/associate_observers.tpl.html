@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h2>Associa osservatori</h2>
+</div>
+<form role="form">
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="profile__name">Osservatori</label>
+            <div class="error" ng-show="errors.observers">
+                <div class="alert alert-danger" ng-repeat="e in errors.observers">{{ e }}</div>
+            </div>
+            <select class="form-control" id="data__observers" ng-model="data.observers" required multiple ng-options="o.id as (o.firstname + ' ' + o.lastname) for o in observers">
+            </select>
+            <p style="margin-top: 10px">Tenere premuto ctrl (cmd su Mac) per effettuare una selezione multipla</p>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-click="cancel()" type="button">Annulla</button>
+        <button class="btn btn-primary" ng-click="save()" type="button">Salva</button>
+    </div>
+</form>

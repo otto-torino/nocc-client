@@ -9,6 +9,7 @@
 
     angular
         .module('nocc.utils.directives', [])
+        .directive('imgajax', imgajax)
         .directive('aajax', aajax);
 
     aajax.$inject = ['files'];
@@ -37,6 +38,37 @@
                         var objectUrl = URL.createObjectURL(blob);
                         window.open(objectUrl);
                     });
+                });
+            }
+        };
+    }
+
+    /**
+    * @namespace   imgajax
+    * @description Directive used to show external images which have to be retrieved using ajax
+    *              Private media must be retrieved using ajax calls because the auth token must
+    *              be included in the request header. Then the response must be used as a Blob
+    *              in order to allow download or browser visualization
+    * @returns {Directive}
+    */
+    function imgajax(files) {
+        return {
+            restrict: 'E',
+            replace: false,
+            transclude: true,
+            scope: true,
+            template: '<img class="{{ class }}" ng-src="{{ data }}" />',
+            link: function(scope, elem, attrs) {
+                // init value
+                scope.data = 'assets/img/photo_placeholder.png';
+                scope.class = attrs.class;
+                attrs.$observe('iaSrc', function(value) {
+                    if(value !== '') {
+                        files.getMedia(value).then(function(response) {
+                            var blob = response.data;
+                            scope.data = URL.createObjectURL(blob);
+                        });
+                    }
                 });
             }
         };

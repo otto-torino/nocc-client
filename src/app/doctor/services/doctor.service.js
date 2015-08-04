@@ -68,10 +68,14 @@
 
         /**
         * @summary Retrieves observers
+        * @params {Array} exclude id of doctors that have to be excluded from selection
         * @returns {Promise}
         * @memberOf nocc.doctor.services.doctorService
         */
-        function observers() {
+        function observers(exclude) {
+            if(exclude && exclude.length) {
+                return $http.get(API_BASE_URL + '/doctors/?exclude=' + exclude.join('-'));
+            }
             return $http.get(API_BASE_URL + '/doctors/');
         }
 

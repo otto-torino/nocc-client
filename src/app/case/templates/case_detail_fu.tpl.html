@@ -1,0 +1,29 @@
+<h2>Follow Up</h2>
+<h3>Accettati</h3>
+<table ng-show="vm.data.accepted.length" class="table table bordered table-striped">
+    <tr>
+        <th>Medico</th>
+        <th>Data</th>
+        <th>Descrizione</th>
+    </tr>
+    <tr ng-repeat="fu in vm.data.accepted">
+        <td>{{ fu.doctor_contact.doctor.firstname }} {{ fu.doctor_contact.doctor.lastname }}</td>
+        <td>{{ fu.date | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ fu.text }}</td>
+    </tr>
+</table>
+<p ng-show="!vm.data.accepted.length">Non risultano Follow Up accettati</p>
+<h3>Finalizzati</h3>
+<table ng-show="vm.data.finalized.length" class="table table bordered table-striped">
+    <tr>
+        <th>Medico</th>
+        <th>Data</th>
+        <th>Descrizione</th>
+    </tr>
+    <tr ng-repeat="fu in vm.data.finalized">
+        <td>{{ fu.doctor_contact.doctor.firstname }} {{ fu.doctor_contact.doctor.lastname }}</td>
+        <td>{{ fu.date | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ fu.text }}</td>
+    </tr>
+</table>
+<p ng-show="!vm.data.finalized.length">Non risultano Follow Up finalizzati</p>

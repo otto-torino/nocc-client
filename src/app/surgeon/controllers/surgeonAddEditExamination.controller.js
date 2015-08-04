@@ -27,10 +27,12 @@
         })();
 
         var ctrl = data.ctrl;
+        var exsl = data.exsl;
         // store index to update parent controller examination when saving
-        var index = ctrl.examinations.indexOf(data.examination);
+        var index = ctrl[exsl].indexOf(data.examination);
         // make a copy in order to update parent only when save button is pressed
         $scope.examination = data.examination ? angular.copy(data.examination) : { attachments: [] };
+        $scope.followups = typeof data.followups === 'undefined' ? [] : data.followups;
 
         $scope.errors = {};
 
@@ -55,8 +57,7 @@
             examinationService.create(ctrl.caseObj.id, examination).then(saveSuccessFn, saveErrorFn);
             function saveSuccessFn(response) {
                 $scope.examination = response.data;
-                ctrl.examinations.push($scope.examination);
-                console.log(ctrl.examinations);
+                ctrl[exsl].push($scope.examination);
             }
             function saveErrorFn(response) {
                 // @TODO
@@ -71,7 +72,7 @@
             examinationService.update(ctrl.caseObj.id, examination).then(updateSuccessFn, updateErrorFn);
             function updateSuccessFn(response) {
                 $scope.examination = response.data;
-                ctrl.examinations[index] = response.data; // @TODO check anmd remove
+                ctrl[exsl][index] = response.data; // @TODO check anmd remove
                 $modalInstance.dismiss();
             }
             function updateErrorFn(response) {
@@ -92,15 +93,14 @@
                 }
             }
         });
-        $scope.show_progress_bar_ph = false;
-        $scope.uploadError_ph = false;
+        $scope.show_progress_bar_attachment = false;
+        $scope.uploadError_attachment = false;
 
         function upload(file) {
-            console.log(file);
             var success = function (response) {
                 console.log(response.data);
                 $scope.examination.attachments.push(response.data);
-                ctrl.examinations[index].attachments.push(response.data);
+                ctrl[exsl][index].attachments.push(response.data);
                 $timeout(function() {
                     $scope['show_progress_bar_attachment'] = false;
                 }, 2000);
@@ -129,6 +129,15 @@
 
             examinationService.uploadAttachment(ctrl.caseObj.id, $scope.examination.id, file).then(success, error, progress);
         }
+
+        $scope.deleteAttachment = function(attachment) {
+            examinationService.killAttachment(ctrl.caseObj.id, $scope.examination.id, attachment.id).then(function(response) {
+                $scope.examination.attachments.splice($scope.examination.attachments.indexOf(attachment), 1);
+                ctrl[exsl][index].attachments.splice(ctrl[exsl][index].attachments.indexOf(attachment), 1);
+            }, function(response) {
+                console.log('error'); // @TODO
+            });
+        };
 
 
     }

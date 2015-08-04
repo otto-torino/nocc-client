@@ -56,8 +56,8 @@
         */
         function logout() {
             authenticationService.logout().then(function() {
-                $state.go('home', {}, {reload: true});
-                $window.location.reload();
+                //$state.go('home', {}, {reload: true});
+                $window.location.href = $window.location.origin + $window.location.pathname;
             });
         }
     }
@@ -73,7 +73,6 @@
             surgeon: ['apphome'],
             doctor: ['apphome', 'profile', 'case']
         };
-
         ['patient', 'surgeon', 'doctor'].every(function(actor) {
             if(user['is_' + actor] && actor_states[actor].indexOf(toState.name) !== -1) {
                 $state.go(toState.name + '.' + actor);

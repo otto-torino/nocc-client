@@ -1,5 +1,10 @@
 <div>
-    <a ng-show="!vm.caseObj.oncologist_contact" class="btn btn-primary" ng-click="vm.associateOncologist('oncologist')">Associa oncologo</a>
-    <a ng-show"v.caseObj.radiotherapist_contact" class="btn btn-primary">Associa radioterapista</a>
-    <a ng-show"v.caseObj.observers" class="btn btn-primary">Associa osservatori</a>
+    <a ng-show="model.caseObj.oncologist_status == model.ASSOCIATION_STATUS.refused || model.caseObj.oncologist_status === null" class="btn btn-primary" ng-click="associateOncologist()">Associa oncologo</a>
+    <a ng-show="model.caseObj.radiotherapist_status == model.ASSOCIATION_STATUS.refused || model.caseObj.radiotherapist_status === null" class="btn btn-primary" ng-click="associateRadiotherapist()">Associa radioterapista</a>
+    <a ng-show"model.caseObj.observers" class="btn btn-primary" ng-click="associateObservers()">Associa osservatori</a>
+</div>
+<div ng-show="model.caseObj.oncologist_status == model.ASSOCIATION_STATUS.accepted && model.caseObj.radiotherapist_status == model.ASSOCIATION_STATUS.accepted">
+    <h2>Passaggio a step successivo</h2>
+    <p>Puoi procedere alla compilazione delle proposte terapeutiche. Ricorda che una volta abbandonato questo primo step non potrai più associare altri medici osservatori.</p>
+    <a class="btn btn-primary" ng-click="forwardStatus()">Passa alla definizione delle proposte terapeutiche</a>
 </div>

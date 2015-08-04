@@ -1,0 +1,18 @@
+<div>
+    <div ng-show="vm.is_oncologist && vm.model.caseObj.oncologist_status == vm.model.ASSOCIATION_STATUS.to_be_accepted">
+        <p>Sei stato invitato a seguire il caso in qualità di Oncologo.</p>
+        <a href ng-click="vm.acceptCase()" class="btn btn-primary">accetta</a>
+        <a href ng-click="vm.refuseCase()" class="btn btn-primary">rifiuta</a>
+    </div>
+    <div ng-show="vm.is_radiotherapist && vm.model.caseObj.radiotherapist_status == vm.model.ASSOCIATION_STATUS.to_be_accepted">
+        <p>Sei stato invitato a seguire il caso in qualità di Radioterapista.</p>
+        <a href ng-click="vm.acceptCase()" class="btn btn-primary">accetta</a>
+        <a href ng-click="vm.refuseCase()" class="btn btn-primary">rifiuta</a>
+    </div>
+    <div ng-show="vm.is_oncologist && vm.model.caseObj.radiotherapist_status != vm.model.ASSOCIATION_STATUS.accepted">
+        <p class="alert alert-info">In attesa che un radioterapista accetti il caso.</p>
+    </div>
+    <div ng-show="vm.model.caseObj.radiotherapist_status == vm.model.ASSOCIATION_STATUS.accepted && vm.model.caseObj.radiotherapist_status == vm.model.ASSOCIATION_STATUS.accepted">
+        <p class="alert alert-info">In attesa di formulazione di una proposta terapeutica</p>
+    </div>
+</div>

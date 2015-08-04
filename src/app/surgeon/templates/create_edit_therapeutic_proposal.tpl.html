@@ -1,0 +1,105 @@
+<div class="modal-header">
+    <h2><i class="fa fa-plus" /> Inserimento proposta terapeutica</h2>
+</div>
+<form role="form" name="therapeuticProposalForm">
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="therapeuticProposal__title">Titolo</label>
+            <div class="error" ng-show="errors.therapeuticProposal__title">
+                <div class="alert alert-danger" ng-repeat="e in errors.therapeuticProposal__title">{{ e }}</div>
+            </div>
+            <input type="text" class="form-control" id="therapeuticProposal__title" ng-model="therapeuticProposal.title" required />
+        </div>
+        <div class="form-group">
+            <label for="therapeuticProposal__description">Descrizione</label>
+            <div class="error" ng-show="errors.therapeuticProposal__description">
+                <div class="alert alert-danger" ng-repeat="e in errors.therapeuticProposal__description">{{ e }}</div>
+            </div>
+            <textarea class="form-control" id="therapeuticProposal__description" ng-model="therapeuticProposal.description"></textarea>
+        </div>
+        <div ng-show="tp_type === 'initial'" class="form-group">
+            <label>Rivalutazione</label>
+            <div class="checkbox checkbox-primary">
+                <label for="therapeuticProposal__need_revaluation">Richiesta rivalutazione
+                    <input type="checkbox" class="form-control" id="therapeuticProposal__need_revaluation" ng-model="therapeuticProposal.need_revaluation" />
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="therapeuticProposal__guidelines">Linee guida</label>
+            <div class="error" ng-show="errors.therapeuticProposal__guidelines">
+                <div class="alert alert-danger" ng-repeat="e in errors.therapeuticProposal__guidelines">{{ e }}</div>
+            </div>
+            <select class="form-control form-control-add-related" id="therapeuticProposal__guidelines" ng-model="therapeuticProposal.guidelines" required multiple ng-options="g.id as g.title for g in data.guidelines">
+            </select> <a href ng-click="addGuideline()" class="fa fa-plus-circle form-add-related"></a>
+            <p style="clear: both;margin-top: 10px">Tenere premuto ctrl (cmd su Mac) per effettuare una selezione multipla</p>
+        </div>
+
+        <div class="form-group">
+            <h2>
+            <div class="checkbox checkbox-primary">
+                <label for="oncologistSection">
+                    <input type="checkbox" class="form-control" id="oncologistSection" ng-model="oncologistSection" />
+                    <span style="top: 7px; position:relative; display: inline-block">Sezione oncologo</span>
+                </label>
+            </div>
+            </h2>
+        </div>
+        <div ng-if="oncologistSection">
+            <div class="form-group">
+                <label for="therapeuticProposalOncologist__text">Testo</label>
+                <div class="error" ng-show="errors.therapeuticProposalOncologist__text">
+                    <div class="alert alert-danger" ng-repeat="e in errors.therapeuticProposalOncologist__text">{{ e }}</div>
+                </div>
+                <textarea required class="form-control" id="therapeuticProposalOncologist__text" ng-model="sections.therapeuticProposalOncologist.text"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <h2>
+            <div class="checkbox checkbox-primary">
+                <label for="radiotherapistSection">
+                    <input type="checkbox" class="form-control" id="radiotherapistSection" ng-model="radiotherapistSection" />
+                    <span style="top: 7px; position:relative; display: inline-block">Sezione radioterapista</span>
+                </label>
+            </div>
+            </h2>
+        </div>
+        <div ng-if="radiotherapistSection">
+            <div class="form-group">
+                <label for="therapeuticProposalRadiotherapist__text">Testo</label>
+                <div class="error" ng-show="errors.therapeuticProposalRadiotherapist__text">
+                    <div class="alert alert-danger" ng-repeat="e in errors.therapeuticProposalRadiotherapist__text">{{ e }}</div>
+                </div>
+                <textarea required class="form-control" id="therapeuticProposalRadiotherapist__text" ng-model="sections.therapeuticProposalRadiotherapist.text"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <h2>
+            <div class="checkbox checkbox-primary">
+                <label for="surgeonSection">
+                    <input type="checkbox" class="form-control" id="surgeonSection" ng-model="surgeonSection" />
+                    <span style="top: 7px; position:relative; display: inline-block">Sezione chirurgo</span>
+                </label>
+            </div>
+            </h2>
+        </div>
+        <div ng-if="surgeonSection">
+            <div class="form-group">
+                <label for="therapeuticProposalSurgeon__text">Testo</label>
+                <div class="error" ng-show="errors.therapeuticProposalSurgeon__text">
+                    <div class="alert alert-danger" ng-repeat="e in errors.therapeuticProposalSurgeon__text">{{ e }}</div>
+                </div>
+                <textarea required class="form-control" id="therapeuticProposalSurgeon__text" ng-model="sections.therapeuticProposalSurgeon.text"></textarea>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-click="cancel()" type="button">Annulla</button>
+        <button class="btn btn-primary" ng-disabled="!therapeuticProposalForm.$valid" ng-click="save()" type="button" disabled="disabled">Salva</button>
+    </div>
+</form>
+<script>$.material.checkbox();</script>

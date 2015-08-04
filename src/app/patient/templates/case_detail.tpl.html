@@ -1,4 +1,25 @@
 <section>
-    <h1>{{ vm.caseObj.description }}</h1>
+    <h1>{{ model.caseObj.description }}</h1>
+    <p>
+        <strong>Chirurgo</strong>: 
+        <a href ui-sref="case.detail.patient.doctorprofile({username: model.caseObj.surgeon_contact_obj.doctor.user.username})">
+            {{ model.caseObj.surgeon_contact_obj.doctor.firstname }} {{ model.caseObj.surgeon_contact_obj.doctor.lastname }}
+        </a>
+    </p>
+    <p ng-show="model.caseObj.oncologist_status == model.ASSOCIATION_STATUS.accepted">
+        <strong>Oncologo</strong>: 
+        <a href ui-sref="case.detail.patient.doctorprofile({username: model.caseObj.oncologist_contact_obj.doctor.user.username})">
+            {{ model.caseObj.oncologist_contact_obj.doctor.firstname }} {{ model.caseObj.oncologist_contact_obj.doctor.lastname }}
+        </a>
+    </p>
+    <p ng-show="model.caseObj.radiotherapist_status == model.ASSOCIATION_STATUS.accepted">
+        <strong>Radioterapista</strong>: 
+        <a href ui-sref="case.detail.patient.doctorprofile({username: model.caseObj.radiotherapist_contact_obj.doctor.user.username})">
+            {{ model.caseObj.radiotherapist_contact_obj.doctor.firstname }} {{ model.caseObj.radiotherapist_contact_obj.doctor.lastname }} 
+        </a>
+    </p>
+    <p ng-show="model.caseObj.observers_obj.length">
+        <strong>Osservatori</strong>: <span ng-repeat="o in model.caseObj.observers_obj">{{o.firstname }} {{ o.lastname }} {{ $last ? '' : ($index==model.caseObj.observers_obj.length-2) ? ' e ' : ', '}}</span>
+    </p>
     <div ui-view="case-main"></div>
 </section>

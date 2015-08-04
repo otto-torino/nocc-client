@@ -1,0 +1,8 @@
+<h2>Fine trattamento</h2>
+<p ng-show="!vm.data.followup" class="alert alert-info">In attesa di Follow Up finale</p>
+<div ng-if="vm.data.followup" class="well">
+    <h2>Follow Up</h2>
+    <h3>{{ vm.data.followup.doctor_contact.doctor.firstname }} {{ vm.data.followup.doctor_contact.doctor.lastname }}</h3>
+    <p><strong>Data</strong>: {{ vm.data.followup.date | date: 'dd/MM/yyyy HH:mm' }}</p>
+    <p>{{ vm.data.followup.text }}</p>
+</div>

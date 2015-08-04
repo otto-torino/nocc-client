@@ -1,0 +1,33 @@
+<div class="modal-header">
+    <h2><i class="fa fa-plus" /> Recidiva caso clinico</h2>
+</div>
+<form role="form">
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="case__description">Descrizione</label>
+            <div class="error" ng-show="errors.description"> <!-- @FIXME -->
+                <div class="alert alert-danger" ng-repeat="e in errors.description">{{ e }}</div>
+            </div>
+            <input type="text" class="form-control" id="case__description" ng-model="case.description" placeholder="" required />
+        </div>
+        <div class="form-group" ng-if="contacts.list.length">
+            <label for="case__patient">Contatto</label>
+            <div class="error" ng-show="errors.surgeon_contact">
+                <div class="alert alert-danger" ng-repeat="e in errors.surgeon_contact">{{ e }}</div>
+            </div>
+            <select class="form-control" id="case__surgeon_contact" ng-model="case.surgeon_contact" required>
+                <option ng-repeat="c in contacts.list" value="{{ c.id }}" ng-selected="case.surgeon_contact == c.id">{{ c.hospital_obj.name }} {{ c.description }}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="case__patient">Paziente</label>
+            <p>{{ case.patient_obj.firstname }} {{ case.patient_obj.lastname }}</p>
+        </div>
+     </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-click="cancel()" type="button">Annulla</button>
+        <button class="btn btn-primary" ng-disabled="!case.description || (!case.patient || (case.patient === '0' && !checkNewPatientMandatoryFields()))" ng-click="save()" type="button" disabled="disabled">Salva</button>
+    </div>
+    <script>$.material.checkbox();$.material.radio();$.material.input();</script>
+</form>

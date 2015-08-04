@@ -24,6 +24,7 @@
         */
         var service = {
             list: list,
+            get: get,
             create: create,
             update: update,
             kill : kill,
@@ -44,6 +45,17 @@
         */
         function list(username) {
             return $http.get(API_BASE_URL + '/doctors/' + username + '/contacts/');
+        }
+
+        /**
+        * @summary Retrieves a contact
+        * @param {String} username
+        * @param {Number} id contact id
+        * @returns {Promise}
+        * @memberOf nocc.doctor.services.contactService
+        */
+        function get(username, id) {
+            return $http.get(API_BASE_URL + '/doctors/' + username + '/contacts/' + id + '/');
         }
 
         /**

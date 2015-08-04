@@ -15,6 +15,7 @@
         .module('nocc.case', [
             'nocc.case.routes',
             'nocc.case.services',
+            'nocc.case.controllers',
             'permission',
             'nocc.authentication.services'
         ])
@@ -23,5 +24,8 @@
                 return authenticationService.isAuthenticated();
             });
         });
+
+    angular
+        .module('nocc.case.controllers', []);
 
 })();

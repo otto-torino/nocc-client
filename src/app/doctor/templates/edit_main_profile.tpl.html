@@ -4,18 +4,25 @@
 <form role="form">
     <div class="modal-body">
         <div class="form-group">
-            <label for="profile__name">Nome</label>
+            <label for="profile__firstname">Nome</label>
             <div class="error" ng-show="errors.name">
-                <div class="alert alert-danger" ng-repeat="e in errors.name">{{ e }}</div>
+                <div class="alert alert-danger" ng-repeat="e in errors.firstname">{{ e }}</div>
             </div>
             <input type="text" class="form-control" id="profile__firstname" ng-model="doctor.firstname" required />
         </div>
         <div class="form-group">
-            <label for="profile__name">Cognome</label>
+            <label for="profile__lastname">Cognome</label>
             <div class="error" ng-show="errors.lastname">
                 <div class="alert alert-danger" ng-repeat="e in errors.lastname">{{ e }}</div>
             </div>
             <input type="text" class="form-control" id="profile__lastname" ng-model="doctor.lastname" required />
+        </div>
+        <div class="form-group">
+            <label for="profile__email">E-mail</label>
+            <div class="error" ng-show="errors.email">
+                <div class="alert alert-danger" ng-repeat="e in errors.email">{{ e }}</div>
+            </div>
+            <input type="text" class="form-control" id="profile__email" ng-model="doctor.email" required />
         </div>
         <div class="form-group">
             <label>Specializzazioni</label>
@@ -36,7 +43,7 @@
             <div class="error" ng-show="errors.cv">
                 <div class="alert alert-danger" ng-repeat="e in errors.cv">{{ e }}</div>
             </div>
-            <div class="form-control-static" ng-show="doctor.cv"><a href="{{ doctor.cv }}" target="_blank">file presente</a></div>
+            <div class="form-control-static" ng-show="doctor.cv"><aajax href="{{ doctor.cv }}" target="_blank">file presente</a></div>
             <p>Inseirsci/Modifica CV</p>
             <div ngf-drop ngf-select ng-model="file.cv" class="drop-box" 
                  ngf-drag-over-class="dragover" ngf-multiple="false" ngf-allow-dir="false" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword,application/pdf">Trascina un file o clicca per aprire una finestra di selezione</div>
@@ -51,7 +58,7 @@
             <div class="error" ng-show="errors.photo">
                 <div class="alert alert-danger" ng-repeat="e in errors.photo">{{ e }}</div>
             </div>
-            <div class="form-control-static" ng-show="doctor.photo"><a href="{{ doctor.photoCV }}" target="_blank">file presente</a></div>
+            <div class="form-control-static" ng-show="doctor.photo"><aajax href="{{ doctor.photo }}" target="_blank">file presente</a></div>
             <p>Inseirsci/Modifica fotografia</p>
             <div ngf-drop ngf-select ng-model="file.photo" class="drop-box" 
                  ngf-drag-over-class="dragover" ngf-multiple="false" ngf-allow-dir="false" accept="image/*">Trascina un'immagine (jpg, png, gif) o clicca per aprire una finestra di selezione</div>
@@ -65,7 +72,7 @@
 
     <div class="modal-footer">
         <button class="btn btn-default" ng-click="cancel()" type="button">Annulla</button>
-        <button class="btn btn-primary" ng-disabled="(!doctor.firstname || !doctor.lastname)" ng-click="save()" type="button" disabled="disabled">Salva</button>
+        <button class="btn btn-primary" ng-disabled="(!doctor.firstname || !doctor.lastname || !doctor.email)" ng-click="save()" type="button" disabled="disabled">Salva</button>
     </div>
 </form>
 <script>$.material.checkbox();</script>

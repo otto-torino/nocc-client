@@ -17,11 +17,11 @@
      * @description Controller of the view with which the surgeon associates an oncologist to the case
      * @permissions isSurgeon
      */
-    function SurgeonAssociateOncologistCtrl($rootScope, $scope, $state, $modalInstance, authenticationService, caseService, doctorService, contactService, dialogs, ctrl) {
+    function SurgeonAssociateOncologistCtrl($rootScope, $scope, $state, $modalInstance, authenticationService, caseService, doctorService, contactService, dialogs, parent_scope) {
 
         /** check permission */
         (function() {
-            if(!authenticationService.isAuthenticated() || !authenticationService.getAuthenticatedUser().is_surgeon) {
+            if(!authenticationService.isAuthenticated() || !authenticationService.getAuthenticatedUser().is_surgeon || !parent_scope.isCaseSurgeon()) {
                 $state.go('home');
             }
         })();
@@ -62,10 +62,8 @@
 
         // dismiss the modal without doing anything
         $scope.save = function() {
-            caseService.associateOncologist(ctrl.caseObj, $scope.data.oncologist_contact).then(function(response) {
-                ctrl.caseObj = response.data;
-                // sistemare le notifiche!!
-                // settare lo oncologist_status automaticamente sul server REST, come to_be_accepted
+            caseService.associateOncologist(parent_scope.model.caseObj, $scope.data.oncologist_contact).then(function(response) {
+                parent_scope.model.caseObj = response.data;
                 $rootScope.$broadcast('update_notifications');
                 $modalInstance.dismiss();
             }, function() {

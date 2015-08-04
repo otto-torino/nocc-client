@@ -30,7 +30,7 @@
                     templateUrl: 'surgeon/templates/apphome.tpl.html'
                 },
                 "sidebar@loggedIn": {
-                    controller: 'SurgeonSidebarCtrl',
+                    controller: 'DoctorSidebarCtrl',
                     templateUrl: 'layout/templates/sidebar.tpl.html'
                 }
             },
@@ -55,7 +55,7 @@
                     templateUrl: 'surgeon/templates/case_detail.tpl.html'
                 },
                 "sidebar@loggedIn": {
-                    controller: 'SurgeonSidebarCtrl',
+                    controller: 'DoctorSidebarCtrl',
                     templateUrl: 'layout/templates/sidebar.tpl.html'
                 }
             },
@@ -99,6 +99,7 @@
         .state( 'case.detail.surgeon.examination', {
             parent: 'case.detail.surgeon',
             url: 'examination/',
+            params: { activeTab: 'initial' },
             views: {
                 'case-main': {
                     controller: 'SurgeonCaseDetailExaminationCtrl',
@@ -119,6 +120,103 @@
                 }
                 */
             }
+        })
+        .state( 'case.detail.surgeon.tp', {
+            parent: 'case.detail.surgeon',
+            url: 'tp/',
+            views: {
+                'case-main': {
+                    controller: 'CaseDetailTpCtrl',
+                    controllerAs: 'vm',
+                    templateUrl: 'case/templates/case_detail_tp.tpl.html'
+                },
+                'case-nav': {
+                    controller: 'SurgeonSidebarCaseCtrl',
+                    templateUrl: 'layout/templates/sidebar_nav.tpl.html'
+                }
+            },
+            data:{
+                page_title: 'Caso | Proposta terapeutica'/*,
+                // defined in parent state
+                permissions: {
+                    only: ['isSurgeonCase'],
+                    redirectTo: 'home'
+                }
+                */
+            }
+        })
+        .state( 'case.detail.surgeon.fu', {
+            parent: 'case.detail.surgeon',
+            url: 'fu/',
+            views: {
+                'case-main': {
+                    controller: 'SurgeonCaseDetailFUCtrl',
+                    controllerAs: 'vm',
+                    templateUrl: 'surgeon/templates/case_detail_fu.tpl.html'
+                },
+                'case-nav': {
+                    controller: 'SurgeonSidebarCaseCtrl',
+                    templateUrl: 'layout/templates/sidebar_nav.tpl.html'
+                }
+            },
+            data:{
+                page_title: 'Caso | Follow Up'/*,
+                // defined in parent state
+                permissions: {
+                    only: ['isSurgeonCase'],
+                    redirectTo: 'home'
+                }
+                */
+            }
+        })
+        .state( 'case.detail.surgeon.revaluation', {
+            parent: 'case.detail.surgeon',
+            url: 'revaluation/',
+            views: {
+                'case-main': {
+                    controller: 'CaseDetailRevaluationCtrl',
+                    controllerAs: 'vm',
+                    templateUrl: 'case/templates/case_detail_revaluation.tpl.html'
+                },
+                'case-nav': {
+                    controller: 'SurgeonSidebarCaseCtrl',
+                    templateUrl: 'layout/templates/sidebar_nav.tpl.html'
+                }
+            },
+            data:{
+                page_title: 'Caso | Rivalutazione'/*,
+                // defined in parent state
+                permissions: {
+                    only: ['isSurgeonCase'],
+                    redirectTo: 'home'
+                }
+                */
+            }
+        })
+        .state( 'case.detail.surgeon.adjuvant', {
+            parent: 'case.detail.surgeon',
+            url: 'adjuvant/',
+            views: {
+                'case-main': {
+                    controller: 'CaseDetailAdjuvantCtrl',
+                    controllerAs: 'vm',
+                    templateUrl: 'case/templates/case_detail_adjuvant.tpl.html'
+                },
+                'case-nav': {
+                    controller: 'SurgeonSidebarCaseCtrl',
+                    templateUrl: 'layout/templates/sidebar_nav.tpl.html'
+                }
+            },
+            data:{
+                page_title: 'Caso | Terapia adiuvante'/*,
+                // defined in parent state
+                permissions: {
+                    only: ['isSurgeonCase'],
+                    redirectTo: 'home'
+                }
+                */
+            }
         });
+
     }
 })();

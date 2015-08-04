@@ -5,6 +5,14 @@
 <form role="form">
     <div class="modal-body">
 
+        <div ng-if="followups.length" class="form-group">
+            <label for="examination__follow_up">Follow Up</label>
+            <div class="error" ng-show="errors.examination__follow_up"> <!-- @FIXME -->
+                <div class="alert alert-danger" ng-repeat="e in errors.examination__follow_up">{{ e }}</div>
+            </div>
+            <select class="form-control" id="examination__followup" ng-model="examination.follow_up" ng-options="f.id as f.text for f in followups" required />
+        </div>
+
         <div class="form-group">
             <label for="examination__date">Data</label>
             <div class="error" ng-show="errors.examination__date">
@@ -57,11 +65,11 @@
                 <div class="form-control-static" ng-show="examination.attachments">
                     <ul>
                         <li ng-repeat="a in examination.attachments">
-                            <aajax href="{{ a.file | absurl }}" target="_blank">{{ a.file }}</a>
+                            <aajax href="{{ a.file | absurl }}" target="_blank">{{ a.file }}</aajax> <a style="margin-left: 20px;" href ng-click="deleteAttachment(a)" class="fa fa-trash-o"></a>
                         </li>
                     </ul>
                 </div>
-                <p>Inseirsci files</p>
+                <p>Inseirsci file</p>
                 <div ngf-drop 
                      ngf-select 
                      ng-model="file.attachments" class="drop-box" 

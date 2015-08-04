@@ -2,7 +2,20 @@
     <i ng-repeat="action in bar.actions" class="link fa fa-2x fa-{{ action.fa }}" ng-click="action.exec()"></i>
 </div>
 <section>
-    <h1>{{ caseObj.description }}</h1>
-    <p><strong>Paziente</strong>: {{ caseObj.patient_obj.firstname }} {{ caseObj.patient_obj.lastname }}</p>
+    <h1>{{ model.caseObj.description }}</h1>
+    <p><strong>Paziente</strong>: {{ model.caseObj.patient_obj.firstname }} {{ model.caseObj.patient_obj.lastname }}</p>
+    <p ng-show="model.caseObj.oncologist_contact_obj">
+        <strong>Oncologo</strong>: {{ model.caseObj.oncologist_contact_obj.doctor.firstname }} {{ model.caseObj.oncologist_contact_obj.doctor.lastname }}
+        <span ng-show="model.caseObj.oncologist_status == model.ASSOCIATION_STATUS.to_be_accepted">(in attesa di accettazione)</span>
+        <span ng-show="model.caseObj.oncologist_status == model.ASSOCIATION_STATUS.refused">(rifiutato)</span>
+    </p>
+    <p ng-show="model.caseObj.radiotherapist_contact_obj">
+        <strong>Radioterapista</strong>: {{ model.caseObj.radiotherapist_contact_obj.doctor.firstname }} {{ model.caseObj.radiotherapist_contact_obj.doctor.lastname }}
+        <span ng-show="model.caseObj.radiotherapist_status == model.ASSOCIATION_STATUS.to_be_accepted">(in attesa di accettazione)</span>
+        <span ng-show="model.caseObj.radiotherapist_status == model.ASSOCIATION_STATUS.refused">(rifiutato)</span>
+    </p>
+    <p ng-show="model.caseObj.observers_obj.length">
+        <strong>Osservatori</strong>: <span ng-repeat="o in model.caseObj.observers_obj">{{o.firstname }} {{ o.lastname }} {{ $last ? '' : ($index==model.caseObj.observers_obj.length-2) ? ' e ' : ', '}}</span>
+    </p>
     <div ui-view="case-main"></div>
 </section>

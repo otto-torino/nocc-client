@@ -74,7 +74,7 @@
         // save the insertion form
         $scope.save = function() {
             // case open
-            $scope['case'].status = 1;
+            $scope['case'].status = 1; //@TODO use dict
             // create patient instance
             if($scope['case'].new_patient && $scope.checkNewPatientMandatoryFields()) {
                 var patient = {

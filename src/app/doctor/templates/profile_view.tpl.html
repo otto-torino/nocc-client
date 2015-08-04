@@ -1,0 +1,33 @@
+<h2>{{ vm.doctor.fullname }}</h2>
+<div class="row">
+    <div class="col-xs-12 col-sm-4 col-md-3">
+        <p>
+            <imgajax ng-show="vm.doctor.model.photo" ia-src="{{ vm.doctor.model.photo }}" class="img-responsive img-circle"></imgajax>
+            <img ng-hide="vm.doctor.model.photo" src="assets/img/photo_placeholder.png" class="img-responsive img-circle" />
+
+        </p>
+    </div>
+    <div class="col-xs-12 col-sm-8 col-md-9">
+        <p><b ng-repeat="d in vm.doctor.doctor_types">{{ d | ucfirst }}{{ $last ? '' : ', ' }}</b></p>
+        <p>Account creato il: {{ vm.doctor.model.created_at | date:'dd/MM/yyyy' }}</p>
+        <p><i class="fa fa-envelope"></i> {{ vm.doctor.model.email }}</p>
+        <p ng-show="vm.doctor.model.cv"><aajax href="{{ vm.doctor.model.cv }}"><i class="fa fa-1x fa-file }}"></i> CV</a></p>
+        <div ng-show="vm.doctor.contacts.length">
+            <h2>Contatti</h2>
+            <tabset>
+                <tab ng-repeat="contact in vm.doctor.contacts" active="contact.active">
+                    <tab-heading>
+                        {{ contact.hospital_obj.name }}
+                    </tab-heading>
+                    <div style="margin-top: 20px;">
+                        <p>{{ contact.description }}</p>
+                        <hr />
+                        <p><i class="fa fa-phone"></i> {{ contact.phone }}</p>
+                        <p><i class="fa fa-envelope"></i> {{ contact.email }}</p>
+                    </div>
+                </tab>
+            </tabset>
+        </div>
+    </div>
+</div>
+

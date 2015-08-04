@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <h2><i class="fa fa-remove" /> Folluw Up</h2>
+</div>
+<form role="form" name="fuForm">
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="fu__suggestion">Suggerimento date alternative</label>
+            <div class="error" ng-show="errors.fu__suggestion">
+                <div class="alert alert-danger" ng-repeat="e in errors.fu__suggestion">{{ e }}</div>
+            </div>
+            <textarea class="form-control" id="fu__suggestion" ng-model="fu.suggestion"></textarea>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-click="cancel()" type="button">Annulla</button>
+        <button ng-show="!examination.id" class="btn btn-primary" ng-disabled="!fuForm.$valid" ng-click="save()" type="button" disabled="disabled">Rifiuta e Invia</button>
+    </div>
+</form>
+<script>$.material.checkbox();</script>
