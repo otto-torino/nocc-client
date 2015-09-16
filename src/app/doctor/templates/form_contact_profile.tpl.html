@@ -42,16 +42,18 @@
             <input type="email" class="form-control" id="contact__email" ng-model="contact.email" placeholder="es. mariorossi@gmail.com" required />
         </div>
 
-        <h3>Disponibilità</h3>
+        <div ng-show="doctor.model.user.is_surgeon">
+            <h3>Disponibilità per visite Follow Up</h3>
 
-        <div class="form-group" ng-repeat="day in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']">
-            <label for="contact__{{ day }}">{{ day|itweekday|ucfirst }}</label>
-            <div class="error" ng-show="errors[day]">
-                <div class="alert alert-danger" ng-repeat="e in errors[day]">{{ e }}</div>
+            <div class="form-group" ng-repeat="day in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']">
+                <label for="contact__{{ day }}">{{ day|itweekday|ucfirst }}</label>
+                <div class="error" ng-show="errors[day]">
+                    <div class="alert alert-danger" ng-repeat="e in errors[day]">{{ e }}</div>
+                </div>
+                <select class="form-control" id="contact__[day]" ng-model="contact[day]" required>
+                    <option ng-repeat="a in availability_choices" value="{{ a.id }}" ng-selected="contact[day] == a.id">{{ a.label }}</option>
+                </select>
             </div>
-            <select class="form-control" id="contact__[day]" ng-model="contact[day]" required>
-                <option ng-repeat="a in availability_choices" value="{{ a.id }}" ng-selected="contact[day] == a.id">{{ a.label }}</option>
-            </select>
         </div>
     </div>
 

@@ -1,8 +1,9 @@
 /**
-* @file app.interceptors.js
-* @namespace nocc.interceptors
-* @description Main app middlewares
-* @author    abidibo <abidibo@gmail.com>
+* @file           app.interceptors.js
+* @version        0.1.1
+* @namespace      nocc.interceptors
+* @description    Main app middlewares
+* @author         abidibo <abidibo@gmail.com>
 */
 (function () {
     'use strict';
@@ -28,7 +29,7 @@
          */
         $provide.factory('noccHttpInterceptor', function($q, $injector, ngToast) {
             return {
-                // optional method
+                // Adds the authentication token
                 'request': function(config) {
                     $injector.invoke(function(authenticationService) {
                         config.headers = config.headers || {};
@@ -39,13 +40,11 @@
                     return config;
                 },
 
-                // optional method
                 'requestError': function(rejection) {
                     // do something on error
                     return $q.reject(rejection);
                 },
 
-                // optional method
                 'response': function(response) {
                     // do something on success
                     return response;

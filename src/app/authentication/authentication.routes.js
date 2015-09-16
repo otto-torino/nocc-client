@@ -1,7 +1,9 @@
 /**
-* @file authentication.routes.js
-* @namespace nocc.authentication
-* @author    abidibo <abidibo@gmail.com>
+* @file           authentication.routes.js
+* @version        0.1.1
+* @namespace      nocc.authentication
+* @author         abidibo <abidibo@gmail.com>
+* @description    Defines routes for the authentication module
 */
 (function () {
     'use strict';

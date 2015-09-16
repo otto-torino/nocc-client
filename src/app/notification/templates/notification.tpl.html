@@ -1,9 +1,11 @@
 <section ng-controller="NotificationCtrl">
     <h1><i class="fa fa-bell"></i> Notifiche</h1>
     <ul class="notification">
-        <li ng-repeat="m in messages">
-            <p><b>{{ m.case }}</b><br />
-               {{ m.text }}</p>
+        <li ng-repeat="m in messages" ng-class="m.state ? 'link' : ''">
+            <p ng-click="checkGoTo(m)">
+                <span class="notification-title">{{ m.case }}</span>
+                <span class="notification-text"><i class="fa fa-arrow-right"></i> {{ m.text }}</span>
+           </p>
         </li>
     </ul>
 </section>

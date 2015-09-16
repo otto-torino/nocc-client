@@ -56,11 +56,18 @@
         });
 
         /**
+         * @summary retrieves observer cases
+         * @uses nocc.case.services.caseService
+         */
+        caseService.listAsObserver().then(function(response) { 
+            vm.observer_cases = response.data;
+        });
+
+        /**
          * @summary Opens the dialog with the add case form
          * @memberOf nocc.doctor.controllers.DoctorCaseListCtrl
          */
         vm.openNewCaseForm = function() {
-            console.log(vm.surgeon_contacts);
             if(vm.surgeon_contacts.length === 0) {
                 dialogs.error('Errore', 
                               'Devi aggiungere un <a href="#/profile">contatto</a> prima di poter aprire casi clinici',

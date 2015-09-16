@@ -145,6 +145,30 @@
                 */
             }
         })
+        .state( 'case.detail.surgeon.tc', {
+            parent: 'case.detail.surgeon',
+            url: 'tc/',
+            views: {
+                'case-main': {
+                    controller: 'CaseDetailTcCtrl',
+                    controllerAs: 'vm',
+                    templateUrl: 'case/templates/case_detail_tc.tpl.html'
+                },
+                'case-nav': {
+                    controller: 'SurgeonSidebarCaseCtrl',
+                    templateUrl: 'layout/templates/sidebar_nav.tpl.html'
+                }
+            },
+            data:{
+                page_title: 'Caso | Scheda terapeutica'/*,
+                // defined in parent state
+                permissions: {
+                    only: ['isSurgeonCase'],
+                    redirectTo: 'home'
+                }
+                */
+            }
+        })
         .state( 'case.detail.surgeon.fu', {
             parent: 'case.detail.surgeon',
             url: 'fu/',
@@ -161,6 +185,30 @@
             },
             data:{
                 page_title: 'Caso | Follow Up'/*,
+                // defined in parent state
+                permissions: {
+                    only: ['isSurgeonCase'],
+                    redirectTo: 'home'
+                }
+                */
+            }
+        })
+        .state( 'case.detail.surgeon.etc', {
+            parent: 'case.detail.surgeon',
+            url: 'etc/',
+            views: {
+                'case-main': {
+                    controller: 'CaseDetailEtcCtrl',
+                    controllerAs: 'vm',
+                    templateUrl: 'case/templates/case_detail_etc.tpl.html'
+                },
+                'case-nav': {
+                    controller: 'SurgeonSidebarCaseCtrl',
+                    templateUrl: 'layout/templates/sidebar_nav.tpl.html'
+                }
+            },
+            data:{
+                page_title: 'Caso | Scheda fine trattamento'/*,
                 // defined in parent state
                 permissions: {
                     only: ['isSurgeonCase'],

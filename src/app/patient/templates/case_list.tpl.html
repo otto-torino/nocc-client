@@ -4,27 +4,29 @@
 <section>
     <h1>Casi clinici</h1>
     <div ng-if="vm.cases.length">
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Descrizione</th>
-                    <th>Chirurgo</th>
-                    <th>Oncologo</th>
-                    <th>Radioterapista</th>
-                    <th>Ultima modifica</th>
-                    <th>Stato</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="c in vm.cases">
-                    <td><a href ui-sref="case.detail.patient.main({ caseId: c.id })">{{ c.description }}</a></td>
-                    <td>{{ c.surgeon_contact_obj.doctor.firstname }} {{ c.surgeon_contact_obj.doctor.lastname }}</td>
-                    <td>{{ c.oncologist_contact_obj.doctor.firstname }} {{ c.oncologist_contact_obj.doctor.lastname }}</td>
-                    <td>{{ c.radiotherapist_contact_obj.doctor.firstname }} {{ c.radiotherapist_contact_obj.doctor.lastname }}</td>
-                    <td>{{ c.last_edit_date | date: 'medium'}}</td>
-                    <td>{{ c.get_status_display }}</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive-vertical">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Diagnosi</th>
+                        <th>Chirurgo</th>
+                        <th>Oncologo</th>
+                        <th>Radioterapista</th>
+                        <th>Ultima modifica</th>
+                        <th>Stato</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="c in vm.cases">
+                        <td data-title="Diagnosi"><a href ui-sref="case.detail.patient.main({ caseId: c.id })">{{ c.specific_diagnosis_name }}</a></td>
+                        <td data-title="Chirurgo">{{ c.surgeon_contact_obj.doctor.firstname }} {{ c.surgeon_contact_obj.doctor.lastname }}</td>
+                        <td data-title="Oncologo">{{ c.oncologist_contact_obj.doctor.firstname }} {{ c.oncologist_contact_obj.doctor.lastname }}</td>
+                        <td data-title="Radioterapista">{{ c.radiotherapist_contact_obj.doctor.firstname }} {{ c.radiotherapist_contact_obj.doctor.lastname }}</td>
+                        <td data-title="Ultima modifica">{{ c.last_edit_date | date: 'medium'}}</td>
+                        <td data-title="Stato">{{ c.get_status_display }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </h1>

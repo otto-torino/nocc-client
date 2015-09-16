@@ -195,6 +195,30 @@
                 */
             }
         })
+        .state( 'case.detail.doctor.tc', {
+            parent: 'case.detail.doctor',
+            url: 'doctor/tc/',
+            views: {
+                'case-main': {
+                    controller: 'CaseDetailTcCtrl',
+                    controllerAs: 'vm',
+                    templateUrl: 'case/templates/case_detail_tc.tpl.html'
+                },
+                'case-nav': {
+                    controller: 'DoctorSidebarCaseCtrl',
+                    templateUrl: 'layout/templates/sidebar_nav.tpl.html'
+                }
+            },
+            data:{
+                page_title: 'Caso | Scheda terapeutica'/*,
+                // defined in parent state
+                permissions: {
+                    only: ['isDoctorCase'],
+                    redirectTo: 'home'
+                }
+                */
+            }
+        })
         .state( 'case.detail.doctor.fu', {
             parent: 'case.detail.doctor',
             url: 'doctor/fu/',
@@ -219,6 +243,31 @@
                 */
             }
         })
+        .state( 'case.detail.doctor.etc', {
+            parent: 'case.detail.doctor',
+            url: 'doctor/etc/',
+            views: {
+                'case-main': {
+                    controller: 'CaseDetailEtcCtrl',
+                    controllerAs: 'vm',
+                    templateUrl: 'case/templates/case_detail_etc.tpl.html'
+                },
+                'case-nav': {
+                    controller: 'DoctorSidebarCaseCtrl',
+                    templateUrl: 'layout/templates/sidebar_nav.tpl.html'
+                }
+            },
+            data:{
+                page_title: 'Caso | Scheda fine trattamento'/*,
+                // defined in parent state
+                permissions: {
+                    only: ['isDoctorCase'],
+                    redirectTo: 'home'
+                }
+                */
+            }
+        })
+
         .state( 'case.detail.doctor.revaluation', {
             parent: 'case.detail.doctor',
             url: 'doctor/revaluation/',

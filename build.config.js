@@ -86,7 +86,7 @@ module.exports = {
     css: [
       'vendor/angular-dialog-service/dist/dialogs.min.css',
       'vendor/ngtoast/dist/ngToast.css',
-      'vendor/bootstrap/dist/css/bootstrap.css',
+      //'vendor/bootstrap/dist/css/bootstrap.css',
       'vendor/angular-bootstrap-datetimepicker/src/css/datetimepicker.css',
     ],
     assets: [

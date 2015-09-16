@@ -35,7 +35,9 @@
             // contacts
             contactService.list(vm.doctor.model.user.username).then(function(response) {
                 vm.doctor.contacts = response.data;
-                vm.doctor.contacts[0].active = true;
+                if(vm.doctor.contacts.length) {
+                    vm.doctor.contacts[0].active = true;
+                }
                 // closure to use c param inside loop
                 var successFactory = function(c) {
                     return function(response) {

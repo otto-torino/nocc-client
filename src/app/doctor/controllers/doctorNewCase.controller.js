@@ -43,6 +43,27 @@
         });
 
         /**
+         * when seleciong a generic diagnosis, specific diagnosis must be retrieved
+         */
+        $scope.$watch('case.generic_diagnosis', function () {
+            if($scope['case'].generic_diagnosis) {
+                caseService.listSpecificDiagnosis($scope['case'].generic_diagnosis).then(function(response) {
+                    $scope.specific_diagnosis = { list: response.data };
+                }, function() {
+                    console.log('error retrieving specific diagnosis');
+                });
+            }
+        });
+
+        /**
+         * @summary Gets generic diagnosis data
+         * @uses nocc.doctor.services.caseService
+         */
+        caseService.listGenericDiagnosis().then(function(response) {
+            $scope.generic_diagnosis = { list: response.data };
+        });
+
+        /**
          * @summary Gets patients data
          * @uses nocc.patient.services.patientService
          */
@@ -95,8 +116,9 @@
                         $scope['case'].patient = response.data.id;
                         caseService.create($scope['case']).then(saveSuccessFn, saveErrorFn);
                     },
-                    function() {
-                        console.log('error'); //@TODO
+                    function(response) {
+                        $scope.errors = response.data;
+                        console.log($scope.errors);
                     }
                 );
             }

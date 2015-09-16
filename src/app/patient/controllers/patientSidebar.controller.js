@@ -20,6 +20,11 @@
 
         $scope.navMain = [
             {
+                state: 'apphome',
+                text: 'home',
+                fa: 'home'
+            },
+            {
                 state: 'case',
                 text: 'casi clinici',
                 fa: 'ambulance'

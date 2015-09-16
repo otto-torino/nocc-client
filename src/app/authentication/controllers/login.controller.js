@@ -1,7 +1,9 @@
 /**
-* @file login.controller.js
-* @namespace nocc.authentication.controllers
-* @author    abidibo <abidibo@gmail.com>
+* @file           login.controller.js
+* @version        0.1.1
+* @namespace      nocc.authentication.controllers
+* @author         abidibo <abidibo@gmail.com>
+* @description    Controller of the login functionality
 */
 (function () {
     'use strict';

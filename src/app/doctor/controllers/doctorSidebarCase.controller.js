@@ -10,13 +10,13 @@
         .module('nocc.doctor.controllers')
         .controller('DoctorSidebarCaseCtrl', DoctorSidebarCaseCtrl);
 
-    DoctorSidebarCaseCtrl.$inject = ['$scope', '$state', 'therapeuticProposalService', 'caseObj', 'STATUS'];
+    DoctorSidebarCaseCtrl.$inject = ['$scope', '$state', 'caseService', 'therapeuticProposalService', 'caseObj', 'STATUS'];
 
     /**
      * @namespace DoctorSidebarCaseCtrl
      * @description Controller which controls the sidebar case nav when inside a case
      */
-    function DoctorSidebarCaseCtrl($scope, $state, therapeuticProposalService, caseObj, STATUS) {
+    function DoctorSidebarCaseCtrl($scope, $state, caseService, therapeuticProposalService, caseObj, STATUS) {
 
         $scope.nav = { title: 'Caso', items: [] };
 
@@ -25,12 +25,17 @@
             text: 'principale',
             fa: 'star'
         });
-        if(caseObj.relapse && (caseObj.relapse.oncologist_contact_obj.doctor.user.id == caseObj.oncologist_contact_obj.doctor.user.id || caseObj.relapse.radiotherapist_contact_obj.doctor.user.id == caseObj.radiotherapist_contact_obj.doctor.user.id)) {
-            $scope.nav.items.push({
-                state: 'case.detail.doctor.main( { caseId: ' + caseObj.relapse + ' } )',
-                text: 'recidiva',
-                fa: 'reply'
-            });
+        if(caseObj.relapse) {
+            caseService.get(caseObj.relapse).then(function(response) {
+                var relapse = response.data;
+                if(caseObj.relapse && (relapse.oncologist_contact_obj.doctor.user.id == caseObj.oncologist_contact_obj.doctor.user.id || relapse.radiotherapist_contact_obj.doctor.user.id == caseObj.radiotherapist_contact_obj.doctor.user.id)) {
+                    $scope.nav.items.push({
+                        state: 'case.detail.doctor.main( { caseId: ' + caseObj.relapse + ' } )',
+                        text: 'recidiva',
+                        fa: 'reply'
+                    });
+                }
+            }, function() {});
         }
         $scope.nav.items.push({
             state: 'case.detail.doctor.examination',
@@ -44,11 +49,25 @@
                 fa: 'medkit'
             });
         }
+        if(caseObj.status >= STATUS.therapy_card) {
+            $scope.nav.items.push({
+                state: 'case.detail.doctor.tc',
+                text: 'scheda terapeutica',
+                fa: 'file-o'
+            });
+        }
         if(caseObj.status >= STATUS.started) {
             $scope.nav.items.push({
                 state: 'case.detail.doctor.fu',
                 text: 'follow up',
                 fa: 'recycle'
+            });
+        }
+        if(caseObj.status > STATUS.started) {
+            $scope.nav.items.push({
+                state: 'case.detail.doctor.etc',
+                text: 'scheda fine trattamento',
+                fa: 'file-o'
             });
         }
         therapeuticProposalService.getInitialTherapeuticProposal(caseObj).then(function(response) {

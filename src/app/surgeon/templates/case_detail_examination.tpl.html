@@ -4,131 +4,155 @@
     <tab active="vm.activeTab_initial">
     <tab-heading>Iniziali</tab-heading>
         <div style="margin-top: 20px;">
-            <table class="table table-striped table-bordered table-hover">
-                <tr>
-                    <th>Data</th>
-                    <th>Tipologia</th>
-                    <th>Descrizione</th>
-                    <th>Allegati</th>
-                    <th ng-if="vm.can_edit_initial"></th>
-                </tr>
-                <tr ng-repeat="examination in vm.examinations">
-                    <td>{{ examination.date | date:'dd/MM/yyyy' }}</td>
-                    <td>{{ examination.get_type_display }}</td>
-                    <td><a class="link" ng-click="vm.openExaminationText(examination)">{{ examination.description }}</a></td>
-                    <td>
-                        <ul>
-                            <li ng-repeat="a in examination.attachments">
-                                <!-- <a ng-click="mediaHref(a.file)" target="_blank">{{ a.insertion_date | date: 'dd/MM/yyyy' }} {{ a.file | filename }}</a> -->
-                                <aajax href="{{ a.file | absurl }}">{{ a.insertion_date | date: 'dd/MM/yyyy' }} {{ a.file | filename }}</aajax>
-                            </li>
-                        </ul>
-                    </td>
-                    <td ng-if="vm.canEdit(examination)">
-                        <a class="link fa fa-pencil"ng-click="vm.addEditExamination(examination)"><a> 
-                        <a class="fa fa-remove" ng-click="vm.confirmAndDeleteExamination(examination)"><a>
-                    </td>
-                </tr>
-            </table>
+            <div class="table-responsive-vertical">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Tipologia</th>
+                            <th>Descrizione</th>
+                            <th>Allegati</th>
+                            <th ng-if="vm.can_edit_initial"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="examination in vm.examinations">
+                            <td data-title="Data">{{ examination.date | date:'dd/MM/yyyy' }}</td>
+                            <td data-title="Tipologia">{{ examination.get_type_display }}</td>
+                            <td data-title="Descrizione"><a class="link" ng-click="vm.openExaminationText(examination)">{{ examination.description }}</a></td>
+                            <td data-title="Allegati">
+                                <ul>
+                                    <li ng-repeat="a in examination.attachments">
+                                        <!-- <a ng-click="mediaHref(a.file)" target="_blank">{{ a.insertion_date | date: 'dd/MM/yyyy' }} {{ a.file | filename }}</a> -->
+                                        <aajax href="{{ a.file | absurl }}">{{ a.insertion_date | date: 'dd/MM/yyyy' }} {{ a.file | filename }}</aajax>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td ng-if="vm.canEdit(examination)">
+                                <a class="link fa fa-pencil"ng-click="vm.addEditExamination(examination)"><a> 
+                                <a class="fa fa-remove" ng-click="vm.confirmAndDeleteExamination(examination)"><a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </tab>
     <tab ng-if="vm.fu_examinations.length" active="vm.activeTab_followup">
         <tab-heading>Follow Up</tab-heading>
         <div style="margin-top: 20px;">
-            <table class="table table-striped table-bordered table-hover">
-                <tr>
-                    <th>Follow Up</th>
-                    <th>Data</th>
-                    <th>Tipologia</th>
-                    <th>Descrizione</th>
-                    <th>Allegati</th>
-                    <th ng-if="vm.can_edit_followup"></th>
-                </tr>
-                <tr ng-repeat="examination in vm.fu_examinations">
-                    <td><a href ui-sref="case.detail.surgeon.fu">{{ examination.follow_up_obj.text }}</a></td>
-                    <td>{{ examination.date | date:'dd/MM/yyyy' }}</td>
-                    <td>{{ examination.get_type_display }}</td>
-                    <td><a class="link" ng-click="vm.openExaminationText(examination)">{{ examination.description }}</a></td>
-                    <td>
-                        <ul>
-                            <li ng-repeat="a in examination.attachments">
-                                <!-- <a ng-click="mediaHref(a.file)" target="_blank">{{ a.insertion_date | date: 'dd/MM/yyyy' }} {{ a.file | filename }}</a> -->
-                                <aajax href="{{ a.file | absurl }}">{{ a.insertion_date | date: 'dd/MM/yyyy' }} {{ a.file | filename }}</aajax>
-                            </li>
-                        </ul>
-                    </td>
-                    <td ng-if="vm.canEdit(examination)">
-                        <a class="link fa fa-pencil"ng-click="vm.addEditExamination(examination)"><a> 
-                        <a class="fa fa-remove" ng-click="vm.confirmAndDeleteExamination(examination)"><a>
-                    </td>
-                </tr>
-            </table>
+            <div class="table-responsive-vertical">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Follow Up</th>
+                            <th>Data</th>
+                            <th>Tipologia</th>
+                            <th>Descrizione</th>
+                            <th>Allegati</th>
+                            <th ng-if="vm.can_edit_followup"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="examination in vm.fu_examinations">
+                            <td data-title="Follow Up"><a href ui-sref="case.detail.surgeon.fu">{{ examination.follow_up_obj.text }}</a></td>
+                            <td data-title="Data">{{ examination.date | date:'dd/MM/yyyy' }}</td>
+                            <td data-title="Tipologia">{{ examination.get_type_display }}</td>
+                            <td data-title="Descrizione"><a class="link" ng-click="vm.openExaminationText(examination)">{{ examination.description }}</a></td>
+                            <td data-title="Allegati">
+                                <ul>
+                                    <li ng-repeat="a in examination.attachments">
+                                        <!-- <a ng-click="mediaHref(a.file)" target="_blank">{{ a.insertion_date | date: 'dd/MM/yyyy' }} {{ a.file | filename }}</a> -->
+                                        <aajax href="{{ a.file | absurl }}">{{ a.insertion_date | date: 'dd/MM/yyyy' }} {{ a.file | filename }}</aajax>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td ng-if="vm.canEdit(examination)">
+                                <a class="link fa fa-pencil"ng-click="vm.addEditExamination(examination)"><a> 
+                                <a class="fa fa-remove" ng-click="vm.confirmAndDeleteExamination(examination)"><a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </tab>
     <tab ng-if="vm.adj_examinations.length" active="vm.activeTab_adj">
         <tab-heading>Follow Up Terapia Adiuvante</tab-heading>
         <div style="margin-top: 20px;">
-            <table class="table table-striped table-bordered table-hover">
-                <tr>
-                    <th>Follow Up</th>
-                    <th>Data</th>
-                    <th>Tipologia</th>
-                    <th>Descrizione</th>
-                    <th>Allegati</th>
-                    <th ng-if="vm.can_edit_adj"></th>
-                </tr>
-                <tr ng-repeat="examination in vm.adj_examinations">
-                    <td><a href ui-sref="case.detail.surgeon.fu">{{ examination.follow_up_obj.text }}</a></td>
-                    <td>{{ examination.date | date:'dd/MM/yyyy' }}</td>
-                    <td>{{ examination.get_type_display }}</td>
-                    <td><a class="link" ng-click="vm.openExaminationText(examination)">{{ examination.description }}</a></td>
-                    <td>
-                        <ul>
-                            <li ng-repeat="a in examination.attachments">
-                                <!-- <a ng-click="mediaHref(a.file)" target="_blank">{{ a.insertion_date | date: 'dd/MM/yyyy' }} {{ a.file | filename }}</a> -->
-                                <aajax href="{{ a.file | absurl }}">{{ a.insertion_date | date: 'dd/MM/yyyy' }} {{ a.file | filename }}</aajax>
-                            </li>
-                        </ul>
-                    </td>
-                    <td ng-if="vm.canEdit(examination)">
-                        <a class="link fa fa-pencil"ng-click="vm.addEditExamination(examination)"><a> 
-                        <a class="fa fa-remove" ng-click="vm.confirmAndDeleteExamination(examination)"><a>
-                    </td>
-                </tr>
-            </table>
+            <div class="table-responsive-vertical">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Follow Up</th>
+                            <th>Data</th>
+                            <th>Tipologia</th>
+                            <th>Descrizione</th>
+                            <th>Allegati</th>
+                            <th ng-if="vm.can_edit_adj"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="examination in vm.adj_examinations">
+                            <td data-title="Follow Up"><a href ui-sref="case.detail.surgeon.fu">{{ examination.follow_up_obj.text }}</a></td>
+                            <td data-title="Data">{{ examination.date | date:'dd/MM/yyyy' }}</td>
+                            <td data-title="Tipologia">{{ examination.get_type_display }}</td>
+                            <td data-title="Descrizione"><a class="link" ng-click="vm.openExaminationText(examination)">{{ examination.description }}</a></td>
+                            <td data-title="Allegati">
+                                <ul>
+                                    <li ng-repeat="a in examination.attachments">
+                                        <!-- <a ng-click="mediaHref(a.file)" target="_blank">{{ a.insertion_date | date: 'dd/MM/yyyy' }} {{ a.file | filename }}</a> -->
+                                        <aajax href="{{ a.file | absurl }}">{{ a.insertion_date | date: 'dd/MM/yyyy' }} {{ a.file | filename }}</aajax>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td ng-if="vm.canEdit(examination)">
+                                <a class="link fa fa-pencil"ng-click="vm.addEditExamination(examination)"><a> 
+                                <a class="fa fa-remove" ng-click="vm.confirmAndDeleteExamination(examination)"><a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </tab>
     <tab ng-if="vm.final_examinations.length" active="vm.activeTab_final">
         <tab-heading>Fine trattamento</tab-heading>
         <div style="margin-top: 20px;">
-            <table class="table table-striped table-bordered table-hover">
-                <tr>
-                    <th>Follow Up</th>
-                    <th>Data</th>
-                    <th>Tipologia</th>
-                    <th>Descrizione</th>
-                    <th>Allegati</th>
-                    <th ng-if="vm.can_edit_adj"></th>
-                </tr>
-                <tr ng-repeat="examination in vm.final_examinations">
-                    <td><a href ui-sref="case.detail.surgeon.fu">{{ examination.follow_up_obj.text }}</a></td>
-                    <td>{{ examination.date | date:'dd/MM/yyyy' }}</td>
-                    <td>{{ examination.get_type_display }}</td>
-                    <td><a class="link" ng-click="vm.openExaminationText(examination)">{{ examination.description }}</a></td>
-                    <td>
-                        <ul>
-                            <li ng-repeat="a in examination.attachments">
-                                <!-- <a ng-click="mediaHref(a.file)" target="_blank">{{ a.insertion_date | date: 'dd/MM/yyyy' }} {{ a.file | filename }}</a> -->
-                                <aajax href="{{ a.file | absurl }}">{{ a.insertion_date | date: 'dd/MM/yyyy' }} {{ a.file | filename }}</aajax>
-                            </li>
-                        </ul>
-                    </td>
-                    <td ng-if="vm.canEdit(examination)">
-                        <a class="link fa fa-pencil"ng-click="vm.addEditExamination(examination)"><a> 
-                        <a class="fa fa-remove" ng-click="vm.confirmAndDeleteExamination(examination)"><a>
-                    </td>
-                </tr>
-            </table>
+            <div class="table-responsive-vertical">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Follow Up</th>
+                            <th>Data</th>
+                            <th>Tipologia</th>
+                            <th>Descrizione</th>
+                            <th>Allegati</th>
+                            <th ng-if="vm.can_edit_adj"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="examination in vm.final_examinations">
+                            <td data-title="Follow Up"><a href ui-sref="case.detail.surgeon.fu">{{ examination.follow_up_obj.text }}</a></td>
+                            <td data-title="Data">{{ examination.date | date:'dd/MM/yyyy' }}</td>
+                            <td data-title="Tipologia">{{ examination.get_type_display }}</td>
+                            <td data-title="Descrizione"><a class="link" ng-click="vm.openExaminationText(examination)">{{ examination.description }}</a></td>
+                            <td data-title="Allegati">
+                                <ul>
+                                    <li ng-repeat="a in examination.attachments">
+                                        <!-- <a ng-click="mediaHref(a.file)" target="_blank">{{ a.insertion_date | date: 'dd/MM/yyyy' }} {{ a.file | filename }}</a> -->
+                                        <aajax href="{{ a.file | absurl }}">{{ a.insertion_date | date: 'dd/MM/yyyy' }} {{ a.file | filename }}</aajax>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td ng-if="vm.canEdit(examination)">
+                                <a class="link fa fa-pencil"ng-click="vm.addEditExamination(examination)"><a> 
+                                <a class="fa fa-remove" ng-click="vm.confirmAndDeleteExamination(examination)"><a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </tab>
 

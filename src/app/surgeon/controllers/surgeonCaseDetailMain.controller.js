@@ -10,68 +10,100 @@
         .module('nocc.surgeon.controllers')
         .controller('SurgeonCaseDetailMainCtrl', SurgeonCaseDetailMainCtrl);
 
-    SurgeonCaseDetailMainCtrl.$inject = ['$scope', '$state', '$window', 'authenticationService', 'contactService', 'caseService', 'therapeuticProposalService', 'followupService', 'dialogs', 'request', 'STATUS', 'THERAPEUTIC_PROPOSAL_TYPES', 'FU_STATUS_DICT', 'FU_TYPE_DICT'];
+    SurgeonCaseDetailMainCtrl.$inject = ['$rootScope', '$scope', '$state', '$window', 'authenticationService', 'contactService', 'caseService', 'therapeuticProposalService', 'therapyCardService', 'endTherapyCardService', 'followupService', 'dialogs', 'request', 'STATUS', 'THERAPEUTIC_PROPOSAL_TYPES', 'FU_STATUS_DICT', 'FU_TYPE_DICT'];
 
     /**
      * @namespace SurgeonCaseDetailMainCtrl
      * @description Controller of the surgeon case detail view
      * @permissions hasProfile
      */
-    function SurgeonCaseDetailMainCtrl($scope, $state, $window, authenticationService, contactService, caseService, therapeuticProposalService, followupService, dialogs, request, STATUS, THERAPEUTIC_PROPOSAL_TYPES, FU_STATUS_DICT, FU_TYPE_DICT) {
+    function SurgeonCaseDetailMainCtrl($rootScope, $scope, $state, $window, authenticationService, contactService, caseService, therapeuticProposalService, therapyCardService, endTherapyCardService, followupService, dialogs, request, STATUS, THERAPEUTIC_PROPOSAL_TYPES, FU_STATUS_DICT, FU_TYPE_DICT) {
 
         // inherits the $scope.model object from the parent controller
-console.log($scope.model.caseObj);
         $scope.bar.actions = [];
-        if($scope.model.caseObj.status == STATUS.open) {
-            statusOpen($scope, $state, $window, dialogs, caseService, STATUS);
-        }
-        else if($scope.model.caseObj.status == STATUS.doctor_association) {
-            statusDoctorAssociation($scope, $state, $window, dialogs, caseService, therapeuticProposalService, STATUS, THERAPEUTIC_PROPOSAL_TYPES);
-        }
-        else if($scope.model.caseObj.status == STATUS.proposals) {
-            statusProposals($scope, $state, $window, dialogs, caseService, therapeuticProposalService, STATUS, THERAPEUTIC_PROPOSAL_TYPES);
-        }
-        else if($scope.model.caseObj.status == STATUS.proposal_accepted) {
-            statusProposalAccepted($scope, $state, $window, dialogs, caseService, therapeuticProposalService, STATUS);
-        }
-        else if($scope.model.caseObj.status == STATUS.started) {
-            statusStarted($scope, $state, $window, dialogs, caseService, therapeuticProposalService, followupService, STATUS, FU_STATUS_DICT, FU_TYPE_DICT);
-        }
-        else if($scope.model.caseObj.status == STATUS.revaluation) {
-            statusRevalutation($scope, $state, $window, dialogs, caseService, therapeuticProposalService, STATUS, THERAPEUTIC_PROPOSAL_TYPES);
-        }
-        else if($scope.model.caseObj.status == STATUS.revaluation_proposal) {
-            statusRevaluationProposal($scope, $state, $window, dialogs, caseService, therapeuticProposalService, STATUS, THERAPEUTIC_PROPOSAL_TYPES);
-        }
-        else if($scope.model.caseObj.status == STATUS.revaluation_proposal_accepted) {
-            statusRevaluationProposalAccepted($scope, $state, $window, dialogs, caseService, therapeuticProposalService, STATUS);
-        }
-        else if($scope.model.caseObj.status == STATUS.revaluation_started) {
-            statusRevaluationStarted($scope, $state, $window, dialogs, caseService, STATUS);
-        }
-        else if($scope.model.caseObj.status == STATUS.revaluation_ended || $scope.model.caseObj.status == STATUS.completed) {
-            statusCompleted($scope, $state, $window, dialogs, caseService, STATUS);
-        }
-        else if($scope.model.caseObj.status == STATUS.adjuvant) {
-            statusAdjuvant($scope, $state, $window, dialogs, caseService, therapeuticProposalService, STATUS, THERAPEUTIC_PROPOSAL_TYPES);
-        }
-        else if($scope.model.caseObj.status == STATUS.adjuvant_proposal) {
-            statusAdjuvantProposal($scope, $state, $window, dialogs, caseService, therapeuticProposalService, STATUS, THERAPEUTIC_PROPOSAL_TYPES);
-        }
-        else if($scope.model.caseObj.status == STATUS.adjuvant_proposal_accepted) {
-            statusAdjuvantProposalAccepted($scope, $state, $window, dialogs, caseService, therapeuticProposalService, STATUS);
-        }
-        else if($scope.model.caseObj.status == STATUS.adjuvant_started) {
-            statusAdjuvantStarted($scope, $state, $window, dialogs, caseService, therapeuticProposalService, followupService, STATUS, FU_STATUS_DICT, FU_TYPE_DICT);
-        }
-        else if($scope.model.caseObj.status == STATUS.ended) {
-            statusEnded($scope, $state, $window, dialogs, caseService, therapeuticProposalService, contactService, followupService, request, STATUS, FU_STATUS_DICT, FU_TYPE_DICT);
-        }
-        else if($scope.model.caseObj.status == STATUS.final_fu_ended) {
-            statusFinalFUEnded($scope, $state, $window, dialogs, caseService, STATUS);
-        }
-        else if($scope.model.caseObj.status == STATUS.relapse) {
-            statusRelapse($scope, $state, $window, dialogs, caseService, STATUS);
+
+        switch($scope.model.caseObj.status) {
+
+            case STATUS.open:
+                statusOpen($scope, $state, $window, dialogs, caseService, STATUS);
+                break;
+
+            case STATUS.doctor_association:
+                statusDoctorAssociation($rootScope, $scope, $state, $window, dialogs, caseService, therapeuticProposalService, STATUS, THERAPEUTIC_PROPOSAL_TYPES);
+                break;
+
+            case STATUS.proposals:
+                statusProposals($scope, $state, $window, dialogs, caseService, therapeuticProposalService, STATUS, THERAPEUTIC_PROPOSAL_TYPES);
+                break;
+
+            case STATUS.proposal_accepted:
+                statusProposalAccepted($scope, $state, $window, dialogs, caseService, therapyCardService, request, STATUS);
+                break;
+
+            case STATUS.therapy_card:
+                statusTherapyCard($scope, $window, dialogs, caseService, STATUS);
+                break;
+
+            case STATUS.started:
+                statusStarted($rootScope, $scope, $state, $window, dialogs, caseService, therapeuticProposalService, followupService, endTherapyCardService, request, STATUS, FU_STATUS_DICT, FU_TYPE_DICT);
+                break;
+
+            case STATUS.revaluation:
+                statusRevalutation($scope, $state, $window, dialogs, caseService, therapeuticProposalService, STATUS, THERAPEUTIC_PROPOSAL_TYPES);
+                break;
+
+            case STATUS.revaluation_proposal:
+                statusRevaluationProposal($scope, $state, $window, dialogs, caseService, therapeuticProposalService, STATUS, THERAPEUTIC_PROPOSAL_TYPES);
+                break;
+
+            case STATUS.revaluation_proposal_accepted:
+                statusRevaluationProposalAccepted($scope, $state, $window, dialogs, caseService, therapeuticProposalService, therapyCardService, request, STATUS);
+                break;
+
+            case STATUS.revaluation_therapy_card:
+                statusRevaluationTherapyCard($scope, $state, $window, dialogs, caseService, STATUS);
+                break;
+
+            case STATUS.revaluation_started:
+                statusRevaluationStarted($scope, $state, $window, dialogs, caseService, endTherapyCardService, request, STATUS);
+                break;
+
+            case STATUS.revaluation_ended:
+            case STATUS.completed:
+                statusCompleted($scope, $state, $window, dialogs, caseService, STATUS);
+                break;
+
+            case STATUS.adjuvant:
+                statusAdjuvant($scope, $state, $window, dialogs, caseService, therapeuticProposalService, STATUS, THERAPEUTIC_PROPOSAL_TYPES);
+                break;
+
+            case STATUS.adjuvant_proposal:
+                statusAdjuvantProposal($scope, $state, $window, dialogs, caseService, therapeuticProposalService, STATUS, THERAPEUTIC_PROPOSAL_TYPES);
+                break;
+
+            case STATUS.adjuvant_proposal_accepted:
+                statusAdjuvantProposalAccepted($scope, $state, $window, dialogs, caseService, therapyCardService, request, STATUS);
+                break;
+
+            case STATUS.adjuvant_therapy_card:
+                statusAdjuvantTherapyCard($scope, $state, $window, dialogs, caseService, STATUS);
+                break;
+
+            case STATUS.adjuvant_started:
+                statusAdjuvantStarted($scope, $state, $window, dialogs, caseService, therapeuticProposalService, followupService, endTherapyCardService, request, STATUS, FU_STATUS_DICT, FU_TYPE_DICT);
+                break;
+
+            case STATUS.ended:
+                statusEnded($scope, $state, $window, dialogs, caseService, therapeuticProposalService, contactService, followupService, request, STATUS, FU_STATUS_DICT, FU_TYPE_DICT);
+                break;
+
+            case STATUS.final_fu_ended:
+                statusFinalFUEnded($scope, $state, $window, dialogs, caseService, STATUS);
+                break;
+
+            case STATUS.relapse:
+                statusRelapse($scope, $state, $window, dialogs, caseService, STATUS);
+                break;
         }
 
     }
@@ -92,7 +124,7 @@ console.log($scope.model.caseObj);
             dialogs.create('surgeon/templates/associate_observers.tpl.html', 'SurgeonAssociateObserversCtrl', $scope, { copy: false });
         };
         $scope.forwardStatus = function() {
-            var dlg = dialogs.confirm('Sicuro di voler passare alla creazione delle proposte terapeutiche?', '', { size: 'sm' });
+            var dlg = dialogs.confirm('Sicuro di voler passare alla creazione delle proposte terapeutiche?', 'Accertati di aver inserito gli esami clinici iniziali prima di proseguire, perché dopo non potrai più inserirli!', { size: 'sm' });
             dlg.result.then(function(btn){
                 caseService.gotoStatus($scope.model.caseObj, STATUS.doctor_association).then(function(response) {
                     //$state.go('case.detail.surgeon.main', {}, {reload: true});
@@ -110,7 +142,7 @@ console.log($scope.model.caseObj);
      * Doctor association status
      * Surgeon has to define two therapeutic proposals that will be voted by the other doctoes in the next step
      */
-    function statusDoctorAssociation($scope, $state, $window, dialogs, caseService, therapeuticProposalService, STATUS, THERAPEUTIC_PROPOSAL_TYPES) {
+    function statusDoctorAssociation($rootScope, $scope, $state, $window, dialogs, caseService, therapeuticProposalService, STATUS, THERAPEUTIC_PROPOSAL_TYPES) {
 
         $scope.data = {
             first_tp: null,
@@ -139,6 +171,43 @@ console.log($scope.model.caseObj);
         // tpn: name of the $scope.data property which stores the therapeutic proposal
         $scope.editTherapeuticProposal = function(tpn) {
             dialogs.create('surgeon/templates/create_edit_therapeutic_proposal.tpl.html', 'SurgeonCreateEditTherapeuticProposalCtrl', {scope: $scope, tpn: tpn, tp_type: 'initial'}, { copy: false });
+        };
+
+        $scope.duplicateTherapeuticProposal = function() {
+            var dlg = dialogs.confirm('Sicuro di voler duplicare la proposta primaria?', '', { size: 'sm' });
+            dlg.result.then(function(btn){
+                // {Object} tp therapeutic proposal
+                var complete = function(tp) {
+                    // if this is a group discussion therapeutic proposal then its saved as the accepted one
+                    $scope.data.second_tp = tp;
+                    $rootScope.$broadcast('update_notifications');
+                };
+                var second_tp = angular.copy($scope.data.first_tp);
+                // reset id to allow creation
+                second_tp.id = null;
+                second_tp.priority = 2;
+                therapeuticProposalService.create($scope.model.caseObj.id, second_tp).then(function(response) {
+                    $scope.data.second_tp = response.data;
+                    // setup sections counter and total. When counter reaches total sections are all saved
+                    $scope.sections_cnt = 0;
+                    $scope.sections_tot = second_tp.sections.length;
+                    // create sections
+                    second_tp.sections.forEach(function(section) {
+                        // reset id to allow creation
+                        section.id = null;
+                        section.therapeutic_proposal = $scope.data.second_tp.id;
+                        therapeuticProposalService.createSection($scope.model.caseObj.id, $scope.data.second_tp.id, section).then(function(response) {
+                            $scope.sections_cnt++;
+                            if($scope.sections_cnt === $scope.sections_tot) {
+                                complete(response.data);
+                            }
+                        });
+                    });
+                });
+
+            },function(btn){
+                // cancel
+            });
         };
 
         $scope.forwardStatus = function() {
@@ -216,7 +285,68 @@ console.log($scope.model.caseObj);
 
     }
 
-    function statusProposalAccepted($scope, $state, $window, dialogs, caseService, therapeuticProposalService, STATUS) {
+    /**
+     * Proposal accepted status
+     * The doctors involved in the therapeutic proposal must provide their "section" info of the therapy card
+     * When done the surgeon must bublish the therapy card
+     */
+    function statusProposalAccepted($scope, $state, $window, dialogs, caseService, therapyCardService, request, STATUS) {
+
+        $scope.edit_section = false;
+        $scope.data = {};
+
+        therapyCardService.getInitial($scope.model.caseObj).then(function(response) {
+            $scope.data.tc = response.data;
+            $scope.data.tc.sections.forEach(function(section) {
+                if(section.dispenser == $scope.model.caseObj.surgeon_contact_obj.id && $scope.model.caseObj.surgeon_contact_obj.doctor.user.id == request.user.id) {
+                    $scope.edit_section = true;
+                    $scope.data.section = section;
+                }
+            });
+        });
+
+        $scope.$watch('data.tc.sections', function (value) {
+            if(value) {
+                var written = 0;
+                var total = $scope.data.tc.sections.length;
+                $scope.data.tc.sections.forEach(function(section) {
+                    if(section.text) {
+                        written++;
+                    }
+                });
+                $scope.card_complete = written == total ? true : false;
+            }
+        });
+
+        // tcn: name of the $scope.data property which stores the therapy card
+        $scope.editTherapyCard = function(tcn) {
+            dialogs.create('surgeon/templates/edit_therapy_card.tpl.html', 'SurgeonEditTherapyCardCtrl', {scope: $scope, tcn: 'tc', tc_type: 'initial'}, { copy: false });
+        };
+
+        // tcsn: name of the $scope.data property which stores the therapy card section
+        $scope.editTherapyCardSection = function() {
+            dialogs.create('doctor/templates/edit_therapy_card_section.tpl.html', 'DoctorEditTherapyCardSectionCtrl', {scope: $scope, tcn: 'tc', tcsn: 'section'}, { copy: false });
+        };
+
+        $scope.forwardStatus = function() {
+            var dlg = dialogs.confirm('Sicuro di voler pubblicare la scheda terapeutica?', 'Attenzione! Una volta pubblicata non potrà essere ulteriormente modificata.', { size: 'sm' });
+            dlg.result.then(function(btn){
+                caseService.gotoStatus($scope.model.caseObj, STATUS.therapy_card).then(function(response) {
+                    $window.location.reload();
+                }, function() {
+                    console.log('error'); // @TODO
+                });
+            },function(btn){
+                // cancel
+            });
+        };
+    }
+
+    /**
+     * Started status
+     * Surgeon starts the therapy, and the end therapy card are prefilled by the system
+     */
+    function statusTherapyCard($scope, $window, dialogs, caseService, STATUS) {
         $scope.forwardStatus = function() {
             var dlg = dialogs.confirm('Sicuro di voler avviare la terapia?', '', { size: 'sm' });
             dlg.result.then(function(btn){
@@ -232,14 +362,51 @@ console.log($scope.model.caseObj);
     }
 
     /**
-     * Status Started
+     * Started status
+     * The doctors involved in the therapy can ask for a FU, and must provide the end therapy section info
+     * When all involved doctors have provided such info and declared the therapy concluded, the surgeon can
+     * forward the status
      */
-    function statusStarted($scope, $state, $window, dialogs, caseService, therapeuticProposalService, followupService, STATUS, FU_STATUS_DICT, FU_TYPE_DICT) {
+    function statusStarted($rootScope, $scope, $state, $window, dialogs, caseService, therapeuticProposalService, followupService, endTherapyCardService, request, STATUS, FU_STATUS_DICT, FU_TYPE_DICT) {
 
+        $scope.edit_section = false;
+        $scope.therapy_is_completed = false;
         $scope.data = {
             followups: null,
             FU_STATUS_DICT: FU_STATUS_DICT
         };
+
+        therapeuticProposalService.getInitialTherapeuticProposal($scope.model.caseObj).then(function(response) {
+            $scope.tp = response.data;
+        }, function() {
+            console.log('error'); // @TODO
+        });
+
+        //////////// END CARD THERAPY
+
+        endTherapyCardService.getInitial($scope.model.caseObj).then(function(response) {
+            $scope.data.etc = response.data;
+        });
+
+        // etcn: name of the $scope.data property which stores the end therapy card
+        $scope.editEndTherapyCard = function(tcn) {
+            dialogs.create('surgeon/templates/edit_end_therapy_card.tpl.html', 'SurgeonEditEndTherapyCardCtrl', {scope: $scope, etcn: 'etc', etc_type: 'initial'}, { copy: false });
+        };
+
+        // etcsn: name of the $scope.data property which stores the end therapy card section
+        $scope.editEndTherapyCardSection = function() {
+            dialogs.create('doctor/templates/edit_end_therapy_card_section.tpl.html', 'DoctorEditEndTherapyCardSectionCtrl', {scope: $scope, etcn: 'etc', etcsn: 'section'}, { copy: false });
+        };
+
+        $scope.$watch('data.etc', function (value) {
+            if(value) {
+                $scope.data.section = endTherapyCardService.userSectionDispenser('surgeon', request.user.id, $scope.model.caseObj, $scope.data.etc);
+                $scope.edit_section = $scope.data.section === null ? false : true;
+                $scope.therapy_is_completed = endTherapyCardService.isCompleted($scope.data.etc);
+            }
+        });
+
+        //////////// FOLLOW UP
 
         followupService.list($scope.model.caseObj.id, FU_TYPE_DICT.initial, [FU_STATUS_DICT.to_be_accepted, FU_STATUS_DICT.accepted]).then(function(response) {
             $scope.data.followups = response.data;
@@ -247,12 +414,6 @@ console.log($scope.model.caseObj);
             console.log('error'); // @TODO
         });
 
-        therapeuticProposalService.getInitialTherapeuticProposal($scope.model.caseObj).then(function(response) {
-            $scope.tp = response.data;
-            console.log($scope.tp);
-        }, function() {
-            console.log('error'); // @TODO
-        });
 
         $scope.acceptFU = function(followup) {
             var dlg = dialogs.confirm('Sicuro di voler accettare la data proposta per il Follow Up?', '', { size: 'sm' });
@@ -263,6 +424,7 @@ console.log($scope.model.caseObj);
                 }, function() {
                     console.log('error');
                 });
+                $rootScope.$broadcast('update_notifications');
             },function(btn){
                 // cancel
             });
@@ -270,6 +432,7 @@ console.log($scope.model.caseObj);
 
         $scope.refuseFU = function(followup) {
             dialogs.create('surgeon/templates/refuse_fu.tpl.html', 'SurgeonRefuseFUCtrl', {scope: $scope, followup: followup}, { copy: false });
+            $rootScope.$broadcast('update_notifications');
         };
 
         $scope.closeFollowUp = function(followup) {
@@ -281,6 +444,7 @@ console.log($scope.model.caseObj);
                 }, function() {
                     console.log('error');
                 });
+                $rootScope.$broadcast('update_notifications');
             },function(btn){
                 // cancel
             });
@@ -412,7 +576,63 @@ console.log($scope.model.caseObj);
 
     }
 
-    function statusRevaluationProposalAccepted($scope, $state, $window, dialogs, caseService, therapeuticProposalService, STATUS) {
+    /**
+     * Revaluation proposal accepted
+     * doctors must fill the revaluation therapy card
+     */
+    function statusRevaluationProposalAccepted($scope, $state, $window, dialogs, caseService, therapeuticProposalService, therapyCardService, request, STATUS) {
+
+        $scope.edit_section = false;
+        $scope.data = {};
+
+        therapyCardService.getRevaluation($scope.model.caseObj).then(function(response) {
+            $scope.data.tc = response.data;
+            $scope.data.tc.sections.forEach(function(section) {
+                if(section.dispenser == $scope.model.caseObj.surgeon_contact_obj.id && $scope.model.caseObj.surgeon_contact_obj.doctor.user.id == request.user.id) {
+                    $scope.edit_section = true;
+                    $scope.data.section = section;
+                }
+            });
+        });
+
+        $scope.$watch('data.tc.sections', function (value) {
+            if(value) {
+                var written = 0;
+                var total = $scope.data.tc.sections.length;
+                $scope.data.tc.sections.forEach(function(section) {
+                    if(section.text) {
+                        written++;
+                    }
+                });
+                $scope.card_complete = written == total ? true : false;
+            }
+        });
+
+        // tcn: name of the $scope.data property which stores the therapy card
+        $scope.editTherapyCard = function(tcn) {
+            dialogs.create('surgeon/templates/edit_therapy_card.tpl.html', 'SurgeonEditTherapyCardCtrl', {scope: $scope, tcn: 'tc', tc_type: 'revaluation'}, { copy: false });
+        };
+
+        // tcsn: name of the $scope.data property which stores the therapy card section
+        $scope.editTherapyCardSection = function() {
+            dialogs.create('doctor/templates/edit_therapy_card_section.tpl.html', 'DoctorEditTherapyCardSectionCtrl', {scope: $scope, tcn: 'tc', tcsn: 'section'}, { copy: false });
+        };
+
+        $scope.forwardStatus = function() {
+            var dlg = dialogs.confirm('Sicuro di voler pubblicare la scheda terapeutica di rivalutazione?', 'Attenzione! Una volta pubblicata non potrà essere ulteriormente modificata.', { size: 'sm' });
+            dlg.result.then(function(btn){
+                caseService.gotoStatus($scope.model.caseObj, STATUS.revaluation_therapy_card).then(function(response) {
+                    $window.location.reload();
+                }, function() {
+                    console.log('error'); // @TODO
+                });
+            },function(btn){
+                // cancel
+            });
+        };
+    }
+
+    function statusRevaluationTherapyCard($scope, $state, $window, dialogs, caseService, STATUS) {
 
         $scope.forwardStatus = function() {
             var dlg = dialogs.confirm('Sicuro di voler avviare la rivalutazione?', '', { size: 'sm' });
@@ -428,7 +648,33 @@ console.log($scope.model.caseObj);
         };
     }
 
-    function statusRevaluationStarted($scope, $state, $window, dialogs, caseService, STATUS) {
+    function statusRevaluationStarted($scope, $state, $window, dialogs, caseService, endTherapyCardService, request, STATUS) {
+
+        $scope.data = {};
+
+        //////////// END CARD THERAPY
+
+        endTherapyCardService.getRevaluation($scope.model.caseObj).then(function(response) {
+            $scope.data.etc = response.data;
+        });
+
+        // etcn: name of the $scope.data property which stores the end therapy card
+        $scope.editEndTherapyCard = function(tcn) {
+            dialogs.create('surgeon/templates/edit_end_therapy_card.tpl.html', 'SurgeonEditEndTherapyCardCtrl', {scope: $scope, etcn: 'etc', etc_type: 'revaluation'}, { copy: false });
+        };
+
+        // etcsn: name of the $scope.data property which stores the end therapy card section
+        $scope.editEndTherapyCardSection = function() {
+            dialogs.create('doctor/templates/edit_end_therapy_card_section.tpl.html', 'DoctorEditEndTherapyCardSectionCtrl', {scope: $scope, etcn: 'etc', etcsn: 'section'}, { copy: false });
+        };
+
+        $scope.$watch('data.etc', function (value) {
+            if(value) {
+                $scope.data.section = endTherapyCardService.userSectionDispenser('surgeon', request.user.id, $scope.model.caseObj, $scope.data.etc);
+                $scope.edit_section = $scope.data.section === null ? false : true;
+                $scope.therapy_is_completed = endTherapyCardService.isCompleted($scope.data.etc);
+            }
+        });
 
         $scope.forwardStatus = function() {
             var dlg = dialogs.confirm('Sicuro di voler chiudere la rivalutazione?', '', { size: 'sm' });
@@ -459,6 +705,21 @@ console.log($scope.model.caseObj);
                 // cancel
             });
         };
+
+        $scope.forwardStatusEnded = function() {
+            var dlg = dialogs.confirm('Sicuro di voler chiudere la terapia?', '', { size: 'sm' });
+            dlg.result.then(function(btn){
+                caseService.gotoStatus($scope.model.caseObj, STATUS.ended).then(function(response) {
+                    $window.location.reload();
+                }, function() {
+                    console.log('error'); // @TODO
+                });
+            },function(btn){
+                // cancel
+            });
+        };
+
+
     }
 
     /**
@@ -558,7 +819,61 @@ console.log($scope.model.caseObj);
 
     }
 
-    function statusAdjuvantProposalAccepted($scope, $state, $window, dialogs, caseService, therapeuticProposalService, STATUS) {
+    function statusAdjuvantProposalAccepted($scope, $state, $window, dialogs, caseService, therapyCardService, request, STATUS) {
+
+        $scope.edit_section = false;
+        $scope.data = {};
+
+        therapyCardService.getAdjuvant($scope.model.caseObj).then(function(response) {
+            console.log(response.data);
+            $scope.data.tc = response.data;
+            $scope.data.tc.sections.forEach(function(section) {
+                if(section.dispenser == $scope.model.caseObj.surgeon_contact_obj.id && $scope.model.caseObj.surgeon_contact_obj.doctor.user.id == request.user.id) {
+                    $scope.edit_section = true;
+                    $scope.data.section = section;
+                }
+            });
+        });
+
+        $scope.$watch('data.tc.sections', function (value) {
+            if(value) {
+                var written = 0;
+                var total = $scope.data.tc.sections.length;
+                $scope.data.tc.sections.forEach(function(section) {
+                    if(section.text) {
+                        written++;
+                    }
+                });
+                $scope.card_complete = written == total ? true : false;
+            }
+        });
+
+        // tcn: name of the $scope.data property which stores the therapy card
+        $scope.editTherapyCard = function(tcn) {
+            dialogs.create('surgeon/templates/edit_therapy_card.tpl.html', 'SurgeonEditTherapyCardCtrl', {scope: $scope, tcn: 'tc', tc_type: 'adjuvant'}, { copy: false });
+        };
+
+        // tcsn: name of the $scope.data property which stores the therapy card section
+        $scope.editTherapyCardSection = function() {
+            dialogs.create('doctor/templates/edit_therapy_card_section.tpl.html', 'DoctorEditTherapyCardSectionCtrl', {scope: $scope, tcn: 'tc', tcsn: 'section'}, { copy: false });
+        };
+
+        $scope.forwardStatus = function() {
+            var dlg = dialogs.confirm('Sicuro di voler pubblicare la scheda terapeutica?', 'Attenzione! Una volta pubblicata non potrà essere ulteriormente modificata.', { size: 'sm' });
+            dlg.result.then(function(btn){
+                caseService.gotoStatus($scope.model.caseObj, STATUS.adjuvant_therapy_card).then(function(response) {
+                    $window.location.reload();
+                }, function() {
+                    console.log('error'); // @TODO
+                });
+            },function(btn){
+                // cancel
+            });
+        };
+
+    }
+
+    function statusAdjuvantTherapyCard($scope, $state, $window, dialogs, caseService, STATUS) {
 
         $scope.forwardStatus = function() {
             var dlg = dialogs.confirm('Sicuro di voler avviare la terapia adiuvante?', '', { size: 'sm' });
@@ -577,22 +892,50 @@ console.log($scope.model.caseObj);
     /**
      * Status Adjuvant Started
      */
-    function statusAdjuvantStarted($scope, $state, $window, dialogs, caseService, therapeuticProposalService, followupService, STATUS, FU_STATUS_DICT, FU_TYPE_DICT) {
+    function statusAdjuvantStarted($scope, $state, $window, dialogs, caseService, therapeuticProposalService, followupService, endTherapyCardService, request, STATUS, FU_STATUS_DICT, FU_TYPE_DICT) {
 
+        $scope.edit_section = false;
+        $scope.therapy_is_completed = false;
         $scope.data = {
             followups: null,
             FU_STATUS_DICT: FU_STATUS_DICT
         };
 
-        followupService.list($scope.model.caseObj.id, FU_TYPE_DICT.adjuvant, [FU_STATUS_DICT.to_be_accepted, FU_STATUS_DICT.accepted]).then(function(response) {
-            $scope.data.followups = response.data;
+        therapeuticProposalService.getAdjuvantTherapeuticProposal($scope.model.caseObj).then(function(response) {
+            $scope.tp = response.data;
+            console.log($scope.tp);
         }, function() {
             console.log('error'); // @TODO
         });
 
-        therapeuticProposalService.getAdjuvantTherapeuticProposal($scope.model.caseObj).then(function(response) {
-            $scope.tp = response.data;
-            console.log($scope.tp);
+        //////////// END CARD THERAPY
+
+        endTherapyCardService.getAdjuvant($scope.model.caseObj).then(function(response) {
+            $scope.data.etc = response.data;
+        });
+
+        // etcn: name of the $scope.data property which stores the end therapy card
+        $scope.editEndTherapyCard = function(tcn) {
+            dialogs.create('surgeon/templates/edit_end_therapy_card.tpl.html', 'SurgeonEditEndTherapyCardCtrl', {scope: $scope, etcn: 'etc', etc_type: 'adjuvant'}, { copy: false });
+        };
+
+        // etcsn: name of the $scope.data property which stores the end therapy card section
+        $scope.editEndTherapyCardSection = function() {
+            dialogs.create('doctor/templates/edit_end_therapy_card_section.tpl.html', 'DoctorEditEndTherapyCardSectionCtrl', {scope: $scope, etcn: 'etc', etcsn: 'section'}, { copy: false });
+        };
+
+        $scope.$watch('data.etc', function (value) {
+            if(value) {
+                $scope.data.section = endTherapyCardService.userSectionDispenser('surgeon', request.user.id, $scope.model.caseObj, $scope.data.etc);
+                $scope.edit_section = $scope.data.section === null ? false : true;
+                $scope.therapy_is_completed = endTherapyCardService.isCompleted($scope.data.etc);
+            }
+        });
+
+        //////////// FOLLOW UP
+
+        followupService.list($scope.model.caseObj.id, FU_TYPE_DICT.adjuvant, [FU_STATUS_DICT.to_be_accepted, FU_STATUS_DICT.accepted]).then(function(response) {
+            $scope.data.followups = response.data;
         }, function() {
             console.log('error'); // @TODO
         });

@@ -1,0 +1,33 @@
+<h2>Terapia adiuvante</h2>
+<h3>Proposta terapeutica</h3>
+<p ng-if="!vm.currentDoctorVoted()" class="alert alert-info">Devi procedere alla votazione delle proposte terapeutiche.</p>
+<p ng-if="!vm.data.pollingComplete && vm.currentDoctorVoted()" class="alert alert-info">In attesa della votazione dell'altro medico.</p>
+<p ng-if="vm.data.pollingComplete && !vm.data.accepted_tp" class="alert alert-info">Tutti i medici hanno votato, non è stata raggiunta la maggioranza, pertanto è necessario programmare un incontro per stabilire la proposta terapeutica da portare avanti.</p>
+<p ng-show="vm.data.pollingComplete && vm.data.accepted_tp" class="alert alert-info">La proposta terapeutica "{{ vm.data.accepted_tp.title }}" è stata accettata.</p>
+<div ng-if="vm.data.accepted_tp.group_discussion" class="row">
+    <div class="col-sm-12 col-md-6">
+        <h3>Proposta a seguito di gruppo di discussione</h3>
+        <div class="vote-true shadow-z-1">
+            <div style="padding: 14px;" class="bg-white">
+                <nocctpbox tp="vm.data.accepted_tp" show-visible="true"></nocctpbox>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- first therapeutic proposal -->
+    <div class="col-sm-12 col-md-6">
+        <h3>Proposta di terapia adiuvante</h3>
+        <div ng-class="{'vote-true': vm.data.tp.vote, 'vote-false': vm.data.tp.vote === false, 'shadow-z-1': true}">
+            <div style="padding: 14px;" class="bg-white">
+                <nocctpbox tp="vm.data.tp" show-visible="true"></nocctpbox>
+            </div>
+            <div class="proposal-vote">
+                <a ng-show="vm.data.tp.vote === null" href ng-click="vm.vote(vm.data.tp, true)" class="fa fa-check fa-3x"></a>
+                <a ng-show="vm.data.tp.vote === null" href ng-click="vm.vote(vm.data.tp, false)" class="fa fa-remove fa-3x"></a>
+                <i ng-show="vm.data.tp.vote !== null" ng-class="{'fa fa-3x fa-check': vm.data.tp.vote, 'fa fa-3x fa-remove': !vm.data.tp.vote}"></i>
+            </div>
+        </div>
+    </div>
+ </div>

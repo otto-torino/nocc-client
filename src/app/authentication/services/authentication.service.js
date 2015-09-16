@@ -1,7 +1,9 @@
 /**
-* @file authentication.service.js
-* @namespace nocc.authentication.services
-* @author    abidibo <abidibo@gmail.com>
+* @file           authentication.service.js
+* @version        0.1.1
+* @namespace      nocc.authentication.services
+* @author         abidibo <abidibo@gmail.com>
+* @description    Authentication module services
 */
 (function () {
     'use strict';
@@ -67,7 +69,7 @@
                     }
                 },
                 function loginErrorFn(response) {
-                    deferred.reject(response.data.message);
+                    deferred.reject(response.data);
                 }
 
             );

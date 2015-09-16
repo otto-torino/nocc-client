@@ -1,0 +1,22 @@
+<h2>Rivalutazione</h2>
+<p class="alert alert-info">Rivalutazione avviata</p>
+<div ng-show="data.etc.date && therapy_is_completed">
+    <p><a href ng-click="forwardStatus()" class="btn btn-primary">Rivalutazione completata</a></p>
+</div>
+<div class="row">
+    <div class="col-sm-12 col-md-6">
+        <h2>Scheda di fine trattamento</h2>
+        <div ng-show="!data.etc.date && therapy_is_completed">
+            <p class="alert alert-info">Inserire la data della scheda di fine trattamento prima di pubblicarla</p>
+        </div>
+        <div class="shadow-z-1">
+            <div style="padding: 14px;" class="bg-white">
+                <p class="text-right">
+                    <a ng-click="editEndTherapyCard('etc')" class="fa fa-pencil"></a>
+                </p>
+                <noccetcbox etc="data.etc" show-visible="true"></nocctcbox>
+            </div>
+        </div>
+        <p ng-show="edit_section"><a class="btn btn-primary" ng-click="editEndTherapyCardSection()">Modifica la sezione "Chirurgia" della scheda di fine trattamento</a></p>
+    </div>
+</div>

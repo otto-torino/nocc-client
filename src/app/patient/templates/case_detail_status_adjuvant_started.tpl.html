@@ -1,0 +1,12 @@
+<h2>Terapia adiuvante</h2>
+<div ng-if="vm.data.followups.length">
+    <h2>Follow Up</h2>
+    <p>Presentarsi alle seguenti visite di Follow Up</p>
+    <div ng-repeat="fu in vm.data.followups" class="well">
+        <p><strong>Medico</strong>: {{ fu.doctor_contact.doctor.firstname }} {{ fu.doctor_contact.doctor.lastname }}</p>
+        <p><strong>Ospedale</strong>: {{ fu.doctor_contact.hospital_obj.name }} - {{ fu.doctor_contact.description }}</p>
+        <p><strong>Data</strong>:{{ fu.date | date: 'dd/MM/yyyy HH:mm' }}</p>
+        <p>{{ fu.text }}</p>
+
+    </div>
+</div>

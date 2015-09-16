@@ -1,0 +1,4 @@
+<p class="alert alert-info" ng-show="vm.model.caseObj.oncologist_status != vm.model.ASSOCIATION_STATUS.accepted && vm.model.caseObj.radiotherapist_status != vm.model.ASSOCIATION_STATUS.accepted">Oncologo e Radioterapista in attesa di associazione</p>
+<p class="alert alert-info" ng-show="vm.model.caseObj.oncologist_status != vm.model.ASSOCIATION_STATUS.accepted && vm.model.caseObj.radiotherapist_status == vm.model.ASSOCIATION_STATUS.accepted">Oncologo in attesa di associazione</p>
+<p class="alert alert-info" ng-show="vm.model.caseObj.oncologist_status == vm.model.ASSOCIATION_STATUS.accepted && vm.model.caseObj.radiotherapist_status != vm.model.ASSOCIATION_STATUS.accepted">Radioterapista in attesa di associazione</p>
+<p class="alert alert-info" ng-show="vm.model.caseObj.oncologist_status == vm.model.ASSOCIATION_STATUS.accepted && vm.model.caseObj.radiotherapist_status == vm.model.ASSOCIATION_STATUS.accepted">In attesa di accettazione di una proposta terapeutica</p>

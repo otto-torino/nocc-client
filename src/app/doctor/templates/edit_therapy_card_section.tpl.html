@@ -1,0 +1,59 @@
+<div class="modal-header">
+    <h2><i class="fa fa-{{ therapyCardSection.id ? 'pencil' : 'plus' }}" /> {{ therapyCardSection.section_type === 'surgeon' ? 'Chirurgia' : (therapyCardSection.section_type == 'oncologist' ? 'Chemioterapia' : 'Radioterapia') }}</h2>
+</div>
+<form role="form" name="therapyCardSectionForm">
+
+    <div class="modal-body">
+        <p ng-show="!therapyCardSection.id">Sarà possibile aggiungere allegati una volta salvato il contenuto principale.</p>
+        <div class="form-group">
+            <label for="therapyCardSection__text">Trattamento</label>
+            <div class="error" ng-show="errors.text">
+                <div class="alert alert-danger" ng-repeat="e in errors.text">{{ e }}</div>
+            </div>
+            <textarea class="form-control" id="therapyCardSection__text" ng-model="therapyCardSection.text"></textarea>
+        </div>
+
+        <div ng-show="therapyCardSection.id">
+            <h3>Allegati</h3>
+            <div class="form-group">
+                <label for="therapyCardSection__attachments">Files</label>
+                <div class="error" ng-show="errors.attachment">
+                    <div class="alert alert-danger" ng-repeat="e in errors.attachment">{{ e }}</div>
+                </div>
+                <div class="form-control-static" ng-show="therapyCardSection.attachments">
+                    <ul>
+                        <li ng-repeat="a in therapyCardSection.attachments">
+                            <aajax href="{{ a.file | absurl }}" target="_blank">{{ a.file }}</aajax> <a style="margin-left: 20px;" href ng-click="deleteAttachment(a)" class="fa fa-trash-o"></a>
+                        </li>
+                    </ul>
+                </div>
+                <p>Inseirsci file</p>
+                <div ngf-drop 
+                     ngf-select 
+                     ng-model="file.attachments" class="drop-box" 
+                     ngf-drag-over-class="dragover" 
+                     ngf-multiple="true" 
+                     ngf-allow-dir="true" 
+                     ngf-keep="true" 
+                     ngk-keep-distinct="true" 
+                     accept="">Trascina un file o clicca per aprire una finestra di selezione</div>
+                <div ngf-no-file-drop>Drag/Drop non supportato dal tuo browser</div>
+                <progressbar ng-show="show_progress_bar_attachment" class="progress-striped active" animate="true" max="100" value="progressValue_attachment" type="success"><i>{{ progressValue_attachment }} / 100</i></progressbar>
+                <p class="alert alert-info" ng-show="progressValue_attachment == 100 && show_progress_bar_attachment && !uploadError_attachment">
+                    <i class="fa fa-info-circle" style="display: inline-block;margin-right: 10px;"></i>upload completato con successo
+                </p>
+                <p class="alert alert-danger" ng-show="uploadError_attachment">
+                    <i class="fa fa-exclamation-circle" style="display: inline-block;margin-right: 10px;"></i>upload fallito
+                </p>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-click="cancel()" type="button">Annulla</button>
+        <button class="btn btn-primary" ng-disabled="!therapyCardSectionForm.$valid" ng-click="save()" type="button" disabled="disabled">Salva</button>
+    </div>
+</form>
+<script>$.material.checkbox();</script>

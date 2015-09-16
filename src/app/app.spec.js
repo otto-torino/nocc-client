@@ -1,7 +1,14 @@
 /**
+* @file           app.spec.js
+* @version        0.1.1
+* @description    Main app unit tests
+* @author         abidibo <abidibo@gmail.com>
+*/
+
+/**
  * Login function
  */
-var login_surgeon = function(authenticationService, $httpBackend, scope) {
+var login_surgeon = function(authenticationService, $httpBackend, scope, API_BASE_URL) {
 
     fake_user = {
         token: 'myfaketoken',
@@ -14,7 +21,7 @@ var login_surgeon = function(authenticationService, $httpBackend, scope) {
             is_surgeon: true
         }
     };
-    $httpBackend.when('POST', "http://localhost:8000/nocc/api/v1/auth/login/").respond(fake_user);
+    $httpBackend.when('POST', API_BASE_URL + "/auth/login/").respond(fake_user);
     authenticationService.login('lorierif', 'fabrizio');
     $httpBackend.flush();
     // $scope.auth is set by the NoccController on $stateChangeSuccess
@@ -27,17 +34,19 @@ describe( 'redirectActor: ', function() {
         $httpBackend,
         $rootScope,
         $controller,
-        authenticationService;
+        authenticationService,
+        API_BASE_URL;
 
     beforeEach( function() {
         module('nocc');
         module('nocc.controllers');
-        inject(function(_$state_, _$httpBackend_, _$rootScope_, _$controller_, _authenticationService_) {
+        inject(function(_$state_, _$httpBackend_, _$rootScope_, _$controller_, _authenticationService_, _API_BASE_URL_) {
             $state = _$state_;
             $httpBackend = _$httpBackend_;
             $rootScope = _$rootScope_;
             $controller = _$controller_;
             authenticationService = _authenticationService_;
+            API_BASE_URL = _API_BASE_URL_;
         });
     } );
 
@@ -57,7 +66,7 @@ describe( 'redirectActor: ', function() {
             beforeEach(inject(function () {
                 scope1 = $rootScope.$new();
                 spyOn($state, 'go');
-                login_surgeon(authenticationService, $httpBackend, {});
+                login_surgeon(authenticationService, $httpBackend, {}, API_BASE_URL);
             }));
 
             /**

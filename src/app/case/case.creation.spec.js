@@ -82,6 +82,7 @@ describe('case creation: ', function() {
         fake_cases = [];
         $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/cases/?role=surgeon").respond(fake_cases);
         $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/cases/?role=doctor").respond(fake_cases);
+        $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/cases/?role=observer").respond(fake_cases);
 
         var fake_surgeon_data = {
             id: 2,
@@ -147,6 +148,14 @@ describe('case creation: ', function() {
             }
         ];
         $httpBackend.when('POST', "http://localhost:8000/nocc/api/v1/cases/").respond(fake_post_case_data);
+
+        var fake_generic_diagnosis_data = [
+            {
+                name: 'diagnosi',
+                id: 1
+            }
+        ];
+        $httpBackend.when('GET', "http://localhost:8000/nocc/api/v1/generic-diagnosis/").respond(fake_generic_diagnosis_data);
 
 
     });

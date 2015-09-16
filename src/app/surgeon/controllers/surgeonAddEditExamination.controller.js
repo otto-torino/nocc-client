@@ -60,8 +60,7 @@
                 ctrl[exsl].push($scope.examination);
             }
             function saveErrorFn(response) {
-                // @TODO
-                console.log('error');
+                $scope.errors = response.data;
             }
         };
 
@@ -76,8 +75,7 @@
                 $modalInstance.dismiss();
             }
             function updateErrorFn(response) {
-                // @TODO
-                console.log('error');
+                $scope.errors = response.data;
             }
         };
 
@@ -98,7 +96,6 @@
 
         function upload(file) {
             var success = function (response) {
-                console.log(response.data);
                 $scope.examination.attachments.push(response.data);
                 ctrl[exsl][index].attachments.push(response.data);
                 $timeout(function() {

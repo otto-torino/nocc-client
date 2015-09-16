@@ -1,7 +1,7 @@
 <h2>{{ nav.title }}</h2>
 <ul>
     <li ng-repeat="n in nav.items">
-        <i class="fa fa-{{ n.fa }}"></i> <a href ui-sref="{{ n.state }}">{{ n.text }}</a>
+        <span style="min-width: 30px; display: inline-block;"><i class="fa fa-{{ n.fa }}"></i></span> <a href ui-sref="{{ n.state }}">{{ n.text }}</a>
 
     </li>
 </ul>

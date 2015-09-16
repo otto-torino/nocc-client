@@ -1,0 +1,38 @@
+<div ng-show="tp">
+    <table class="table table-bordered">
+        <tr>
+            <th>Data</th>
+            <td>{{ tp.date | date: 'dd/MM/yyyy' }}</td>
+        </tr>
+        <tr>
+            <th>CTNM</th>
+            <td>{{ tp.title }}</td>
+        </tr>
+        <tr>
+            <th>Descrizione</th>
+            <td>{{ tp.description }}</td>
+        </tr>
+        <tr>
+            <th>Rivalutazione</th>
+            <td><i class="fa fa-{{ tp.need_revaluation ? 'check' : 'remove' }}"></i></td>
+        </tr>
+        <tr>
+            <th>Linne guida</th>
+            <td>
+                <ul>
+                    <li ng-repeat="g in tp.guidelines_obj">
+                        <aajax href="{{ g.file | absurl }}">{{ g.title }}</aajax>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr ng-show="showVisible">
+            <th>Visibile al paziente</th>
+            <td><i class="fa fa-{{ tp.visible ? 'check' : 'remove' }}"></i></td>
+        </tr>
+    </table>
+    <div ng-repeat="s in tp.sections">
+        <h4>{{ s.section_type == 'oncologist' ? 'Chemioterapia' : (s.section_type == 'radiotherapist' ? 'Radioterapia' : 'Chirurgia') }}</h4>
+        {{ s.text }}
+    </div>
+</div>

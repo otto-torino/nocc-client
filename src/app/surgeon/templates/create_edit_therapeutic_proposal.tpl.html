@@ -4,7 +4,7 @@
 <form role="form" name="therapeuticProposalForm">
     <div class="modal-body">
         <div class="form-group">
-            <label for="therapeuticProposal__title">Titolo</label>
+            <label for="therapeuticProposal__title">CTNM</label>
             <div class="error" ng-show="errors.therapeuticProposal__title">
                 <div class="alert alert-danger" ng-repeat="e in errors.therapeuticProposal__title">{{ e }}</div>
             </div>
@@ -36,11 +36,20 @@
         </div>
 
         <div class="form-group">
+            <label>Visibilità</label>
+            <div class="checkbox checkbox-primary">
+                <label for="therapeuticProposal__visible">Rendi visibile al paziente una volta pubblicata
+                    <input type="checkbox" class="form-control" id="therapeuticProposal__visible" ng-model="therapeuticProposal.visible" />
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
             <h2>
             <div class="checkbox checkbox-primary">
                 <label for="oncologistSection">
                     <input type="checkbox" class="form-control" id="oncologistSection" ng-model="oncologistSection" />
-                    <span style="top: 7px; position:relative; display: inline-block">Sezione oncologo</span>
+                    <span style="top: 7px; position:relative; display: inline-block">Chemioterapia</span>
                 </label>
             </div>
             </h2>
@@ -60,7 +69,7 @@
             <div class="checkbox checkbox-primary">
                 <label for="radiotherapistSection">
                     <input type="checkbox" class="form-control" id="radiotherapistSection" ng-model="radiotherapistSection" />
-                    <span style="top: 7px; position:relative; display: inline-block">Sezione radioterapista</span>
+                    <span style="top: 7px; position:relative; display: inline-block">Radioterapia</span>
                 </label>
             </div>
             </h2>
@@ -80,7 +89,7 @@
             <div class="checkbox checkbox-primary">
                 <label for="surgeonSection">
                     <input type="checkbox" class="form-control" id="surgeonSection" ng-model="surgeonSection" />
-                    <span style="top: 7px; position:relative; display: inline-block">Sezione chirurgo</span>
+                    <span style="top: 7px; position:relative; display: inline-block">Chirurgia</span>
                 </label>
             </div>
             </h2>

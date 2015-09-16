@@ -4,11 +4,17 @@
 <form role="form">
     <div class="modal-body">
         <div class="form-group">
-            <label for="case__description">Descrizione</label>
-            <div class="error" ng-show="errors.description"> <!-- @FIXME -->
-                <div class="alert alert-danger" ng-repeat="e in errors.description">{{ e }}</div>
-            </div>
-            <input type="text" class="form-control" id="case__description" ng-model="case.description" placeholder="" required />
+            <label for="case__generic_diagnosis">Diagnosi generica</label>
+            <select class="form-control" id="case__generic_diagnosis" ng-model="case.generic_diagnosis" required>
+                <option ng-repeat="g in generic_diagnosis.list" value="{{ g.id }}" ng-selected="case.generic_diagnosis == g.id">{{ g.code }} - {{ g.name }}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="case__specific_diagnosis">Diagnosi specifica</label>
+            <select ng-show="case.generic_diagnosis" class="form-control" id="case__specific_diagnosis" ng-model="case.specific_diagnosis" required>
+                <option ng-repeat="s in specific_diagnosis.list" value="{{ s.id }}" ng-selected="case.specific_diagnosis == s.id">{{ s.complete_code }} - {{ s.name }}</option>
+            </select>
+            <p ng-show="!case.generic_diagnosis">Selezionare la diagnosi generica</p>
         </div>
         <div class="form-group" ng-if="contacts.list.length">
             <label for="case__patient">Contatto</label>
@@ -33,15 +39,15 @@
         <div ng-show="case.patient === '0'">
             <div class="form-group">
                 <label for="patient__firstname">Nome</label>
-                <div class="error" ng-show="errors.patient__firstname"> <!-- @FIXME -->
-                    <div class="alert alert-danger" ng-repeat="e in errors.patient__firstname">{{ e }}</div>
+                <div class="error" ng-show="errors.firstname"> <!-- @FIXME -->
+                    <div class="alert alert-danger" ng-repeat="e in errors.firstname">{{ e }}</div>
                 </div>
                 <input type="text" class="form-control" id="patient__firstname" ng-model="case.new_patient.firstname" placeholder="es. Mario" required />
             </div>
             <div class="form-group">
                 <label for="patient__lastname">Cognome</label>
-                <div class="error" ng-show="errors.patient__lastname"> <!-- @FIXME -->
-                    <div class="alert alert-danger" ng-repeat="e in errors.patient__lastname">{{ e }}</div>
+                <div class="error" ng-show="errors.lastname"> <!-- @FIXME -->
+                    <div class="alert alert-danger" ng-repeat="e in errors.lastname">{{ e }}</div>
                 </div>
                 <input type="text" class="form-control" id="patient__lastname" ng-model="case.new_patient.lastname" placeholder="es. Rossi" required />
             </div>
@@ -65,15 +71,15 @@
             </div>
             <div class="form-group">
                 <label for="patient__cf">Codice Fiscale</label>
-                <div class="error" ng-show="errors.patient__cf"> <!-- @FIXME -->
-                    <div class="alert alert-danger" ng-repeat="e in errors.patient__cf">{{ e }}</div>
+                <div class="error" ng-show="errors.cf"> <!-- @FIXME -->
+                    <div class="alert alert-danger" ng-repeat="e in errors.cf">{{ e }}</div>
                 </div>
-                <input type="text" class="form-control" id="patient__cf" ng-model="case.new_patient.cf" placeholder="es. DBTGNT88G21T654T" required />
+                <input type="text" class="form-control form-control-uppercase" id="patient__cf" ng-model="case.new_patient.cf" placeholder="es. DBTGNT88G21T654T" required />
             </div>
             <div class="form-group">
                 <label for="patient__birth_date">Data di nascita</label>
-                <div class="error" ng-show="errors.patient__birth_date">
-                    <div class="alert alert-danger" ng-repeat="e in errors.date">{{ e }}</div>
+                <div class="error" ng-show="errors.birth_date">
+                    <div class="alert alert-danger" ng-repeat="e in errors.birth_date">{{ e }}</div>
                 </div>
                 <div class="dropdown">
                     <span class="dropdown-toggle" id="dropdown2" role="button" data-target="#" href="#">
@@ -90,36 +96,36 @@
             </div>
             <div class="form-group">
                 <label for="patient__birth_place">Luogo di nascita</label>
-                <div class="error" ng-show="errors.patient__birth_place"> <!-- @FIXME -->
-                    <div class="alert alert-danger" ng-repeat="e in errors.patient__birth_place">{{ e }}</div>
+                <div class="error" ng-show="errors.birth_place"> <!-- @FIXME -->
+                    <div class="alert alert-danger" ng-repeat="e in errors.birth_place">{{ e }}</div>
                 </div>
                 <input type="text" class="form-control" id="patient__birth_place" ng-model="case.new_patient.birth_place" placeholder="es. Milano" required />
             </div>
             <div class="form-group">
                 <label for="patient__address">Indirizzo</label>
-                <div class="error" ng-show="errors.patient__address"> <!-- @FIXME -->
-                    <div class="alert alert-danger" ng-repeat="e in errors.patient__address">{{ e }}</div>
+                <div class="error" ng-show="errors.ddress"> <!-- @FIXME -->
+                    <div class="alert alert-danger" ng-repeat="e in errors.address">{{ e }}</div>
                 </div>
                 <input type="text" class="form-control" id="patient__address" ng-model="case.new_patient.address" placeholder="es. Via Roma 45" required />
             </div>
             <div class="form-group">
                 <label for="patient__city">Città</label>
-                <div class="error" ng-show="errors.patient__city"> <!-- @FIXME -->
-                    <div class="alert alert-danger" ng-repeat="e in errors.patient__city">{{ e }}</div>
+                <div class="error" ng-show="errors.city"> <!-- @FIXME -->
+                    <div class="alert alert-danger" ng-repeat="e in errors.city">{{ e }}</div>
                 </div>
                 <input type="text" class="form-control" id="patient__city" ng-model="case.new_patient.city" placeholder="es. Torino" required />
             </div>
             <div class="form-group">
                 <label for="patient__phone">Telefono</label>
-                <div class="error" ng-show="errors.patient__phone"> <!-- @FIXME -->
-                    <div class="alert alert-danger" ng-repeat="e in errors.patient__phone">{{ e }}</div>
+                <div class="error" ng-show="errors.phone"> <!-- @FIXME -->
+                    <div class="alert alert-danger" ng-repeat="e in errors.phone">{{ e }}</div>
                 </div>
                 <input type="text" class="form-control" id="patient__phone" ng-model="case.new_patient.phone" placeholder="es. 011.784839" required />
             </div>
             <div class="form-group">
                 <label for="patient__email">E-mail</label>
-                <div class="error" ng-show="errors.patient__email"> <!-- @FIXME -->
-                    <div class="alert alert-danger" ng-repeat="e in errors.patient__email">{{ e }}</div>
+                <div class="error" ng-show="errors.email"> <!-- @FIXME -->
+                    <div class="alert alert-danger" ng-repeat="e in errors.email">{{ e }}</div>
                 </div>
                 <input type="email" class="form-control" id="patient__email" ng-model="case.new_patient.email" placeholder="es. mariorossi@gmail.com" required />
             </div>
@@ -129,7 +135,7 @@
 
     <div class="modal-footer">
         <button class="btn btn-default" ng-click="cancel()" type="button">Annulla</button>
-        <button class="btn btn-primary" ng-disabled="!case.description || (!case.patient || (case.patient === '0' && !checkNewPatientMandatoryFields()))" ng-click="save()" type="button" disabled="disabled">Salva</button>
+        <button class="btn btn-primary" ng-disabled="!case.specific_diagnosis || (!case.patient || (case.patient === '0' && !checkNewPatientMandatoryFields()))" ng-click="save()" type="button" disabled="disabled">Salva</button>
     </div>
     <script>$.material.checkbox();$.material.radio();$.material.input();</script>
 </form>

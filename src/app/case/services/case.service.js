@@ -26,6 +26,7 @@
             listAsSurgeon: listAsSurgeon,
             listAsDoctor: listAsDoctor,
             listAsPatient: listAsPatient,
+            listAsObserver: listAsObserver,
             create: create,
             getRelapse: getRelapse,
             get: get,
@@ -34,7 +35,9 @@
             associateObservers: associateObservers,
             refuse: refuse,
             accept: accept,
-            gotoStatus: gotoStatus
+            gotoStatus: gotoStatus,
+            listGenericDiagnosis: listGenericDiagnosis,
+            listSpecificDiagnosis: listSpecificDiagnosis
         };
 
         return service;
@@ -76,6 +79,15 @@
         */
         function listAsPatient() {
             return $http.get(API_BASE_URL + '/cases/?role=patient');
+        }
+
+        /**
+        * @summary Retrieves cases in which the user is an observer
+        * @returns {Promise}
+        * @memberOf nocc.case.services.caseService
+        */
+        function listAsObserver() {
+            return $http.get(API_BASE_URL + '/cases/?role=observer');
         }
 
         /**
@@ -143,10 +155,10 @@
         function refuse(caseobj, role) {
             var obj;
             if(role === 'oncologist') {
-                obj = { oncologist_status: ASSOCIATION_STATUS.refused };
+                obj = { oncologist_status: ASSOCIATION_STATUS.refused, oncologist_contact: null };
             }
             if(role === 'radiotherapist') {
-                obj = { radiotherapist_status: ASSOCIATION_STATUS.refused };
+                obj = { radiotherapist_status: ASSOCIATION_STATUS.refused, radiotherapist_contact: null };
             }
             return $http.patch(API_BASE_URL + '/cases/' + caseobj.id + '/', obj);
         }
@@ -178,6 +190,27 @@
          */
         function gotoStatus(caseobj, status) {
             return $http.patch(API_BASE_URL + '/cases/' + caseobj.id + '/', {status: status});
+        }
+
+        ////////// DIAGNOSIS
+
+        /**
+        * @summary Retrieves all general diagnosis
+        * @returns {Promise}
+        * @memberOf nocc.case.services.caseService
+        */
+        function listGenericDiagnosis() {
+            return $http.get(API_BASE_URL + '/generic-diagnosis/');
+        }
+
+        /**
+        * @summary Retrieves all specific diagnosis given the general diagnosis
+        * @params {Number} generic_diagnosis_id
+        * @returns {Promise}
+        * @memberOf nocc.case.services.caseService
+        */
+        function listSpecificDiagnosis(generic_diagnosis_id) {
+            return $http.get(API_BASE_URL + '/specific-diagnosis/?generic_diagnosis=' + generic_diagnosis_id);
         }
 
     }

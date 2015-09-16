@@ -1,10 +1,11 @@
 html {
     position: relative;
     min-height: 100%;
-    background: #ECF0F1;
+    background: #f8f8f8;
 }
 body {
     min-height: 100%;
+    background: #f8f8f8;
 }
 #sidebar {
     min-height: 100%;
@@ -19,6 +20,10 @@ body {
             color: #fff;
             font-size: 18px;
             margin-right: 10px;
+            transition-duration: 1s;
+            transition-property: transform;
+            transition-timing-function: ease-in-out;
+            transform: rotate(0deg);
         }
         .navbar-collapse {
             padding: 0;
@@ -31,6 +36,9 @@ body {
             padding: 10px 20px;
             background: #222;
             border: 1px solid #111;
+            &:hover i.fa {
+                transform: rotate(360deg);
+            }
         }
         li + li {
             border-top-width: 0px;
@@ -95,19 +103,23 @@ body {
 
 /* actions bar */
 .actions-bar {
-    background: #eaeaea;
+    background: #d9b9b9;
     border-bottom: 1px solid #fff;
     text-align: right;
-    padding: 10px 30px 10px 20px;
+    padding: 10px 30px 10px 20px !important;
 }
 
 /* pageslide */
 .ng-pageslide {
-    background: #75c1cf;
+    background: lighten(#75c1cf, 10%);
     border-left: 1px solid #fff;
+    h1 {
+        margin-top: 0;
+    }
     > div {
         padding: 20px 10px;
     }
+    overflow: auto !important;
 }
 
 /* notification */
@@ -115,10 +127,25 @@ ul.notification {
     list-style-type: none;
     padding-left: 0;
     li {
-        background: lighten(#066071, 5%);
-        padding: 5px;
         color: #fff;
         margin-bottom: 5px;
+    }
+    .notification-title {
+        display: block;
+        font-size: 13px;
+        background: #066476;
+        padding: 5px;
+    }
+    .notification-text {
+        background: #fff;
+        display: block;
+        font-weight: bold;
+        font-size: 13px;
+        padding: 5px;
+        color: #066071;
+    }
+    li:hover .notification-title {
+        background: lighten(#066476, 5%);
     }
 }
 .notification-num {
@@ -135,4 +162,214 @@ ul.notification {
     position: relative;
     top: -15px;
     left: -5px;
+}
+
+/** PROFILE */
+.img-profile {
+    width: 250px;
+}
+
+
+/** TABLES */
+@table-header-font-weight:      400;
+@table-header-font-color:       #757575;
+
+@table-bg:                      #fff;
+@table-bg-accent:               #f5f5f5;
+@table-bg-hover:                rgba(0,0,0,.12);
+@table-bg-active:               @table-bg-hover;
+@table-border-color:            #e0e0e0;
+// Baseline styles
+
+.table-responsive-vertical {
+    .table {
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: 2rem;
+      background-color: @table-bg;
+      > thead,
+      > tbody,
+      > tfoot {
+        > tr {
+          .transition(all .3s ease);
+          > th,
+          > td {
+            text-align: left;
+            padding: @table-cell-padding;
+            vertical-align: top;
+            border-top: 0;
+            .transition(all .3s ease);
+          }
+        }
+      }
+      > thead > tr > th {
+        font-weight: @table-header-font-weight;
+        color: @table-header-font-color;
+        vertical-align: bottom;
+        border-bottom: 1px solid rgba(0,0,0,.12);
+      }
+      > caption + thead,
+      > colgroup + thead,
+      > thead:first-child {
+        > tr:first-child {
+          > th,
+          > td {
+            border-top: 0;
+          }
+        }
+      }
+      > tbody + tbody {
+        border-top: 1px solid rgba(0,0,0,.12);
+      }
+
+      // Nesting
+      .table {
+        background-color: @table-bg;
+      }
+
+      // Remove border
+      .no-border {
+        border: 0;
+      }
+    }
+
+    // Condensed table w/ half padding
+    .table-condensed {
+      > thead,
+      > tbody,
+      > tfoot {
+        > tr {
+          > th,
+          > td {
+            padding: @table-condensed-cell-padding;
+          }
+        }
+      }
+    }
+    // Bordered version
+    //
+    // Add horizontal borders between columns.
+    .table-bordered {
+      border: 0;
+      > thead,
+      > tbody,
+      > tfoot {
+        > tr {
+          > th,
+          > td {
+            border: 0;
+            border-bottom: 1px solid @table-border-color;
+          }
+        }
+      }
+      > thead > tr {
+        > th,
+        > td {
+          border-bottom-width: 2px;
+        }
+      }
+    }
+}
+
+
+// Responsive tables (vertical)
+//
+// Wrap your tables in `.table-responsive-vertical` and we'll make them mobile friendly
+// by vertical table-cell display. Only applies <768px. Everything above that will display normally.
+// For correct display you must add 'data-title' to each 'td'
+.table-responsive-vertical {
+
+  @media screen and (max-width: 768px) {
+
+    // Tighten up spacing
+    > .table {
+      margin-bottom: 0;
+      background-color: transparent;
+      > thead,
+      > tfoot {
+        display: none;
+      }
+
+      > tbody {
+        display: block;
+
+        > tr {
+          display: block;
+          border: 1px solid @table-border-color;
+          border-radius: 2px;
+          margin-bottom: @table-cell-padding;
+
+          > td {
+            background-color: @table-bg;
+            display: block;
+            vertical-align: middle;
+            text-align: right;
+            > ul {
+                list-style-type: none;
+            }
+          }
+          > td[data-title]:before {
+            content: attr(data-title);
+            float: left;
+            font-size: inherit;
+            font-weight: @table-header-font-weight;
+            color: @table-header-font-color;
+          }
+        }
+      }
+    }
+    
+    // Special overrides for shadows
+    &.shadow-z-1 {
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+      > .table > tbody > tr {
+        border: none;
+        .shadow-z-1();
+      }
+    }
+
+    // Special overrides for the bordered tables
+    > .table-bordered {
+      border: 0;
+
+      // Nuke the appropriate borders so that the parent can handle them
+      > tbody {
+        > tr {
+          > td {
+            border: 0;
+            border-bottom: 1px solid @table-border-color;
+          }
+          > td:last-child {
+            border-bottom: 0;
+          }
+        }
+      }
+    }
+
+    // Special overrides for the striped tables
+    > .table-striped {
+      > tbody > tr > td,
+      > tbody > tr:nth-child(odd) {
+          background-color: @table-bg;
+      }
+      > tbody > tr > td:nth-child(odd) {
+          background-color: @table-bg-accent;
+      }
+    }
+
+    // Special overrides for hover tables
+    > .table-hover {
+      > tbody {
+        > tr:hover > td,
+        > tr:hover {
+          background-color: @table-bg;
+        }
+        > tr > td:hover {
+          background-color: @table-bg-hover;
+        }
+      }
+    }
+  }
 }

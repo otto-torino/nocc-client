@@ -1,0 +1,21 @@
+<h2>Terapia adiuvante</h2>
+<div class="row">
+    <div class="col-sm-12 col-md-6">
+        <h3>Scheda terapeutica</h3>
+        <div ng-show="!data.tc.date && card_complete">
+            <p class="alert alert-info">Inserire la data della scheda terapeutica prima di avviare la terapia</p>
+        </div>
+        <div ng-show="data.tc.date && card_complete">
+            <p><a class="btn btn-primary" ng-click="forwardStatus()">Pubblica la scheda terapeutica</a></p>
+        </div>
+        <div class="shadow-z-1">
+            <div style="padding: 14px;" class="bg-white">
+                <p class="text-right">
+                    <a ng-click="editTherapyCard('tc')" class="fa fa-pencil"></a>
+                </p>
+                <nocctcbox tc="data.tc" show-visible="true"></nocctcbox>
+            </div>
+        </div>
+        <p ng-show="edit_section"><a class="btn btn-primary" ng-click="editTherapyCardSection()">Modifica la sezione "Chirurgia" della scheda terapeutica</a></p>
+    </div>
+</div>

@@ -1,17 +1,25 @@
 /**
+* @file           authentication.spec.js
+* @version        0.1.1
+* @description    Authentication module unit tests
+* @author         abidibo <abidibo@gmail.com>
+*/
+
+/**
  * @summary Authentication Module's Tests
  */
 describe( 'authentication login and logout: ', function() {
-    var authenticationService, $httpBackend, $window, $controller, $rootScope, fake_data, scope1;
+    var authenticationService, $httpBackend, $window, $controller, $rootScope, fake_data, scope1, API_BASE_URL;
 
     beforeEach( module( 'nocc' ) );
     beforeEach( module( 'nocc.authentication' ) );
     beforeEach( module( 'ngCookies' ) );
 
-    beforeEach(inject(function (_authenticationService_, _$httpBackend_, _$window_) {
+    beforeEach(inject(function (_authenticationService_, _$httpBackend_, _$window_, _API_BASE_URL_) {
         authenticationService = _authenticationService_;
         $httpBackend = _$httpBackend_;
         $window = _$window_;
+        API_BASE_URL = _API_BASE_URL_;
         fake_data = {
             token: 'myfaketoken',
             user: {
@@ -23,8 +31,8 @@ describe( 'authentication login and logout: ', function() {
                 is_surgeon: true
             }
         };
-        $httpBackend.when('POST', "http://localhost:8000/nocc/api/v1/auth/login/").respond(fake_data);
-        $httpBackend.when('POST', "http://localhost:8000/nocc/api/v1/auth/logout/").respond({});
+        $httpBackend.when('POST', API_BASE_URL + "/auth/login/").respond(fake_data);
+        $httpBackend.when('POST', API_BASE_URL + "/auth/logout/").respond({});
     }));
 
     beforeEach(inject(function(_$controller_, _$state_, _$rootScope_) {

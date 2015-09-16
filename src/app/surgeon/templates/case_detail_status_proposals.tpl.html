@@ -1,0 +1,61 @@
+<h2>Proposte terapeutiche</h2>
+<p ng-show="!data.pollingComplete" class="alert alert-info">Le proposte terapeutiche devono essere votate dagli altri medici.</p>
+<p ng-show="data.pollingComplete && !data.accepted_tp" class="alert alert-info">Nessuna proposta terapeutica ha raggiunto il consenso di tutti i medici. Programmare un incontro per concordare una nuova proposta.</p>
+<p ng-show="data.pollingComplete && data.accepted_tp" class="alert alert-info">La proposta terapeutica "{{ data.accepted_tp.title }}" è stata accettata.</p>
+<p ng-show="data.pollingComplete && !data.accepted_tp"><a class="btn btn-primary" href ng-click="createTherapeuticProposal('accepted_tp')">inserisci proposta terapeutica concordata</a></p>
+<p ng-show="data.pollingComplete && data.accepted_tp"><a class="btn btn-primary" href ng-click="freezeTpAndForwardStep()">passa alla creazione della scheda terapeutica</a></p>
+<div ng-if="data.accepted_tp.group_discussion" class="row">
+    <div class="col-sm-12 col-md-6">
+        <h3>Proposta a seguito di gruppo di discussione</h3>
+        <div class="vote-true shadow-z-1">
+            <div style="padding: 14px;" class="bg-white">
+                <p class="text-right">
+                    <a ng-click="editTherapeuticProposal('accepted_tp')" class="fa fa-pencil"></a>
+                </p>
+
+                <nocctpbox tp="data.accepted_tp" show-visible="true"></nocctpbox>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <!-- first therapeutic proposal -->
+    <div class="col-md-6">
+        <h3>Primaria</h3>
+        <div ng-show="data.first_tp" ng-class="{'vote-true': data.accepted_tp && data.first_tp.id == data.accepted_tp.id, 'vote-false': data.accepted_tp && data.first_tp.id != data.accepted_tp.id, 'shadow-z-1': true}">
+            <div style="padding: 14px;" class="bg-white">
+                <nocctpbox tp="data.first_tp" show-visible="true"></nocctpbox>
+            </div>
+            <div class="proposal-vote" ng-show="data.first_tp.votes_obj.length">
+                <h4>Votazioni</h4>
+                <ul style="text-align: left;">
+                    <li ng-repeat="poll in data.first_tp.votes_obj">
+                        {{ poll.date | date: 'dd/MM HH:mm' }} {{ poll.doctor_contact.doctor.firstname }} {{ poll.doctor_contact.doctor.lastname }}: <i ng-class="{'fa fa-check': poll.vote, 'fa fa-remove': !poll.vote}"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- second therapeutic proposal -->
+    <div class="col-md-6">
+        <h3>Secondaria</h3>
+        <div ng-show="data.second_tp" ng-class="{'vote-true': data.accepted_tp && data.second_tp.id == data.accepted_tp.id, 'vote-false': data.accepted_tp && data.second_tp.id != data.accepted_tp.id, 'shadow-z-1': true}">
+            <div style="padding: 14px;" class="bg-white">
+                <nocctpbox tp="data.second_tp" show-visible="true"></nocctpbox>
+            </div>
+            <div class="proposal-vote" ng-show="data.second_tp.votes_obj.length">
+                <h4>Votazioni</h4>
+                <ul style="text-align: left;">
+                    <li ng-repeat="poll in data.second_tp.votes_obj">
+                        {{ poll.date | date: 'dd/MM HH:mm' }} {{ poll.doctor_contact.doctor.firstname }} {{ poll.doctor_contact.doctor.lastname }}: <i ng-class="{'fa fa-check': poll.vote, 'fa fa-remove': !poll.vote}"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+    </div>
+</div>

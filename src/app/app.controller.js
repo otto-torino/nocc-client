@@ -1,8 +1,10 @@
 /**
-* @file app.controller.js
-* @namespace nocc.controllers
-* @author    abidibo <abidibo@gmail.com>
-*/
+ * @file           app.controller.js
+ * @version        0.1.1
+ * @namespace      nocc.controllers
+ * @author         abidibo <abidibo@gmail.com>
+ * @description    Main controller
+ */
 (function () {
     'use strict';
 
@@ -20,6 +22,7 @@
 
         /**
          * Actions to perform in the main controller when the state (ui-router) changes
+         * - redirect if user has its own state (the same state can have different instancies for each actor: patient, doctor, surgeon)
          * - change pageTitle
          * - refresh is_authenticated and user properties
          */
@@ -50,24 +53,37 @@
 
         /**
         * @summary logout
-        * @description Log the user out
+        * @description Logs the user out
         * @memberOf nocc.AppCtrl
         * @uses nocc.authentication.services.authenticationService
         */
         function logout() {
             authenticationService.logout().then(function() {
-                //$state.go('home', {}, {reload: true});
                 $window.location.href = $window.location.origin + $window.location.pathname;
             });
         }
     }
 
+    /**
+     * Redirects the user to its own state if it exists
+     *
+     * In some points of the application the templates are the same for every actor. In such case a link to a different 
+     * state points to a general state which indeed may have different substates for different actors. 
+     * A substate is called with the state name plus a dot and the actor name, ie:
+     * apphome -> apphome.surgeon | apphome.patient | apphome.doctor
+     * This function assures that the user is redirected to its own substate when it exists.
+     *
+     * @param {Object} $state
+     * @param {Object} toState next state
+     * @param {Object} user
+     */
     function redirectActor($state, toState, user) {
 
         if(typeof user == 'undefined') {
             return;
         }
 
+        // states which have actor substates
         var actor_states = {
             patient: ['apphome', 'case'],
             surgeon: ['apphome'],

@@ -14,10 +14,10 @@
                     <th></th>
                 </tr>
                 <tr ng-repeat="fu in vm.data.initial.accepted">
-                    <td>{{ fu.doctor_contact.doctor.firstname }} {{ fu.doctor_contact.doctor.lastname }}</td>
-                    <td>{{ fu.date | date: 'dd/MM/yyyy HH:mm' }}</td>
-                    <td>{{ fu.text }}</td>
-                    <td>
+                    <td data-title="Medico">{{ fu.doctor_contact.doctor.firstname }} {{ fu.doctor_contact.doctor.lastname }}</td>
+                    <td data-title="Data">{{ fu.date | date: 'dd/MM/yyyy HH:mm' }}</td>
+                    <td data-title="Descrizione">{{ fu.text }}</td>
+                    <td data-title="Esami">
                         <a href ui-sref="case.detail.doctor.examination({ activeTab: 'followup' })" class="fa fa-eye"></a>
                     </td>
                 </tr>
@@ -32,10 +32,10 @@
                     <th>Esami</th>
                 </tr>
                 <tr ng-repeat="fu in vm.data.initial.finalized">
-                    <td>{{ fu.doctor_contact.doctor.firstname }} {{ fu.doctor_contact.doctor.lastname }}</td>
-                    <td>{{ fu.date | date: 'dd/MM/yyyy HH:mm' }}</td>
-                    <td>{{ fu.text }}</td>
-                    <td>
+                    <td data-title="Medico">{{ fu.doctor_contact.doctor.firstname }} {{ fu.doctor_contact.doctor.lastname }}</td>
+                    <td data-title="Data">{{ fu.date | date: 'dd/MM/yyyy HH:mm' }}</td>
+                    <td data-title="Descrizione">{{ fu.text }}</td>
+                    <td data-title="Esami">
                         <a href ui-sref="case.detail.doctor.examination({ activeTab: 'followup' })" class="fa fa-eye"></a>
                     </td>
                 </tr>
@@ -56,10 +56,10 @@
                     <th></th>
                 </tr>
                 <tr ng-repeat="fu in vm.data.adjuvant.accepted">
-                    <td>{{ fu.doctor_contact.doctor.firstname }} {{ fu.doctor_contact.doctor.lastname }}</td>
-                    <td>{{ fu.date | date: 'dd/MM/yyyy HH:mm' }}</td>
-                    <td>{{ fu.text }}</td>
-                    <td>
+                    <td data-title="Medico">{{ fu.doctor_contact.doctor.firstname }} {{ fu.doctor_contact.doctor.lastname }}</td>
+                    <td data-title="Data">{{ fu.date | date: 'dd/MM/yyyy HH:mm' }}</td>
+                    <td data-title="Descrizione">{{ fu.text }}</td>
+                    <td data-title="Esami">
                         <a href ui-sref="case.detail.doctor.examination({ activeTab: 'adj' })" class="fa fa-eye"></a>
                     </td>
                 </tr>
@@ -74,10 +74,10 @@
                     <th>Esami</th>
                 </tr>
                 <tr ng-repeat="fu in vm.data.adjuvant.finalized">
-                    <td>{{ fu.doctor_contact.doctor.firstname }} {{ fu.doctor_contact.doctor.lastname }}</td>
-                    <td>{{ fu.date | date: 'dd/MM/yyyy HH:mm' }}</td>
-                    <td>{{ fu.text }}</td>
-                    <td>
+                    <td data-title="Medico">{{ fu.doctor_contact.doctor.firstname }} {{ fu.doctor_contact.doctor.lastname }}</td>
+                    <td data-title="Data">{{ fu.date | date: 'dd/MM/yyyy HH:mm' }}</td>
+                    <td data-title="Descrizione">{{ fu.text }}</td>
+                    <td data-title="Esami">
                         <a href ui-sref="case.detail.doctor.examination({ activeTab: 'adj' })" class="fa fa-eye"></a>
                     </td>
                 </tr>
@@ -98,10 +98,10 @@
                     <th></th>
                 </tr>
                 <tr ng-repeat="fu in vm.data.final.accepted">
-                    <td>{{ fu.doctor_contact.doctor.firstname }} {{ fu.doctor_contact.doctor.lastname }}</td>
-                    <td>{{ fu.date | date: 'dd/MM/yyyy HH:mm' }}</td>
-                    <td>{{ fu.text }}</td>
-                    <td>
+                    <td data-title="Medico">{{ fu.doctor_contact.doctor.firstname }} {{ fu.doctor_contact.doctor.lastname }}</td>
+                    <td data-title="Data">{{ fu.date | date: 'dd/MM/yyyy HH:mm' }}</td>
+                    <td data-title="Descrizione">{{ fu.text }}</td>
+                    <td data-title="Esami">
                         <a href ui-sref="case.detail.doctor.examination({ activeTab: 'final' })" class="fa fa-eye"></a>
                     </td>
                 </tr>
@@ -116,10 +116,10 @@
                     <th>Esami</th>
                 </tr>
                 <tr ng-repeat="fu in vm.data.final.finalized">
-                    <td>{{ fu.doctor_contact.doctor.firstname }} {{ fu.doctor_contact.doctor.lastname }}</td>
-                    <td>{{ fu.date | date: 'dd/MM/yyyy HH:mm' }}</td>
-                    <td>{{ fu.text }}</td>
-                    <td>
+                    <td data-title="Medico">{{ fu.doctor_contact.doctor.firstname }} {{ fu.doctor_contact.doctor.lastname }}</td>
+                    <td data-title="Data">{{ fu.date | date: 'dd/MM/yyyy HH:mm' }}</td>
+                    <td data-title="Descrizione">{{ fu.text }}</td>
+                    <td data-title="Esami">
                         <a href ui-sref="case.detail.doctor.examination({ activeTab: 'final' })" class="fa fa-eye"></a>
                     </td>
                 </tr>

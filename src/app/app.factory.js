@@ -1,7 +1,10 @@
 /**
-* @file app.factory.js
-* @namespace nocc.factory
-* @author    abidibo <abidibo@gmail.com>
+* @file           app.factory.js
+* @version        0.1.1
+* @namespace      nocc.factory
+* @author         abidibo <abidibo@gmail.com>
+* @description    Defines a factory which provides the right template to be used for the main case detail view
+*                 basing upon the current actor (user) and the case status.
 */
 (function () {
     'use strict';
@@ -10,35 +13,47 @@
         .module('nocc.factory', ['nocc.authentication'])
         .factory('NoccControllerFactory', NoccControllerFactory);
 
-    NoccControllerFactory.$inject = ['$http', '$templateCache', 'authenticationService'];
+    NoccControllerFactory.$inject = ['$http', '$templateCache', 'authenticationService', 'STATUS_KEY'];
 
     /**
-     * Main app controller
-     * Uses scope instead of controller as technique in order to have fallback in other nested views
+     * Main case detail template factory
+     * @return template of the case detail main view basing upon actor and case status
      */
-    function NoccControllerFactory($http, $templateCache, authenticationService) {
+    function NoccControllerFactory($http, $templateCache, authenticationService, STATUS_KEY) {
 
 
         // some status look the same to the patient eyes
         var patient_status_repeat_dict = {
-            3: 2
+            'proposals': 'doctor_association',
+            'therapy_card': 'proposal_accepted'
+        };
+
+        // some status look the same to the observer eyes
+        var observer_status_repeat_dict = {
         };
 
         return {
             caseDetailTemplate: function(caseObj) {
-                /**
-                 * creare case.detail come status poi status1 è figlio
-                 */
                 var user = authenticationService.getAuthenticatedUser();
+                var tpl_status;
                 if(user.is_surgeon && caseObj.surgeon_contact_obj.doctor.user.id === user.id) {
-                    return $http.get('surgeon/templates/case_detail_status' + caseObj.status + '.tpl.html', {cache: $templateCache }).then(function(response){return response.data;});
+                    return $http.get('surgeon/templates/case_detail_status_' + STATUS_KEY[caseObj.status] + '.tpl.html', {cache: $templateCache }).then(function(response){return response.data;});
                 }
                 else if(user.is_doctor && (caseObj.oncologist_contact_obj.doctor.user.id === user.id || caseObj.radiotherapist_contact_obj.doctor.user.id === user.id)) {
-                    return $http.get('doctor/templates/case_detail_status' + caseObj.status + '.tpl.html', {cache: $templateCache }).then(function(response){return response.data;});
+                    return $http.get('doctor/templates/case_detail_status_' + STATUS_KEY[caseObj.status] + '.tpl.html', {cache: $templateCache }).then(function(response){return response.data;});
                 }
                 else if(user.is_patient && caseObj.patient_obj.user.id === user.id) {
-                    var tpl_status = typeof patient_status_repeat_dict[caseObj.status] === 'undefined' ? caseObj.status : patient_status_repeat_dict[caseObj.status];
-                    return $http.get('patient/templates/case_detail_status' + tpl_status + '.tpl.html', {cache: $templateCache }).then(function(response){return response.data;});
+                    tpl_status = typeof patient_status_repeat_dict[STATUS_KEY[caseObj.status]] === 'undefined' ? STATUS_KEY[caseObj.status] : patient_status_repeat_dict[STATUS_KEY[caseObj.status]];
+                    return $http.get('patient/templates/case_detail_status_' + tpl_status + '.tpl.html', {cache: $templateCache }).then(function(response){return response.data;});
+                }
+                else if(user.is_doctor) {
+                    /* jshint loopfunc:true */
+                    for(var i = 0, l = caseObj.observers_obj.length; i < l; i++) {
+                        if(caseObj.observers_obj[i].user.id === user.id) {
+                            tpl_status = typeof observer_status_repeat_dict[STATUS_KEY[caseObj.status]] === 'undefined' ? STATUS_KEY[caseObj.status] : observer_status_repeat_dict[STATUS_KEY[caseObj.status]];
+                            return $http.get('observer/templates/case_detail_status_' + tpl_status + '.tpl.html', {cache: $templateCache }).then(function(response){return response.data;});
+                        }
+                    }
                 }
             }
         };

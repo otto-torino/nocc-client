@@ -43,11 +43,25 @@
                 fa: 'medkit'
             });
         }
+        if(caseObj.status >= STATUS.therapy_card) {
+            $scope.nav.items.push({
+                state: 'case.detail.surgeon.tc',
+                text: 'scheda terapeutica',
+                fa: 'file-o'
+            });
+        }
         if(caseObj.status >= STATUS.started) {
             $scope.nav.items.push({
                 state: 'case.detail.surgeon.fu',
                 text: 'follow up',
                 fa: 'recycle'
+            });
+        }
+        if(caseObj.status > STATUS.started) {
+            $scope.nav.items.push({
+                state: 'case.detail.surgeon.etc',
+                text: 'scheda fine trattamento',
+                fa: 'file-o'
             });
         }
 

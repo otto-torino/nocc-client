@@ -1,8 +1,9 @@
 /**
-* @file app.routes.js
-* @namespace nocc.routes
-* @description Main app routes
-* @author    abidibo <abidibo@gmail.com>
+* @file           app.routes.js
+* @version        0.1.1
+* @namespace      nocc.routes
+* @description    Main app routes
+* @author         abidibo <abidibo@gmail.com>
 */
 (function () {
     'use strict';

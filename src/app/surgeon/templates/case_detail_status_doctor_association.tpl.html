@@ -1,0 +1,36 @@
+<h2>Proposte terapeutiche</h2>
+<p>Inserisci due proposte terapeutiche.<br />
+    Quando entrambe saranno inserite potrai sottoporle a votazione da parte degli altri medici.</p>
+<div class="row">
+    <!-- first therapeutic proposal -->
+    <div class="col-md-6">
+        <h3>Primaria</h3>
+        <a ng-show="!data.first_tp" class="btn btn-primary" ng-click="createTherapeuticProposal('first_tp', 1)">Inserisci la prima proposta terapeutica</a>
+
+        <div class="well" ng-show="data.first_tp">
+            <p class="text-right">
+                <a ng-click="editTherapeuticProposal('first_tp')" class="fa fa-pencil"></a>
+            </p>
+            <nocctpbox tp="data.first_tp" show-visible="true"></nocctpbox>
+        </div>
+    </div>
+    <!-- second therapeutic proposal -->
+    <div class="col-md-6">
+        <h3>Secondaria</h3>
+        <a ng-show="data.first_tp && !data.second_tp" class="btn btn-primary" ng-click="duplicateTherapeuticProposal()">Duplica la prima proposta</a>
+        <a ng-show="!data.second_tp" class="btn btn-primary" ng-click="createTherapeuticProposal('second_tp', 2)">Inserisci la seconda proposta terapeutica</a>
+
+        <div class="well" ng-show="data.second_tp">
+            <p class="text-right">
+                <a ng-click="editTherapeuticProposal('second_tp')" class="fa fa-pencil"></a>
+            </p>
+            <nocctpbox tp="data.second_tp" show-visible="true"></nocctpbox>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <p ng-show="data.first_tp && data.second_tp">
+            <a class="btn btn-primary" ng-click="forwardStatus()">Sottoponi le proposte terapeutiche a votazione</a>
+        </p>
+    </div>
+<div>

@@ -1,5 +1,6 @@
 /**
- * @file authentication.module.js
+ * @file        authentication.module.js
+ * @version     0.1.1
  * @summary     Authentication Module
  * @author      abidibo <abidibo@gmail.com>
  * @description This is the authentication module responsible for logging users in and out.

@@ -22,14 +22,23 @@
         var vm = this;
         vm.model = $scope.model;
 
-        if(vm.model.caseObj.status == STATUS.started) {
-            statusStarted(vm, followupService, FU_STATUS_DICT, FU_TYPE_DICT);
-        }
-        else if(vm.model.caseObj.status == STATUS.adjuvant_started) {
-            statusAdjuvantStarted(vm, followupService, FU_STATUS_DICT, FU_TYPE_DICT);
-        }
-        else if(vm.model.caseObj.status == STATUS.relapse) {
-            statusRelapse(vm, caseService);
+        switch(vm.model.caseObj.status) {
+
+            case STATUS.started:
+                statusStarted(vm, followupService, FU_STATUS_DICT, FU_TYPE_DICT);
+                break;
+
+            case STATUS.adjuvant_started:
+                statusAdjuvantStarted(vm, followupService, FU_STATUS_DICT, FU_TYPE_DICT);
+                break;
+
+            case STATUS.ended:
+                statusEnded(vm, followupService, FU_STATUS_DICT, FU_TYPE_DICT);
+                break;
+
+            case STATUS.relapse:
+                statusRelapse(vm, caseService);
+                break;
         }
 
     }
@@ -57,6 +66,20 @@
         });
 
     }
+
+    function statusEnded(vm, followupService, FU_STATUS_DICT, FU_TYPE_DICT) {
+
+        vm.data = {};
+
+        followupService.list(vm.model.caseObj.id, FU_TYPE_DICT.final, [FU_STATUS_DICT.accepted]).then(function(response) {
+            vm.data.followups = response.data;
+        }, function() {
+            console.log('error'); // @TODO
+        });
+
+    }
+
+
 
     function statusRelapse(vm, caseService) {
         vm.data = {};

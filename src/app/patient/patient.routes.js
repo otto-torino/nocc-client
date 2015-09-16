@@ -193,6 +193,30 @@
                 */
             }
         })
+        .state( 'case.detail.patient.tc', {
+            parent: 'case.detail.patient',
+            url: 'patient/tc/',
+            views: {
+                'case-main': {
+                    controller: 'CaseDetailTcCtrl',
+                    controllerAs: 'vm',
+                    templateUrl: 'case/templates/case_detail_tc.tpl.html'
+                },
+                'case-nav': {
+                    controller: 'PatientSidebarCaseCtrl',
+                    templateUrl: 'layout/templates/sidebar_nav.tpl.html'
+                }
+            },
+            data:{
+                page_title: 'Caso | Scheda terapeutica'/*,
+                // defined in parent state
+                permissions: {
+                    only: ['isDoctorCase'],
+                    redirectTo: 'home'
+                }
+                */
+            }
+        })
         .state( 'case.detail.patient.fu', {
             parent: 'case.detail.patient',
             url: 'patient/fu/',
@@ -212,6 +236,30 @@
                 // defined in parent state
                 permissions: {
                     only: ['isSurgeonCase'],
+                    redirectTo: 'home'
+                }
+                */
+            }
+        })
+        .state( 'case.detail.patient.etc', {
+            parent: 'case.detail.patient',
+            url: 'patient/etc/',
+            views: {
+                'case-main': {
+                    controller: 'CaseDetailEtcCtrl',
+                    controllerAs: 'vm',
+                    templateUrl: 'case/templates/case_detail_etc.tpl.html'
+                },
+                'case-nav': {
+                    controller: 'PatientSidebarCaseCtrl',
+                    templateUrl: 'layout/templates/sidebar_nav.tpl.html'
+                }
+            },
+            data:{
+                page_title: 'Caso | Scheda fine trattamento'/*,
+                // defined in parent state
+                permissions: {
+                    only: ['isDoctorCase'],
                     redirectTo: 'home'
                 }
                 */

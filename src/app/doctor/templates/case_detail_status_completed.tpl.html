@@ -1,0 +1,7 @@
+<div ng-show="vm.data.caseObj.need_revaluation">
+    <p class="alert alert-info">Caso completato. In attesa di rivalutazione.</p>
+</div>
+
+<div ng-show="!vm.data.caseObj.need_revaluation">
+    <p class="alert alert-info">Caso completato. In attesa di chiusura o inizio terapia adiuvante.</p>
+</div>

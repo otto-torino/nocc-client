@@ -1,0 +1,48 @@
+<div ng-show="!vm.data.followup && vm.edit_section && !vm.data.section.completed">
+    <h2>Follow Up</h2>
+    <p><a href ng-click="vm.createFU()" class="btn btn-primary">Richiesta Follow Up</a></p>
+</div>
+<div ng-show="vm.data.followup">
+    <h2>Follow Up</h2>
+    <p ng-show="vm.data.followup.status == vm.data.FU_STATUS_DICT.to_be_accepted" class="alert alert-info">Richiesto Follow Up in attesa di accetazione</p>
+    <p ng-show="vm.data.followup.status == vm.data.FU_STATUS_DICT.accepted" class="alert alert-success">Follow Up accettato</p>
+    <p ng-show="vm.data.followup.status == vm.data.FU_STATUS_DICT.refused" class="alert alert-danger">Follow Up rifiutato, selezionare una nuova data</p>
+</div>
+<div ng-if="vm.data.followup.status == vm.data.FU_STATUS_DICT.refused">
+    <div class="well">
+        <div class="form-group">
+            <p>{{ vm.data.followup.text }}</p>
+            <p><strong>Suggerimenti</strong>:</p>
+            <p>{{ vm.data.followup.suggestion }}</p>
+            <label for="fu__date">Data</label>
+            <div class="error" ng-show="errors.date">
+                <div class="alert alert-danger" ng-repeat="e in errors.date">{{ e }}</div>
+            </div>
+            <div class="dropdown">
+                <span class="dropdown-toggle" id="dropdown2" role="button" data-target="#" href="#">
+                    <div class="input-group">
+                        <!-- <input type="text" class="form-control" data-ng-model="case.new_patient.birth_date | date:'dd/MM/yyyy'" placeholder="es. 01/10/1980" required> -->
+                        Data selezionata: {{ vm.data.followup.date | date:'dd/MM/yyyy HH:mm' }}
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </span>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <datetimepicker ng-required="true" data-before-render="vm.beforeRender($view, $dates, $leftDate, $upDate, $rightDate)" data-ng-model="vm.data.followup.date" data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }"/>
+                </ul>
+            </div>
+
+            <button class="btn btn-primary" ng-disabled="!vm.data.followup.date" ng-click="vm.update()" type="button" disabled="disabled">Aggiorna richiesta</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 col-md-6">
+        <h2>Scheda di fine trattamento</h2>
+        <div class="shadow-z-1">
+            <div style="padding: 14px;" class="bg-white">
+                <noccetcbox etc="vm.data.etc" show-visible="true"></nocctcbox>
+            </div>
+        </div>
+        <p ng-show="vm.edit_section"><a class="btn btn-primary" ng-click="vm.editEndTherapyCardSection()">Modifica la sezione "{{ vm.data.section.section_type == 'oncologist' ? 'Chemioterapia' : 'Radioterapia' }}" della scheda di fine trattamento</a></p>
+    </div>
+</div>

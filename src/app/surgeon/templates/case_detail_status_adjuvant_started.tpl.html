@@ -1,0 +1,43 @@
+<h2>Terapia adiuvante</h2>
+<p class="alert alert-info">Terapia avviata</p>
+
+<div ng-if="data.etc.date && therapy_is_completed && !data.followups.length">
+    <p><a href ng-click="forwardStatusEnded()" class="btn btn-primary">Terapia completata</a></p>
+</div>
+<div ng-if="data.followups.length">
+    <h2>Follow Up</h2>
+    <div ng-repeat="fu in data.followups" class="bg-white well">
+        <h3>{{ fu.doctor_contact.doctor.firstname }} {{ fu.doctor_contact.doctor.lastname }}</h3>
+        <p><strong>Data</strong>: {{ fu.date | date: 'dd/MM/yyyy HH:mm' }}</p>
+        <p>{{ fu.text }}</p>
+        <p ng-show="fu.status==data.FU_STATUS_DICT.to_be_accepted">
+            <a ng-click="acceptFU(fu)" class="btn btn-primary">Accetta</a>
+            <a ng-click="refuseFU(fu)" class="btn btn-primary">Rifiuta</a>
+        </p>
+        <p ng-show="fu.status==data.FU_STATUS_DICT.accepted">
+            <a class="btn btn-info" href ui-sref="case.detail.surgeon.examination({ activeTab: 'adj' })">Inserire risultati esami</a> 
+            <a class="btn btn-primary" href ng-click="closeFollowUp(fu)">chiudere il Follow Up</a>
+        </p>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-sm-12 col-md-6">
+        <h2>Scheda di fine trattamento</h2>
+        <div ng-show="!data.etc.date && therapy_is_completed">
+            <p class="alert alert-info">Inserire la data della scheda di fine trattamento prima di pubblicarla</p>
+        </div>
+        <div class="shadow-z-1">
+            <div style="padding: 14px;" class="bg-white">
+                <p class="text-right">
+                    <a ng-click="editEndTherapyCard('etc')" class="fa fa-pencil"></a>
+                </p>
+                <noccetcbox etc="data.etc" show-visible="true"></noccetcbox>
+            </div>
+        </div>
+        <p ng-show="edit_section"><a class="btn btn-primary" ng-click="editEndTherapyCardSection()">Modifica la sezione "Chirurgia" della scheda di fine trattamento</a></p>
+    </div>
+</div>
+
+

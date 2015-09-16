@@ -2,7 +2,7 @@
     <i ng-repeat="action in bar.actions" class="link fa fa-2x fa-{{ action.fa }}" ng-click="action.exec()"></i>
 </div>
 <section>
-    <h1>{{ model.caseObj.description }}</h1>
+    <h1>{{ model.caseObj.specific_diagnosis_name }}</h1>
     <p><strong>Paziente</strong>: {{ model.caseObj.patient_obj.firstname }} {{ model.caseObj.patient_obj.lastname }}</p>
     <p ng-show="model.caseObj.oncologist_contact_obj">
         <strong>Oncologo</strong>: {{ model.caseObj.oncologist_contact_obj.doctor.firstname }} {{ model.caseObj.oncologist_contact_obj.doctor.lastname }}

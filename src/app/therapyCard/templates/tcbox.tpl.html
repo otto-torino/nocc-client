@@ -1,0 +1,22 @@
+<div ng-show="tc">
+    <table class="table table-bordered">
+        <tr>
+            <th>Data</th>
+            <td>{{ tc.date | date: 'dd/MM/yyyy' }}</td>
+        </tr>
+        <tr ng-show="showVisible">
+            <th>Visibile al paziente</th>
+            <td><i class="fa fa-{{ tc.visible ? 'check' : 'remove' }}"></i></td>
+        </tr>
+    </table>
+    <div ng-repeat="s in tc.sections">
+        <h3>{{ s.section_type == 'oncologist' ? 'Chemioterapia' : (s.section_type == 'radiotherapist' ? 'Radioterapia' : 'Chirurgia') }}</h3>
+        <p>{{ s.text }}</p>
+        <ul>
+            <li ng-repeat="a in s.attachments">
+                <!-- <a ng-click="mediaHref(a.file)" target="_blank">{{ a.insertion_date | date: 'dd/MM/yyyy' }} {{ a.file | filename }}</a> -->
+                <aajax href="{{ a.file | absurl }}">{{ a.insertion_date | date: 'dd/MM/yyyy' }} {{ a.file | filename }}</aajax>
+            </li>
+        </ul>
+    </div>
+</div>
